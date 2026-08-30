@@ -273,8 +273,8 @@
                     <div class="input-group">
                         <label>Language of Diet Plan</label>
                         <select id="language" required>
-                            <option value="en" selected>English</option>
-                            <option value="mr">मराठी (Marathi)</option>
+                            <option value="en">English</option>
+                            <option value="mr" selected>मराठी (Marathi)</option>
                             <option value="hi">हिंदी (Hindi)</option>
                             <option value="kn">ಕನ್ನಡ (Kannada)</option>
                         </select>
@@ -443,6 +443,16 @@
         </section>
 
         <section id="result-section" class="glass-panel hidden">
+            <!-- Language Quick Switcher -->
+            <div data-html2canvas-ignore style="display: flex; justify-content: flex-end; margin-bottom: 1rem; align-items: center; gap: 0.5rem;">
+                <label style="color: var(--text-light); font-size: 0.9rem; font-weight: 500;">🌍 Language:</label>
+                <select id="quick-language" style="padding: 0.5rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(15,23,42,0.6); color: white; outline: none; font-size: 0.9rem; cursor: pointer;">
+                    <option value="en">English</option>
+                    <option value="mr">मराठी (Marathi)</option>
+                    <option value="hi">हिंदी (Hindi)</option>
+                    <option value="kn">ಕನ್ನಡ (Kannada)</option>
+                </select>
+            </div>
             <div id="pdf-content">
                 <div class="result-header">
                     <h2 id="r-title">Your Personalized Prescription</h2>
@@ -550,7 +560,7 @@
                 <button id="btn-new-patient" class="btn-secondary">Enter New Patient</button>
                 <button id="btn-pdf" class="btn-primary pdf-btn">Save as PDF 📄</button>
                 <div style="display: flex; gap: 0.5rem; align-items: center; justify-content: center;">
-                    <input type="tel" id="wa-number" placeholder="+91 0000000000" style="padding: 1rem; border-radius: 16px; border: 1px solid rgba(255,255,255,0.2); background: rgba(15,23,42,0.6); color: white; width: 150px; font-size: 1rem;" />
+                    <input type="tel" id="wa-number" placeholder="Enter Patient WhatsApp" style="padding: 1rem; border-radius: 16px; border: 1px solid rgba(255,255,255,0.2); background: rgba(15,23,42,0.6); color: white; width: 150px; font-size: 1rem;" />
                     <button id="btn-whatsapp" class="btn-primary whatsapp-btn">WhatsApp 💬</button>
                 </div>
             </div>
@@ -805,6 +815,8 @@
 
             document.getElementById('diet-form').addEventListener('submit', (e) => {
                 e.preventDefault();
+                // Keep quick language switcher in sync with the main one
+                document.getElementById('quick-language').value = document.getElementById('language').value;
                 
                 // Custom Validation
                 let isValid = true;
@@ -1427,6 +1439,11 @@
                 document.getElementById('diet-form').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
             });
 
+            document.getElementById('quick-language').addEventListener('change', (e) => {
+                document.getElementById('language').value = e.target.value;
+                document.getElementById('diet-form').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+            });
+
             document.getElementById('btn-recalculate').addEventListener('click', () => {
                 document.getElementById('result-section').classList.remove('active');
                 setTimeout(() => {
@@ -1520,21 +1537,35 @@
                     } catch(e) {}
                     
                     let p = new URLSearchParams();
-                    let nMatch = f.match(/(?:Mr|Mrs|Ms|Master)\\.?\\s+[A-Za-z\\s]+/i);
+                    let nMatch = f.match(/(?:Mr|Mrs|Ms|Master)\\.?\\s*[A-Za-z]+(?:\\s+[A-Za-z]+){0,3}/i);
                     if(nMatch) { p.set('name', nMatch[0].trim()); }
-                    else { let dMatch = f.match(/(?:Dr)\\.?\\s+[A-Za-z\\s]+/i); if(dMatch) p.set('name', dMatch[0].trim()); }
+                    else { let dMatch = f.match(/(?:Dr)\\.?\\s*[A-Za-z]+(?:\\s+[A-Za-z]+){0,2}/i); if(dMatch) p.set('name', dMatch[0].trim()); }
                     
                     let gMatch = f.match(/Gender:\\s*(Male|Female)/i);
                     if(gMatch) p.set('gender', gMatch[1].toLowerCase());
                     
-                    let aMatch = f.match(/Age[^0-9]*(\\d+)/i);
-                    if(aMatch) p.set('age', aMatch[1]);
+                    let age = '', height = '', weight = '';
                     
-                    let hMatch = f.match(/height[^0-9]*(\\d+)/i);
-                    if(hMatch) p.set('height', hMatch[1]);
+                    let aMatch = f.match(/Age[^0-9a-z]{0,15}(\\d+)/i);
+                    if(aMatch) age = aMatch[1];
                     
-                    let wMatch = f.match(/weight[^0-9]*(\\d+)/i);
-                    if(wMatch) p.set('weight', wMatch[1]);
+                    let hMatch = f.match(/height[^0-9a-z]{0,15}(\\d+)/i);
+                    if(hMatch) height = hMatch[1];
+                    
+                    let wMatch = f.match(/weight[^0-9a-z]{0,15}(\\d+)/i);
+                    if(wMatch) weight = wMatch[1];
+                    
+                    // Fallback to strict input search in case they are completely separated
+                    document.querySelectorAll('input').forEach(i => {
+                        let t = (i.previousElementSibling ? i.previousElementSibling.innerText.toLowerCase() : "") + " " + (i.parentElement ? i.parentElement.innerText.toLowerCase() : "");
+                        if(t.includes('height') && i.value) height = i.value;
+                        if(t.includes('weight') && i.value) weight = i.value;
+                        if(t.includes('age') && i.value) age = i.value;
+                    });
+                    
+                    if(age) p.set('age', age.match(/\\d+/)?.[0] || age);
+                    if(height) p.set('height', height.match(/\\d+/)?.[0] || height);
+                    if(weight) p.set('weight', weight.match(/\\d+/)?.[0] || weight);
                     
                     let dx = [];
                     if(/HTN|Hypertension/i.test(f)) dx.push('hypertension');
