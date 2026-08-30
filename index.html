@@ -1526,8 +1526,8 @@
                 function scrapeEMR() {
                     let f = "";
                     try {
-                        f += document.body.innerText + ' ' + Array.from(document.querySelectorAll('input, textarea')).map(i=>i.value).join(' ');
-                        document.querySelectorAll('iframe').forEach(ifr => {
+                        f += document.title + ' ' + document.body.innerText + ' ' + Array.from(document.querySelectorAll('input, textarea')).map(i=>i.value).join(' ');
+                        document.querySelectorAll('iframe, frame').forEach(ifr => {
                             try {
                                 f += ' ' + ifr.contentWindow.document.body.innerText;
                                 f += ' ' + Array.from(ifr.contentWindow.document.querySelectorAll('input, textarea')).map(i=>i.value).join(' ');
@@ -1536,7 +1536,7 @@
                     } catch(e) {}
                     
                     let p = new URLSearchParams();
-                    let nMatch = f.match(/(?:^|\\s)(Master|Mrs|Ms|Mr)\\.?\\s*[A-Za-z]+(?:\\s+[A-Za-z]+){0,3}/i);
+                    let nMatch = f.match(/(?:Master|Mrs|Ms|Mr)\\.?\\s*[A-Za-z]+(?:\\s+[A-Za-z]+){0,3}/i);
                     let inferredGender = '';
                     if(nMatch) {
                         let nStr = nMatch[0];
@@ -1705,7 +1705,9 @@
             }
 
             // Auto-generate plan if all required fields are filled by scraper
-            if(urlParams.has('name') && urlParams.has('height') && urlParams.has('weight') && document.getElementById('weight').value !== "") {
+            if(urlParams.has('height') && urlParams.has('weight') && document.getElementById('weight').value !== "") {
+                if(!document.getElementById('patient-name').value) document.getElementById('patient-name').value = 'Patient';
+                if(!document.getElementById('gender').value) document.getElementById('gender').value = 'male';
                 // Fill in defaults for dropdowns so form validation passes
                 if(!document.getElementById('veg-status').value) document.getElementById('veg-status').value = 'vegetarian';
                 if(!document.getElementById('region').value) document.getElementById('region').value = 'maharashtra';
