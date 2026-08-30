@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr Parale's Spandan Diet & Exercise Plan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-hover: #4338CA;
+            --secondary: #10B981;
+            --danger: #EF4444;
+            --text-main: #1F2937;
+            --text-light: #4B5563;
+            --glass-bg: rgba(255, 255, 255, 0.95);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', system-ui, -apple-system, sans-serif; }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 2rem;
+            word-wrap: break-word;
+        }
+
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+        .container { width: 100%; max-width: 1200px; position: relative; z-index: 1; }
+
+        .header { text-align: center; margin-bottom: 2rem; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .header h1 { font-size: 3.2rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 0.5rem; }
+        .header p { font-size: 1.2rem; font-weight: 500; }
+
+        @media print {
+            body { background: white !important; padding: 0 !important; margin: 0 !important; color: black !important; display: block !important; }
+            .container { max-width: 100% !important; width: 100% !important; margin: 0 !important; padding: 0 !important; }
+            .background-animation, .header, #input-section, .action-buttons, #wa-hint { display: none !important; }
+            
+            .glass-panel { 
+                box-shadow: none !important; border: none !important; background: transparent !important; padding: 0 !important;
+                backdrop-filter: none !important; opacity: 1 !important; display: block !important; transform: none !important;
+            }
+            
+            .diet-columns { 
+                display: flex !important; flex-wrap: wrap !important; overflow: visible !important; gap: 0.5rem !important;
+            }
+            .meal-col { 
+                flex: 1 1 30% !important; min-width: 150px !important; margin-bottom: 1rem !important;
+                border: 1px solid #ccc !important; break-inside: avoid !important; box-shadow: none !important; background: transparent !important;
+            }
+            .meal-col-header { background: #eee !important; color: black !important; -webkit-print-color-adjust: exact; padding: 0.5rem !important; }
+            .meal-col-content { padding: 0.5rem !important; gap: 0.5rem !important; }
+            .meal-option { font-size: 0.85rem !important; padding: 0.5rem !important; border-left: 2px solid #555 !important; background: transparent !important;}
+            
+            .guideline-card, .guideline-block, .ex-stat { 
+                border: 1px solid #ccc !important; background: transparent !important; box-shadow: none !important; 
+                break-inside: avoid !important; margin-bottom: 1rem !important;
+            }
+            h2, h3 { page-break-after: avoid !important; }
+            ul, p { break-inside: avoid !important; }
+        }
+
+        .glass-panel {
+            background: var(--glass-bg); backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border); border-radius: 24px; padding: 2.5rem;
+            box-shadow: var(--glass-shadow); display: none; opacity: 0;
+            transform: translateY(20px); transition: all 0.5s ease-in-out;
+        }
+        .glass-panel.active { display: block; opacity: 1; transform: translateY(0); }
+
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .input-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .input-group label { font-weight: 600; font-size: 0.95rem; color: var(--text-main); }
+        
+        input[type="number"], select {
+            padding: 0.8rem 1rem; border-radius: 12px; border: 1px solid rgba(0,0,0,0.1);
+            background: rgba(255,255,255,0.9); font-size: 1rem; color: var(--text-main);
+            outline: none; transition: all 0.3s ease;
+        }
+        input[type="number"]:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2); }
+
+        .comorbidities-group { margin-bottom: 2.5rem; background: rgba(255,255,255,0.4); padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(255,255,255,0.5); }
+        .comorbidities-group > label { display: block; font-weight: 700; margin-bottom: 1.5rem; font-size: 1.2rem; border-bottom: 2px solid rgba(0,0,0,0.05); padding-bottom: 0.5rem;}
+        .checkbox-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+        
+        .comorbidity-item { display: flex; flex-direction: column; gap: 0.5rem; background: #fff; padding: 0.8rem; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.02);}
+        .checkbox-label { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; font-weight: 500; }
+        input[type="checkbox"] { display: none; }
+        .custom-check {
+            width: 20px; height: 20px; border: 2px solid var(--primary); border-radius: 6px;
+            display: flex; justify-content: center; align-items: center; transition: all 0.2s ease; flex-shrink: 0;
+        }
+        input[type="checkbox"]:checked + .custom-check { background: var(--primary); }
+        input[type="checkbox"]:checked + .custom-check::after { content: '✓'; color: white; font-size: 14px; font-weight: bold; }
+
+        .sub-options { margin-top: 0.5rem; margin-left: 2rem; display: flex; flex-direction: column; gap: 0.5rem; border-left: 2px solid var(--primary); padding-left: 1rem; }
+        .sub-options label { font-size: 0.9rem; color: var(--text-light); display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
+
+        .btn-primary, .btn-secondary {
+            width: 100%; padding: 1rem; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: 700;
+            cursor: pointer; transition: transform 0.2s ease;
+        }
+        .btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4); }
+        .btn-secondary { background: white; color: var(--primary); border: 2px solid var(--primary); margin-top: 0; }
+        .btn-primary:hover, .btn-secondary:hover { transform: translateY(-2px); }
+
+        .result-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; border-bottom: 2px solid rgba(0,0,0,0.05); padding-bottom: 1rem; flex-wrap: wrap; gap: 1rem;}
+        .bmi-badge { background: #fff; padding: 0.5rem 1rem; border-radius: 20px; font-weight: 700; color: var(--primary); box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+
+        .diet-guidelines { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2.5rem; }
+        .guideline-card { background: #fff; padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(0,0,0,0.05); }
+        .guideline-card h3 { margin-bottom: 1rem; color: var(--danger); }
+        .guideline-card.include h3 { color: var(--secondary); }
+        .guideline-card ul { padding-left: 1.5rem; color: var(--text-light); line-height: 1.6; }
+
+        .meal-plan { margin-bottom: 2.5rem; }
+        .meal-plan h3 { margin-bottom: 1.5rem; text-align: center; color: var(--primary); font-size: 1.4rem;}
+        
+        .diet-columns { 
+            display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 1rem; 
+            -webkit-overflow-scrolling: touch; 
+        }
+        .meal-col { 
+            flex: 1; min-width: 200px; background: #fff; border-radius: 12px; overflow: hidden; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04); display: flex; flex-direction: column;
+        }
+        .meal-col-header { background: linear-gradient(135deg, var(--primary), var(--primary-hover)); color: white; padding: 1rem; text-align: center; font-weight: 600; font-size: 1.05rem;}
+        .meal-col-content { padding: 1.2rem; flex: 1; display: flex; flex-direction: column; gap: 1rem; }
+        .meal-option { background: #f8fafc; padding: 1rem; border-radius: 8px; border-left: 4px solid var(--secondary); font-size: 0.95rem; line-height: 1.5; color: var(--text-main); word-break: break-word;}
+        .meal-option strong { display: block; margin-bottom: 0.3rem; color: var(--secondary); }
+
+        .guideline-block { background: #fff; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,0.04); margin-bottom: 1.5rem; }
+        .guideline-block h3 { margin-bottom: 1rem; color: var(--primary); font-size: 1.2rem; }
+        .guideline-block p, .guideline-block ul { color: var(--text-light); line-height: 1.6; }
+        .guideline-block ul { padding-left: 1.5rem; }
+        .guideline-block h4 { margin-top: 1rem; margin-bottom: 0.5rem; color: var(--text-main); font-size: 1.05rem;}
+
+        .exercise-grid { display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .ex-stat { background: #f1f5f9; padding: 1rem; border-radius: 8px; text-align: center; flex: 1; min-width: 150px; }
+        .ex-stat strong { display: block; color: var(--primary); font-size: 1.1rem; margin-bottom: 0.2rem; }
+
+        .action-buttons { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+        .action-buttons button { flex: 1; min-width: 200px; }
+        .whatsapp-btn { background: #25D366; color: white; }
+        .whatsapp-btn:hover { background: #128C7E; }
+        .pdf-btn { background: #EF4444; color: white; border: none; }
+        .pdf-btn:hover { background: #DC2626; }
+
+        .hidden { display: none !important; }
+
+        @media (max-width: 768px) {
+            body { padding: 0.5rem; background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); color: #f8fafc; }
+            .header h1 { font-size: 2.2rem; background: linear-gradient(to right, #60a5fa, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+            .header p { color: #cbd5e1; }
+            .glass-panel { 
+                padding: 1.5rem 1rem; 
+                background: rgba(30, 41, 59, 0.7); 
+                backdrop-filter: blur(20px); 
+                -webkit-backdrop-filter: blur(20px);
+                border: 1px solid rgba(255, 255, 255, 0.1); 
+                box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5); 
+                border-radius: 24px;
+                color: #f8fafc;
+            }
+            .input-group label { color: #e2e8f0; font-weight: 500; font-size: 1rem; }
+            input[type="number"], select, input[type="text"] {
+                background: rgba(15, 23, 42, 0.6);
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                color: #f8fafc;
+                font-size: 1.05rem;
+                border-radius: 16px;
+                padding: 1rem;
+                box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+            }
+            input[type="number"]:focus, select:focus, input[type="text"]:focus {
+                background: rgba(15, 23, 42, 0.8);
+                border-color: #818cf8;
+                box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.3);
+            }
+            select option { background: #1e293b; color: #f8fafc; }
+            .comorbidities-group {
+                background: rgba(15, 23, 42, 0.4);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                border-radius: 20px;
+                padding: 1.25rem;
+            }
+            .comorbidities-group > label { color: #e2e8f0; border-bottom: 2px solid rgba(255,255,255,0.05); }
+            .comorbidity-item {
+                background: rgba(30, 41, 59, 0.8);
+                border: 1px solid rgba(255, 255, 255, 0.05);
+                color: #e2e8f0;
+                border-radius: 16px;
+                padding: 1rem;
+            }
+            .sub-options label { color: #94a3b8; }
+            .custom-check { border-color: #818cf8; background: rgba(15, 23, 42, 0.5); border-radius: 8px; width: 22px; height: 22px; }
+            input[type="checkbox"]:checked + .custom-check { background: #818cf8; border-color: #818cf8; }
+            .btn-primary { 
+                background: linear-gradient(135deg, #6366f1, #8b5cf6); 
+                border: none; 
+                box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4); 
+                border-radius: 16px; 
+                font-size: 1.15rem; 
+                padding: 1.1rem;
+            }
+            .btn-secondary { 
+                background: rgba(255,255,255,0.05); 
+                color: #e2e8f0; 
+                border: 1px solid rgba(255,255,255,0.2); 
+                border-radius: 16px;
+            }
+            
+            .diet-guidelines { grid-template-columns: 1fr; gap: 1rem; }
+            .guideline-card, .guideline-block { 
+                background: rgba(30, 41, 59, 0.6); 
+                border: 1px solid rgba(255, 255, 255, 0.08); 
+                color: #e2e8f0; 
+                border-radius: 20px;
+            }
+            .guideline-card h3, .guideline-block h3, .guideline-card.include h3 { color: #a5b4fc; }
+            .guideline-card ul, .guideline-block p, .guideline-block ul, #food-cal-content, #act-cal-content, #fruit-guide-content, #compliance-content { color: #cbd5e1; }
+            .meal-col { 
+                min-width: 85vw; 
+                scroll-snap-align: center; 
+                border-radius: 20px; 
+                box-shadow: 0 8px 24px rgba(0,0,0,0.3); 
+                background: rgba(30, 41, 59, 0.8); 
+                border: 1px solid rgba(255, 255, 255, 0.1); 
+            } 
+            .diet-columns { padding-bottom: 1.5rem; scroll-snap-type: x mandatory; gap: 1rem; padding-inline: 0.5rem; }
+            .meal-col-header { background: linear-gradient(135deg, #4f46e5, #7c3aed); font-size: 1.15rem; padding: 1.2rem; }
+            .meal-option { background: rgba(15, 23, 42, 0.5); color: #f8fafc; border-left: 4px solid #818cf8; border-radius: 12px; }
+            .meal-option strong { color: #a5b4fc; }
+            .ex-stat { background: rgba(15, 23, 42, 0.5); color: #e2e8f0; border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; }
+            .ex-stat strong { color: #818cf8; }
+            .result-header { border-bottom: 1px solid rgba(255,255,255,0.1); }
+            .bmi-badge { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; box-shadow: 0 4px 10px rgba(99,102,241,0.3); border: none; }
+            .whatsapp-btn { background: #22c55e; box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3); }
+            .pdf-btn { background: #ef4444; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3); }
+        }
+        .error-highlight { border: 2px solid var(--danger) !important; background: #FEF2F2 !important; box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2) !important; }
+        @keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-5px);} 75% {transform: translateX(5px);} }
+    </style>
+</head>
+<body>
+    <!-- EMR Integration Side Panel -->
+    <div id="emr-panel" style="position: fixed; left: 0; top: 30%; background: var(--glass-bg, rgba(255,255,255,0.95)); backdrop-filter: blur(10px); padding: 15px; border-radius: 0 12px 12px 0; box-shadow: 4px 4px 15px rgba(0,0,0,0.1); z-index: 1000; max-width: 180px; border: 1px solid var(--glass-border, rgba(0,0,0,0.1)); border-left: none;" data-html2canvas-ignore>
+        <h4 style="margin-bottom: 10px; color: var(--primary, #4F46E5); font-size: 1rem;">⚙️ EMR Integration</h4>
+        <p style="font-size: 0.75rem; margin-bottom: 12px; color: var(--text-light, #4B5563); line-height: 1.4;">Drag button to bookmarks bar. Click in EMR to autofill.</p>
+        <a id="bookmarklet-btn" href="#" style="display: block; padding: 10px; background: var(--secondary, #10B981); color: white; text-align: center; border-radius: 8px; font-weight: bold; text-decoration: none; font-size: 0.85rem; box-shadow: 0 2px 5px rgba(16, 185, 129, 0.4);" title="Drag me to your bookmarks bar!">Diet Scraper</a>
+    </div>
+
+    <main class="container">
+        <header class="header" data-html2canvas-ignore>
+            <h1>Dr Parale's Spandan Diet</h1>
+            <p>Comprehensive Diet, Yoga & Detailed Exercise Plan</p>
+            <p style="font-size: 1rem; font-weight: 500; margin-top: 0.5rem; color: #fdfdfd; font-style: italic;">Developed by Dr. Gurunath Parale</p>
+        </header>
+
+        <section id="input-section" class="glass-panel active">
+            <form id="diet-form" novalidate>
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label>Language of Diet Plan</label>
+                        <select id="language" required>
+                            <option value="en" selected>English</option>
+                            <option value="mr">मराठी (Marathi)</option>
+                            <option value="hi">हिंदी (Hindi)</option>
+                            <option value="kn">ಕನ್ನಡ (Kannada)</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="patient-name">Patient Name</label>
+                        <input type="text" id="patient-name" required placeholder="Enter Patient Name">
+                    </div>
+                    <div class="input-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" required>
+                            <option value="" disabled selected>Select</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="age">Age (years)</label>
+                        <input type="number" id="age" required min="1" max="120">
+                    </div>
+                    <div class="input-group">
+                        <label for="height">Height (cm)</label>
+                        <input type="number" id="height" required min="50" max="250">
+                    </div>
+                    <div class="input-group">
+                        <label for="weight">Weight (kg)</label>
+                        <input type="number" id="weight" required min="10" max="300">
+                    </div>
+                    <div class="input-group">
+                        <label for="veg-status">Dietary Preference</label>
+                        <select id="veg-status" required>
+                            <option value="" disabled selected>Select</option>
+                            <option value="vegetarian">Vegetarian</option>
+                            <option value="eggetarian">Eggetarian</option>
+                            <option value="non-veg">Non-Vegetarian</option>
+                            <option value="occasional-non-veg">Occasional Non-Vegetarian</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="region">State / Region of Residence</label>
+                        <select id="region" required>
+                            <option value="" disabled selected>Select</option>
+                            <option value="maharashtra">Maharashtra</option>
+                            <option value="karnataka">Karnataka</option>
+                            <option value="gujarat">Gujarat</option>
+                            <option value="rajasthan">Rajasthan</option>
+                            <option value="mp">Madhya Pradesh & Chhattisgarh</option>
+                            <option value="up">Uttar Pradesh & Bihar</option>
+                            <option value="punjab">Punjab & Haryana</option>
+                            <option value="delhi">Delhi / NCR</option>
+                            <option value="tamilnadu">Tamil Nadu</option>
+                            <option value="kerala">Kerala</option>
+                            <option value="ap">Andhra Pradesh & Telangana</option>
+                            <option value="wb">West Bengal & Odisha</option>
+                            <option value="northeast">North East States</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="cuisine">Choice of Cuisine</label>
+                        <select id="cuisine" required>
+                            <option value="default" selected>Same as Region (Default)</option>
+                            <option value="north">North Indian</option>
+                            <option value="south">South Indian</option>
+                            <option value="west">West Indian</option>
+                            <option value="east">East Indian</option>
+                            <option value="central">Central Indian</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="comorbidities-group">
+                    <label>Medical Conditions (Select all that apply)</label>
+                    <div class="checkbox-grid">
+                        <div class="comorbidity-item">
+                            <label class="checkbox-label"><input type="checkbox" name="comorbidity" value="diabetes" id="cb-diabetes"> <span class="custom-check"></span> Diabetes</label>
+                            <div class="sub-options hidden" id="sub-diabetes">
+                                <label><input type="radio" name="diabetes_stage" value="controlled" checked> Controlled</label>
+                                <label><input type="radio" name="diabetes_stage" value="uncontrolled"> Uncontrolled</label>
+                            </div>
+                        </div>
+
+                        <div class="comorbidity-item">
+                            <label class="checkbox-label"><input type="checkbox" name="comorbidity" value="hypertension" id="cb-hypertension"> <span class="custom-check"></span> Hypertension</label>
+                            <div class="sub-options hidden" id="sub-hypertension">
+                                <label><input type="radio" name="hypertension_stage" value="controlled" checked> Controlled</label>
+                                <label><input type="radio" name="hypertension_stage" value="uncontrolled"> Uncontrolled</label>
+                            </div>
+                        </div>
+
+                        <div class="comorbidity-item">
+                            <label class="checkbox-label"><input type="checkbox" name="comorbidity" value="ckd" id="cb-ckd"> <span class="custom-check"></span> Chronic Kidney Disease (CKD)</label>
+                            <div class="sub-options hidden" id="sub-ckd">
+                                <label><input type="radio" name="ckd_stage" value="initial" checked> Initial Stage (1-3)</label>
+                                <label><input type="radio" name="ckd_stage" value="advanced"> Advanced/Dialysis (4-5)</label>
+                            </div>
+                        </div>
+
+                        <div class="comorbidity-item">
+                            <label class="checkbox-label"><input type="checkbox" name="comorbidity" value="heart_failure" id="cb-hf"> <span class="custom-check"></span> Heart Failure</label>
+                            <div class="sub-options hidden" id="sub-hf">
+                                <label><input type="radio" name="hf_stage" value="initial" checked> Initial (Compensated)</label>
+                                <label><input type="radio" name="hf_stage" value="advanced"> Advanced (Decompensated)</label>
+                            </div>
+                        </div>
+
+                        <div class="comorbidity-item">
+                            <label class="checkbox-label"><input type="checkbox" name="comorbidity" value="anemia" id="cb-anemia"> <span class="custom-check"></span> Anemia</label>
+                            <div class="sub-options hidden" id="sub-anemia">
+                                <input type="number" id="hb_value" placeholder="Hemoglobin (Hb) g/dL" step="0.1" style="width:100%; margin-top:0.5rem;">
+                            </div>
+                        </div>
+
+                        <div class="comorbidity-item">
+                            <label class="checkbox-label"><input type="checkbox" name="comorbidity" value="thyroid" id="cb-thyroid"> <span class="custom-check"></span> Thyroid Disorder</label>
+                            <div class="sub-options hidden" id="sub-thyroid">
+                                <label><input type="radio" name="thyroid_stage" value="hypo" checked> Hypothyroidism</label>
+                                <label><input type="radio" name="thyroid_stage" value="hyper"> Hyperthyroidism</label>
+                            </div>
+                        </div>
+
+                        <div class="comorbidity-item">
+                            <label class="checkbox-label"><input type="checkbox" name="comorbidity" value="epilepsy"> <span class="custom-check"></span> Epilepsy / Neurological</label>
+                        </div>
+                        <div class="comorbidity-item">
+                            <label class="checkbox-label"><input type="checkbox" name="comorbidity" value="vit_k_antagonist"> <span class="custom-check"></span> Vit-K Antagonist (Warfarin/Acitrom)</label>
+                        </div>
+                        <div class="comorbidity-item">
+                            <label class="checkbox-label"><input type="checkbox" name="comorbidity" value="vit_b12"> <span class="custom-check"></span> Vitamin B12 Deficiency</label>
+                        </div>
+                        <div class="comorbidity-item">
+                            <label class="checkbox-label"><input type="checkbox" name="comorbidity" value="vit_d"> <span class="custom-check"></span> Vitamin D Deficiency</label>
+                        </div>
+                        <div class="comorbidity-item" id="preg-wrapper">
+                            <label class="checkbox-label"><input type="checkbox" name="comorbidity" value="pregnancy" id="cb-pregnancy"> <span class="custom-check"></span> Pregnancy</label>
+                        </div>
+                        <div class="comorbidity-item">
+                            <label class="checkbox-label"><input type="checkbox" name="comorbidity" value="ihd"> <span class="custom-check"></span> Ischemic Heart Disease</label>
+                        </div>
+                        <div class="comorbidity-item">
+                            <label class="checkbox-label"><input type="checkbox" name="comorbidity" value="liver_disease" id="cb-liver"> <span class="custom-check"></span> Liver Disease</label>
+                            <div class="sub-options hidden" id="sub-liver">
+                                <label><input type="radio" name="liver_stage" value="acute" checked> Acute Hepatitis</label>
+                                <label><input type="radio" name="liver_stage" value="chronic"> Chronic Liver Disease</label>
+                            </div>
+                        </div>
+                        <div class="comorbidity-item">
+                            <label class="checkbox-label"><input type="checkbox" name="comorbidity" value="hyperacidity"> <span class="custom-check"></span> Hyperacidity</label>
+                        </div>
+                        <div class="comorbidity-item">
+                            <label class="checkbox-label"><input type="checkbox" name="comorbidity" value="peptic_ulcer"> <span class="custom-check"></span> Peptic Ulcer</label>
+                        </div>
+                        <div class="comorbidity-item">
+                            <label class="checkbox-label"><input type="checkbox" name="comorbidity" value="ibd" id="cb-ibd"> <span class="custom-check"></span> Inflammatory Bowel Disease (IBD)</label>
+                        </div>
+                        <div class="comorbidity-item">
+                            <label class="checkbox-label"><input type="checkbox" name="comorbidity" value="dyslipidemia" id="cb-dyslipidemia"> <span class="custom-check"></span> Dyslipidemia</label>
+                        </div>
+                        <div class="comorbidity-item">
+                            <label class="checkbox-label"><input type="checkbox" name="comorbidity" value="gout" id="cb-gout"> <span class="custom-check"></span> Hyperuricemia (Gout)</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary">Generate Comprehensive Plan</button>
+            </form>
+        </section>
+
+        <section id="result-section" class="glass-panel hidden">
+            <div id="pdf-content">
+                <div class="result-header">
+                    <h2 id="r-title">Your Personalized Prescription</h2>
+                    <div id="profile-display" class="bmi-badge">--</div>
+                </div>
+                
+                <div class="diet-guidelines">
+                    <div class="guideline-card avoid">
+                        <h3 id="r-avoid">⚠️ Foods to Restrict/Avoid</h3>
+                        <ul id="avoid-list"></ul>
+                    </div>
+                    <div class="guideline-card include">
+                        <h3 id="r-include">✅ Focus On (Therapeutic Foods)</h3>
+                        <ul id="include-list"></ul>
+                    </div>
+                </div>
+
+                <div class="meal-plan">
+                    <h3 id="diet-plan-title">Diet Plan</h3>
+                    <div class="diet-columns">
+                        <div class="meal-col"><div class="meal-col-header" id="header-bfast">Breakfast</div><div class="meal-col-content" id="col-bfast"></div></div>
+                        <div class="meal-col"><div class="meal-col-header" id="header-mid">Mid-Morning</div><div class="meal-col-content" id="col-mid"></div></div>
+                        <div class="meal-col"><div class="meal-col-header" id="header-lunch">Lunch</div><div class="meal-col-content" id="col-lunch"></div></div>
+                        <div class="meal-col"><div class="meal-col-header" id="header-eve">Evening</div><div class="meal-col-content" id="col-eve"></div></div>
+                        <div class="meal-col"><div class="meal-col-header" id="header-dinner">Dinner</div><div class="meal-col-content" id="col-dinner"></div></div>
+                    </div>
+                </div>
+
+                <div class="guideline-block hidden" id="exercise-block">
+                    <h3 id="r-exTitle">🏃‍♂️ Detailed Exercise Routine</h3>
+                    <div class="exercise-grid">
+                        <div class="ex-stat"><strong id="r-type">Type</strong><span id="ex-type"></span></div>
+                        <div class="ex-stat"><strong id="r-int">Intensity</strong><span id="ex-intensity"></span></div>
+                        <div class="ex-stat"><strong id="r-dur">Duration</strong><span id="ex-duration"></span></div>
+                    </div>
+                    <div id="ex-warmup"></div>
+                    <div id="ex-specifics"></div>
+                    <div id="ex-cooldown"></div>
+                </div>
+
+                <div class="guideline-block hidden" id="yoga-block">
+                    <h3 id="r-yogaTitle">🧘‍♀️ Comprehensive Yoga & Meditation Plan</h3>
+                    <ul id="yoga-asanas"></ul>
+                    <ul id="yoga-pranayama"></ul>
+                    <ul id="yoga-meditation"></ul>
+                </div>
+
+                <div class="guideline-block hidden" id="special-block">
+                    <h3 id="r-specTitle">⚠️ Special Clinical Instructions</h3>
+                    <ul id="special-text"></ul>
+                </div>
+                
+                <div class="guideline-block hidden" id="bread-subs-block">
+                    <h3 id="r-breadTitle">🍞 Bread/Roti Substitutes Guide</h3>
+                    <div id="bread-subs-text" style="white-space: pre-line; line-height: 1.6; font-size: 0.95rem;"></div>
+                </div>
+
+                <div class="guideline-block" id="references-block" style="margin-top: 1.5rem; border-top: 1px solid rgba(0,0,0,0.08); padding-top: 1.5rem;">
+                    <h3 id="r-refTitle">📚 Medical References & Justifications</h3>
+                    <ul id="references-text" style="font-size: 0.85rem; color: var(--text-light); line-height: 1.5; list-style-type: decimal; padding-left: 1.5rem;"></ul>
+                </div>
+            </div>
+
+            <div class="guideline-block" id="food-calorie-block">
+                <h3 style="color: var(--primary); margin-bottom: 0.5rem; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    <span id="r-foodCalTitle">Common Foods & Calorie Content</span>
+                </h3>
+                <div id="food-cal-content" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; font-size: 0.85rem; color: var(--text-light);">
+                </div>
+            </div>
+
+            <div class="guideline-block" id="activity-calorie-block">
+                <h3 style="color: var(--primary); margin-bottom: 0.5rem; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    <span id="r-activityCalTitle">Activity Calorie Burn Rate (per 30 mins)</span>
+                </h3>
+                <div id="act-cal-content" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; font-size: 0.85rem; color: var(--text-light);">
+                </div>
+            </div>
+
+            
+            
+            <div class="guideline-block" id="fruit-guide-block">
+                <h3 style="color: var(--primary); margin-bottom: 0.5rem; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><path d="M12 6c-3.31 0-6 2.69-6 6h12c0-3.31-2.69-6-6-6z"/></svg>
+                    <span id="r-fruitTitle">Fruits & Dry Fruits Guide</span>
+                </h3>
+                <div id="fruit-guide-content" style="font-size: 0.85rem; color: var(--text-light); line-height: 1.6;">
+                </div>
+            </div>
+
+            <div class="guideline-block" id="compliance-block">
+                <h3 style="color: var(--primary); margin-bottom: 0.5rem; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    <span id="r-compTitle">Compliance, Cheat Meals & Social Guidelines</span>
+                </h3>
+                <div id="compliance-content" style="font-size: 0.85rem; color: var(--text-light); line-height: 1.6;">
+                </div>
+            </div>
+
+            <div class="action-buttons" data-html2canvas-ignore>
+                <button id="btn-recalculate" class="btn-secondary">Modify Inputs</button>
+                <button id="btn-new-patient" class="btn-secondary">Enter New Patient</button>
+                <button id="btn-pdf" class="btn-primary pdf-btn">Save as PDF 📄</button>
+                <button id="btn-whatsapp" class="btn-primary whatsapp-btn">Share via WhatsApp 💬</button>
+            </div>
+            <p id="wa-hint" style="text-align:center; color:var(--text-light); font-size:0.85rem; margin-top:1rem;" data-html2canvas-ignore>
+                *Note: WhatsApp natively blocks apps from automatically attaching PDFs.<br>
+                To send the PDF, tap <b>Save as PDF</b> to download it, then attach the file manually in WhatsApp!
+            </p>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleSubOptions = (cbId, subId) => {
+                const cb = document.getElementById(cbId);
+                const sub = document.getElementById(subId);
+                if(cb && sub) cb.addEventListener('change', e => e.target.checked ? sub.classList.remove('hidden') : sub.classList.add('hidden'));
+            };
+            ['diabetes','hypertension','ckd','hf','anemia','thyroid','liver'].forEach(id => toggleSubOptions(`cb-${id}`, `sub-${id}`));
+
+            // Hide pregnancy if male
+            document.getElementById('gender').addEventListener('change', (e) => {
+                const p = document.getElementById('preg-wrapper');
+                if(e.target.value === 'male') { p.style.display = 'none'; document.getElementById('cb-pregnancy').checked = false; }
+                else p.style.display = 'block';
+            });
+
+            const dict = {
+                en: {
+                    title: "Diet Plan", bfast: "Breakfast", mid: "Mid-Morning", lunch: "Lunch", eve: "Evening", dinner: "Dinner",
+                    refTitle: "Medical References & Justifications",
+                    opt1: "Option 1", opt2: "Option 2", opt3: "Option 3",
+                    b1: "1-2 {staple} + 1 bowl {protein}.", b2: "1 bowl Dalia / Poha / Upma / Sabudana Khichdi (or baked Sabudana Wada).", b3: "Besan Chilla / Moong Dal Dosa / Thalipeeth / Oats Dosa + Mint Chutney.",
+                    m1: "1 Fresh Fruit ({fruit}) + Peanuts/Almonds.", m2: "1 cup Buttermilk / Chaas.", m3: "Cucumber + Carrot sticks with Hummus / Curd dip.",
+                    l1: "2 {staple} + 1 bowl {protein} + 1 bowl Veg ({veg}).", l2: "1 bowl {altStaple} + 1 bowl Curd/Raita.", l3: "Multigrain Bhakri / Pulav + 1 bowl Dal + Fresh Salad ({veg}).",
+                    e1: "1 cup Tea + Roasted Chana/Makhana.", e2: "1 bowl sprout salad.", e3: "Makhana Bhel / Wheat Khakra / Roasted Chana Chaat with lemon.",
+                    d1: "1-2 {staple} (light) + 1 bowl Dal + Veg ({veg}).", d2: "Khichdi or Jowar/Bajra Bhakri with Dal.", d3: "Dalia Khichdi / Moong Dal Dosa / Palak Paratha + Light Vegetable Soup.",
+                    waProfile: "Profile", waMeal: "Diet Plan", waAvoid: "Avoid", waInclude: "Include",
+                    waSpec: "Special Instructions", waEx: "Exercise Plan", waYoga: "Yoga & Meditation",
+                    vegNormal: "Lauki (Bottle Gourd), Tori (Ridge Gourd), Beans, Spinach, Carrots, Capsicum, Cabbage, Brinjal, Pumpkin, Cauliflower, Drumstick, Parwal, Tinda, Mushroom, Zucchini, Sweet Corn, Green Peas, Radish (Mooli), Methi leaves, Onion — (rotate daily to ensure variety)", 
+                    vegCKD: "Lauki, Parwal, Cabbage (Leached), Cauliflower (Leached), Ridge Gourd, Tinda",
+                    vegDia: "Karela (Bitter Gourd), Bhindi (Okra), Methi, Broccoli, Parwal, Spinach, Mushroom, Capsicum, Drumstick, Cabbage, Tori, Beans, Onion, Garlic, Lauki — (rotate daily)", 
+                    vegHyp: "Spinach, Tomato, Beetroot, Sweet Potato, Zucchini, Ash Gourd, Drumstick, Lauki, Carrots, Capsicum, Cabbage, Green Peas, Cauliflower — (rotate daily)", 
+                    vegAcid: "Lauki, Ash Gourd (Petha), Cucumber, Pumpkin, Pointed Gourd",
+                    vegIbd: "Peeled and well-cooked Lauki (Bottle Gourd), Tori (Ridge Gourd), Carrots, Pumpkin (Avoid raw veggies)",
+                    vegDys: "Broccoli, Methi (Fenugreek leaves), Bhindi (Okra), Spinach, Cabbage, Drumstick (Moringa), Beans, Carrots, Onion, Garlic, Capsicum, Mushroom, Lauki (Bottle Gourd), Tori (Ridge Gourd) — (rotate daily for variety)",
+                    vegGout: "Lauki, Tori, Ash Gourd, Carrots, Cucumber, Tomatoes, Pumpkin (Avoid excess Spinach, Cauliflower, Mushroom).",
+                    breadSubs: `🍞 Bread/Roti Healthy Substitutes Guide:\n• Chapati / Phulka (Whole Wheat) — Recommended daily, lowest calorie.\n• Jowar Bhakri — Gluten-free, high fiber, excellent for diabetics & cholesterol.\n• Bajra Bhakri — Rich in iron & magnesium, ideal in winter.\n• Nachni/Ragi Roti — Calcium-rich, good for bones & diabetics.\n• Thalipeeth (Multi-grain) — High protein (Jowar+Bajra+Besan mix).\n• Multigrain Roti — Best overall substitute with mixed flours.\n• Oats Roti — Excellent for cholesterol patients.\n• Besan/Moong Chilla — High-protein, gluten-free flatbread alternative.\n• Tandoori Roti — Better than Naan (less oil/butter).\n• ❌ Naan — Maida-based, high calorie. Avoid or choose whole wheat naan rarely.\n• ❌ Kulcha — Maida-based stuffed bread. Avoid.\n• ❌ Rumali Roti — Maida-based, very thin. Avoid.\n• ❌ Bread/Pav — Maida with added sugar. Choose whole wheat or multigrain bread.`,
+                    avDia: "Sugar, Sweets, Maida, White Rice, Fruit Juices", inDia: "Millets, High Fiber Veggies, Methi seeds, Vitamin C/E rich foods",
+                    avHyp: "Added table salt, Pickles, Papads", inHyp: "Potassium-rich foods (Banana, Spinach - if no CKD)",
+                    avCkd: "High Potassium (Bananas, Coconut Water), Colas", inCkd: "Leached Vegetables (boiled/drained)",
+                    avHf: "Saturated Fats, Deep fried foods, High Sodium", inHf: "Omega-3 (Flaxseeds, Fish)",
+                    avAne: "Tea/Coffee immediately after meals (blocks iron)", inAne: "Iron-rich foods (Green leafy veg, Dates, Jaggery)",
+                    avVitK: "Sudden changes in Vitamin K intake. HIGH Vit-K foods (keep CONSISTENT, don't suddenly increase/decrease): Spinach, Kale, Broccoli, Cabbage, Lettuce, Methi, Coriander (Dhaniya), Mint (Pudina), Spring onions. FOODS THAT ALTER INR: Grapefruit juice, Cranberry juice, Papaya (large amounts), Mango (excess), Garlic/Ginger/Turmeric (excess), Fish oil supplements, Alcohol, Green tea, Chamomile tea, Avocado, Soybean oil, Liver/organ meats.", inVitK: "Consistent daily portions of ALL foods. Maintain a stable diet pattern. Eat regular meals at similar times.", specVitK: "⚠️ On Vit-K Antagonist (Warfarin/Acitrom): (1) Keep green leafy vegetable intake CONSISTENT — do NOT suddenly increase or decrease. (2) Avoid Grapefruit, Cranberry juice, excess Alcohol, Green tea, and Chamomile tea. (3) Excess Garlic, Ginger, Turmeric, Papaya, Mango, Fish oil & Omega-3 supplements can INCREASE bleeding risk. (4) Sudden increase in Vit-K foods (greens, soybean, avocado, liver) can DECREASE drug effect. (5) Report any unusual bleeding or bruising to your doctor immediately. (6) Get INR checked regularly as advised.",
+                    avHypo: "Raw Goitrogens (Cabbage, Cauliflower, Soy) - Cook well", inHypo: "Iodine & Selenium-rich foods (Nuts, Seeds)",
+                    avHyper: "Excessive Iodine (Seaweed), Caffeine", inHyper: "Cruciferous vegetables (Cabbage, Cauliflower), Calcium/Vit D",
+                    avEpi: "Alcohol strictly, MSG, Excessive caffeine", inEpi: "Healthy fats (Ghee, Coconut Oil, Nuts) for brain health",
+                    avPreg: "Raw papaya, Undercooked meat, Unpasteurized milk", inPreg: "Folic acid rich foods (Spinach, Beans), Iron, Calcium",
+                    avLiver: "Alcohol strictly, Deep fried foods, Processed meats", inLiver: "Complex carbs, Lean proteins, Turmeric, Garlic",
+                    avAcid: "Spicy food, Citrus on empty stomach, Excessive tea/coffee", inAcid: "Cold milk, Cucumber, Banana, Fennel seeds (Saunf)",
+                    avIbd: "High-fiber tough foods, spicy/fried foods, caffeine/soda, dairy (if intolerant)", inIbd: "Easily digestible foods (bananas, white rice, applesauce), lean proteins, yogurt (probiotics)",
+                    avDys: "Trans fats, Saturated fats (Butter, Ghee in excess, Coconut oil, Palm oil), Organ meats (Liver, Kidney), Processed meats, Full-fat dairy (Cheese, Cream), Bakery items (Pastry, Cake, Cream rolls, Khari), Deep-fried foods (Samosa, Vada, Bhaji), Egg yolk (limit to 3/week), Red meat, Mayonnaise, Packaged snacks.", inDys: "Oats, Barley, Psyllium husk (Isabgol), Almonds, Walnuts, Flaxseeds, Olive oil, Mustard oil, Fatty fish (Salmon, Mackerel), Garlic, Green tea, Soy products, Methi seeds, Plant sterols, Soluble fiber-rich foods (Beans, Apples, Citrus fruits).",
+                    avGout: "High purine foods (Red meat, Organ meats, Seafood), Alcohol (especially beer), Sugary drinks (Fructose), Excess Spinach/Cauliflower.", inGout: "Plenty of water (3-4L), Vitamin C rich foods (Amla, Lemon, Oranges), Cherries, Low-fat dairy.",
+                    exTypeNorm: "Aerobic (e.g. Jogging, Cycling, Zumba) & Flexibility", exIntNorm: "Moderate", exDurNorm: "45 mins daily",
+                    exTypeRehab: "Cardiac Rehab (Slow flat walking)", exIntLow: "Low (Target HR < 100)", exDur15: "15-20 mins/day",
+                    exTypeLow: "Low-impact Aerobic (Swimming, Stationary Bike)", exDur45: "45-60 mins, 5 days/wk",
+                    exSpecCardiac: "Gentle flat walking. Stop if breathlessness occurs.",
+                    exSpecObese: "Swimming or cycling. Avoid jumping to protect knees.", exSpecObese2: "Light upper body weights 2x/week.",
+                    exSpecNorm: "Brisk walking. Light squats 2x/week.", exSpecHyper: "Strictly avoid heavy weightlifting/planks.",
+                    exSpecEpi: "Avoid swimming alone or high altitudes.",
+                    exWarm: "Warm-up (5 mins): Neck/shoulder rolls, light marching.", exCool: "Cool-down (5 mins): Static stretching, deep breathing.",
+                    yShavasana: "Shavasana: Lie flat, relax muscles. Lowers BP.", yAnulom: "Anulom Vilom: Alternate nostril breathing.",
+                    yBhramari: "Bhramari: Humming breath to calm mind.", yNoHeadstand: "⚠️ AVOID: Headstands and rapid breathing.",
+                    ySurya: "Surya Namaskar: 5-10 rounds.", yManduka: "Mandukasana: Stimulates pancreas.",
+                    yKapala: "Kapalabhati: Vigorous breathing (avoid if high BP).", yVajra: "Vajrasana: Sit on heels after meals for digestion.",
+                    yPawan: "Pawanmuktasana: Relieves gas.", ySheetali: "Sheetali: Cooling breath for acidity.",
+                    yTadasana: "Tadasana: Mountain pose for posture.", yBhujanga: "Bhujangasana: Cobra pose.",
+                    yBala: "Balasana: Child's pose for brain fatigue.",
+                    med1: "Meditation: Sit straight for 10 mins post-waking.", med2: "Close eyes, focus on natural breath.", med3: "If mind wanders, gently return focus.",
+                    defInc: "Fresh seasonal vegetables, Balanced Proteins.", defAv: "Ultra-processed foods, Excess sugar, and Deep-fried items.", avObese: "Refined sugars (Sweets, Colas), Bakery items, Deep-fried foods, Excess carbohydrates."
+                },
+                hi: {
+                    title: "आहार योजना", bfast: "नाश्ता", mid: "सुबह का नाश्ता", lunch: "दोपहर का भोजन", eve: "शाम का नाश्ता", dinner: "रात का भोजन",
+                    refTitle: "चिकित्सीय संदर्भ और औचित्य",
+                    opt1: "विकल्प 1", opt2: "विकल्प 2", opt3: "विकल्प 3",
+                    b1: "1-2 {staple} + 1 कटोरी {protein}।", b2: "1 कटोरी दलिया / पोहा / उपमा / साबूदाना खिचड़ी (या बेक्ड साबूदाना वड़ा)।", b3: "बेसन चीला / मूंग दाल डोसा / थालीपीठ / ओट्स डोसा + पुदीना चटनी।",
+                    m1: "1 ताज़ा फल ({fruit}) + मूंगफली / बादाम।", m2: "1 गिलास छाछ।", m3: "खीरा + गाजर स्टिक्स हम्मस / दही डिप के साथ।",
+                    l1: "2 {staple} + 1 कटोरी {protein} + 1 कटोरी सब्जी ({veg})।", l2: "1 कटोरी {altStaple} + 1 कटोरी दही।", l3: "मल्टीग्रेन भाकरी / पुलाव + 1 कटोरी दाल + ताज़ा सलाद ({veg})।",
+                    e1: "1 कप चाय + भुना हुआ चना / मखाना।", e2: "1 कटोरी अंकुरित सलाद।", e3: "मखाना भेल / गेहूं खाकरा / भुने चने की चाट नींबू के साथ।",
+                    d1: "1-2 {staple} (हल्का) + 1 कटोरी दाल + सब्जी ({veg})।", d2: "खिचड़ी या ज्वार/बाजरे की भाकरी और दाल।", d3: "दलिया खिचड़ी / मूंग दाल डोसा / पालक पराठा + हल्का सब्ज़ी का सूप।",
+                    waProfile: "रोगी विवरण", waMeal: "आहार विकल्प", waAvoid: "परहेज करें", waInclude: "शामिल करें",
+                    waSpec: "विशेष निर्देश", waEx: "व्यायाम योजना", waYoga: "योग और ध्यान",
+                    vegNormal: "लौकी, तोरई, बीन्स, पालक, गाजर, शिमला मिर्च, पत्तागोभी, बैंगन, कद्दू, फूलगोभी, सहजन, परवल, टिंडा, मशरूम, ज़ुकिनी, मक्का, हरे मटर, मूली, मेथी पत्ते, प्याज — (रोज़ बदल-बदल कर खाएं)", 
+                    vegCKD: "लौकी, परवल, पत्तागोभी (पानी निकाला हुआ), फूलगोभी (पानी निकाला हुआ), टिंडा",
+                    vegDia: "करेला, भिंडी, मेथी, ब्रोकली, परवल, पालक, मशरूम, शिमला मिर्च, सहजन, पत्तागोभी, तोरई, बीन्स, प्याज, लहसुन, लौकी — (रोज़ बदलें)", 
+                    vegHyp: "पालक, टमाटर, चुकंदर, शकरकंद, ज़ुकिनी, पेठा, सहजन, लौकी, गाजर, शिमला मिर्च, पत्तागोभी, हरे मटर, फूलगोभी — (रोज़ बदलें)", 
+                    vegAcid: "लौकी, पेठा, खीरा, कद्दू, परवल",
+                    vegIbd: "छिली और अच्छी तरह पकी हुई लौकी, तोरई, गाजर, कद्दू (कच्ची सब्जियों से बचें)",
+                    vegDys: "ब्रोकली, मेथी, भिंडी, पालक, पत्तागोभी, सहजन (मोरिंगा), बीन्स, गाजर, प्याज, लहसुन, शिमला मिर्च, मशरूम, लौकी, तोरई — (रोज़ाना बदल-बदल कर खाएं)",
+                    breadSubs: `🍞 रोटी/ब्रेड स्वस्थ विकल्प:\n• चपाती / फुल्का (गेहूं) — रोज़ाना के लिए सबसे अच्छा, कम कैलोरी।\n• ज्वार भाकरी — ग्लूटेन-फ्री, उच्च फाइबर, मधुमेह और कोलेस्ट्रॉल के लिए उत्तम।\n• बाजरा भाकरी — आयरन और मैग्नीशियम से भरपूर, सर्दियों में अच्छा।\n• नाचणी/रागी रोटी — कैल्शियम-युक्त, हड्डियों के लिए अच्छा।\n• थालीपीठ (मल्टीग्रेन) — उच्च प्रोटीन (ज्वार+बाजरा+बेसन मिश्रण)।\n• मल्टीग्रेन रोटी — सर्वश्रेष्ठ विकल्प।\n• ओट्स रोटी — कोलेस्ट्रॉल रोगियों के लिए उत्कृष्ट।\n• बेसन/मूंग चीला — उच्च प्रोटीन, ग्लूटेन-फ्री।\n• तंदूरी रोटी — नान से बेहतर (कम तेल/मक्खन)।\n• ❌ नान — मैदा से बना, अधिक कैलोरी। टालें या कभी-कभी होल व्हीट नान लें।\n• ❌ कुल्चा — मैदा से बना भरवां ब्रेड। टालें।\n• ❌ रुमाली रोटी — मैदा से बनी। टालें।\n• ❌ ब्रेड/पाव — मैदा + चीनी। होल व्हीट या मल्टीग्रेन ब्रेड चुनें।`,
+                    avDia: "चीनी, मिठाइयाँ, मैदा, सफेद चावल, फलों का रस", inDia: "बाजरा, उच्च फाइबर वाली सब्जियाँ, विटामिन (संतरा/नींबू)",
+                    avHyp: "ऊपर से नमक, अचार, पापड़", inHyp: "पोटेशियम युक्त भोजन (केला, पालक - यदि CKD नहीं है)",
+                    avCkd: "उच्च पोटेशियम (केला, नारियल पानी)", inCkd: "उबली और छानी हुई सब्जियाँ",
+                    avHf: "तला हुआ खाना, अधिक नमक", inHf: "ओमेगा-3 (अलसी, मछली)",
+                    avAne: "खाने के तुरंत बाद चाय/कॉफी (आयरन रोकता है)", inAne: "आयरन युक्त भोजन (हरी सब्जियाँ, खजूर, गुड़), विटामिन सी",
+                    avVitK: "विटामिन K सेवन में अचानक बदलाव। उच्च Vit-K खाद्य पदार्थ (समान रखें, अचानक न बढ़ाएं/घटाएं): पालक, ब्रोकली, पत्तागोभी, मेथी, धनिया, पुदीना, हरा प्याज। INR प्रभावित करने वाले: अंगूर का रस, क्रैनबेरी रस, पपीता (अधिक मात्रा), आम (अधिक), लहसुन/अदरक/हल्दी (अधिक), मछली का तेल, शराब, ग्रीन टी, कैमोमाइल टी, एवोकाडो, सोयाबीन तेल, कलेजी।", inVitK: "सभी खाद्य पदार्थों की रोज़ाना समान मात्रा रखें। स्थिर आहार पैटर्न बनाए रखें।", specVitK: "⚠️ Vit-K Antagonist (Warfarin/Acitrom): (1) हरी पालेभाजियों का सेवन समान रखें — अचानक न बढ़ाएं/घटाएं। (2) अंगूर का रस, क्रैनबेरी, शराब, ग्रीन टी, कैमोमाइल टी से बचें। (3) अधिक लहसुन, अदरक, हल्दी, पपीता, आम, मछली का तेल रक्तस्राव का खतरा बढ़ाते हैं। (4) हरी सब्जियाँ, सोयाबीन, एवोकाडो अचानक बढ़ाने से दवा का असर कम होता है। (5) असामान्य रक्तस्राव तुरंत डॉक्टर को बताएं। (6) INR नियमित जांचवाएं।",
+                    avHypo: "कच्ची पत्तागोभी, फूलगोभी, सोया - अच्छे से पकाएं", inHypo: "आयोडीन और सेलेनियम (अखरोट, बीज)",
+                    avHyper: "अधिक आयोडीन, कैफीन", inHyper: "पत्तागोभी, फूलगोभी, कैल्शियम/विटामिन डी",
+                    avEpi: "शराब, कैफीन, MSG", inEpi: "दिमाग के लिए स्वस्थ वसा (घी, नारियल तेल, अखरोट)",
+                    avPreg: "कच्चा पपीता, अधपका मांस", inPreg: "फोलिक एसिड (पालक), आयरन, कैल्शियम",
+                    avLiver: "शराब सख्त मना है, तला हुआ भोजन", inLiver: "हल्दी, लहसुन, लीन प्रोटीन",
+                    avAcid: "मसालेदार भोजन, खाली पेट खट्टे फल", inAcid: "ठंडा दूध, खीरा, केला, सौंफ",
+                    avIbd: "उच्च फाइबर युक्त कड़े खाद्य पदार्थ, मसालेदार/तला भोजन, कैफीन/सोडा, डेयरी उत्पाद", inIbd: "आसानी से पचने वाले भोजन (केला, सफेद चावल, सेब की चटनी), लीन प्रोटीन, दही (प्रोबायोटिक्स)",
+                    avDys: "ट्रांस फैट, संतृप्त वसा (मक्खन, अधिक घी, नारियल तेल, पाम ऑयल), अंग मांस (कलेजी), प्रोसेस्ड मीट, पूर्ण वसा वाली डेयरी (चीज़, क्रीम), बेकरी उत्पाद (पेस्ट्री, केक, खारी), तले हुए पदार्थ (समोसा, वड़ा, भजी), अंडे की जर्दी (सप्ताह में 3 तक), रेड मीट, मेयोनेज़, पैकेज्ड स्नैक्स।", inDys: "ओट्स, जौ, ईसबगोल, बादाम, अखरोट, अलसी, ऑलिव ऑयल, सरसों का तेल, ओमेगा-3 मछली, लहसुन, ग्रीन टी, सोया उत्पाद, मेथी दाना, घुलनशील फाइबर (बीन्स, सेब, मूंग दाल)।",
+                    avGout: "रेड मीट, समुद्री भोजन (Seafood), शराब (विशेषकर बीयर), मीठे पेय पदार्थ, बहुत अधिक पालक/फूलगोभी।", inGout: "खूब पानी पिएं (3-4 लीटर), विटामिन सी (आंवला, नींबू), चेरी, कम वसा वाला दूध।",
+                    exTypeNorm: "एरोबिक (तेज़ चलना, साइकिलिंग) और लचीलापन", exIntNorm: "मध्यम", exDurNorm: "रोज़ 45 मिनट",
+                    exTypeRehab: "हृदय पुनर्वास (धीरे चलना)", exIntLow: "कम (HR < 100)", exDur15: "रोज़ 15-20 मिनट",
+                    exTypeLow: "कम प्रभाव वाला व्यायाम (तैरना)", exDur45: "45-60 मिनट, हफ्ते में 5 दिन",
+                    exSpecCardiac: "समतल जगह पर धीरे चलें। सांस फूलने पर तुरंत रुकें।",
+                    exSpecObese: "तैरना या साइकिल चलाना। घुटनों के बचाव के लिए कूदना मना है।", exSpecObese2: "हफ्ते में दो बार हल्का वज़न उठाएं।",
+                    exSpecNorm: "तेज़ चलना। हफ्ते में दो बार स्क्वैट्स।", exSpecHyper: "भारी वज़न उठाना या प्लैंक (planks) सख्त मना है।",
+                    exSpecEpi: "अकेले तैरना या ऊंचाई वाले व्यायाम से बचें।",
+                    exWarm: "वार्म-अप (5 मिनट): हल्का चलना और स्ट्रेचिंग।", exCool: "कूल-डाउन (5 मिनट): गहरी सांसें।",
+                    yShavasana: "शवासन: पीठ के बल लेटें। BP कम करता है।", yAnulom: "अनुलोम विलोम: नाड़ी शोधन प्राणायाम।",
+                    yBhramari: "भ्रामरी: मन शांत करने के लिए।", yNoHeadstand: "⚠️ बचें: शीर्षासन और तेज़ सांस लेना मना है।",
+                    ySurya: "सूर्य नमस्कार: 5-10 चक्र।", yManduka: "मंडूकासन: अग्न्याशय (pancreas) को उत्तेजित करता है।",
+                    yKapala: "कपालभाति: पेट के अंगों के लिए (BP होने पर न करें)।", yVajra: "वज्रासन: खाने के तुरंत बाद पाचन के लिए।",
+                    yPawan: "पवनमुक्तासन: गैस निकालने के लिए।", ySheetali: "शीतली: एसिडिटी कम करने के लिए।",
+                    yTadasana: "ताड़ासन: शरीर का संतुलन।", yBhujanga: "भुजंगासन: रीढ़ की हड्डी के लिए।",
+                    yBala: "बालासन: दिमागी थकान दूर करने के लिए।",
+                    med1: "ध्यान: सुबह 10 मिनट सीधे बैठें।", med2: "आँखें बंद करें और साँस पर ध्यान दें।", med3: "ध्यान भटके तो वापस साँस पर लाएं।",
+                    defInc: "ताजी मौसमी सब्जियां, संतुलित प्रोटीन।", defAv: "अल्ट्रा-प्रोसेस्ड फूड्स, अतिरिक्त चीनी और तला हुआ भोजन।", avObese: "रिफाइंड चीनी (मिठाई, कोला), बेकरी उत्पाद, तला हुआ भोजन, अतिरिक्त कार्बोहाइड्रेट।"
+                },
+                mr: {
+                    title: "आहार योजना", bfast: "न्याहारी", mid: "सकाळचा नाश्ता", lunch: "दुपारचे जेवण", eve: "संध्याकाळचा नाश्ता", dinner: "रात्रीचे जेवण",
+                    refTitle: "वैद्यकीय संदर्भ आणि स्पष्टीकरण",
+                    opt1: "पर्याय 1", opt2: "पर्याय 2", opt3: "पर्याय 3",
+                    b1: "1-2 {staple} + 1 वाटी {protein}.", b2: "1 वाटी दलिया / पोहे / उपमा / साबुदाणा खिचडी (किंवा बेक केलेले साबुदाणा वडे).", b3: "बेसन धिरडे / मूग डाळ डोसा / थालीपीठ / ओट्स डोसा + पुदिना चटणी.",
+                    m1: "1 ताजे फळ ({fruit}) + शेंगदाणे / बदाम.", m2: "1 ग्लास ताक.", m3: "काकडी + गाजर स्टिक्स हम्मस / दही डिप सोबत.",
+                    l1: "2 {staple} + 1 वाटी {protein} + 1 वाटी भाजी ({veg}).", l2: "1 वाटी {altStaple} + 1 वाटी दही.", l3: "मल्टीग्रेन भाकरी / पुलाव + 1 वाटी वरण + ताज़े सलाड ({veg}).",
+                    e1: "1 कप चहा + भाजलेले चणे / मखाणे.", e2: "1 वाटी मोड आलेल्या कडधान्यांची उसळ.", e3: "मखाणा भेळ / गव्हाचे खाकरा / भाजलेल्या चण्याची चाट लिंबासोबत.",
+                    d1: "1-2 {staple} (हलके) + 1 वाटी वरण + भाजी ({veg}).", d2: "खिचडी किंवा ज्वारी/बाजरीची भाकरी आणि वरण.", d3: "दलिया खिचडी / मूग डाळ डोसा / पालक पराठा + हलका भाज्यांचा सूप.",
+                    waProfile: "रुग्ण माहिती", waMeal: "आहार पर्याय", waAvoid: "टाळावे", waInclude: "समाविष्ट करा",
+                    waSpec: "विशेष सूचना", waEx: "व्यायाम योजना", waYoga: "योग आणि ध्यान",
+                    vegNormal: "दुधी भोपळा, दोडका, बीन्स, पालक, गाजर, ढोबळी मिरची, कोबी, वांगे, लाल भोपळा, फुलकोबी, शेवगा, पडवळ, टिंडा, मशरूम, मक्याचे कणीस, हिरवे वाटाणे, मुळा, मेथीची भाजी, कांदा — (रोज वेगवेगळ्या भाज्या खा)", 
+                    vegCKD: "दुधी भोपळा, पडवळ, कोबी आणि फ्लॉवर (उकळून पाणी काढलेले), टिंडा",
+                    vegDia: "कारले, भेंडी, मेथी, ब्रोकोली, पडवळ, पालक, मशरूम, ढोबळी मिरची, शेवगा, कोबी, दोडका, बीन्स, कांदा, लसूण, दुधी भोपळा — (रोज बदला)", 
+                    vegHyp: "पालक, टोमॅटो, बीटरूट, रताळे, झुकिनी, कोहळा, शेवगा, दुधी भोपळा, गाजर, ढोबळी मिरची, कोबी, हिरवे वाटाणे, फुलकोबी — (रोज बदला)", 
+                    vegAcid: "दुधी भोपळा, कोहळा, काकडी, लाल भोपळा, पडवळ",
+                    vegIbd: "साले काढून शिजवलेला दुधी भोपळा, दोडका, गाजर, लाल भोपळा (कच्च्या भाज्या टाळा)",
+                    vegDys: "ब्रोकोली, मेथी, भेंडी, पालक, कोबी, शेवगा (मोरिंगा), बीन्स, गाजर, कांदा, लसूण, ढोबळी मिरची, मशरूम, दुधी भोपळा, दोडका — (रोज वेगवेगळ्या भाज्या खा)",
+                    breadSubs: `🍞 पोळी/ब्रेड निरोगी पर्याय:\n• चपाती / फुलका (गव्हाचे) — रोज खाण्यासाठी सर्वोत्तम, कमी कॅलरी.\n• ज्वारीची भाकरी — ग्लुटेन-फ्री, उच्च फायबर, मधुमेह आणि कोलेस्टेरॉलसाठी उत्तम.\n• बाजरीची भाकरी — लोह आणि मॅग्नेशियमने समृद्ध, हिवाळ्यात उत्तम.\n• नाचणीची भाकरी — कॅल्शियम-युक्त, हाडांसाठी चांगले.\n• थालीपीठ (मल्टीग्रेन) — उच्च प्रथिने (ज्वारी+बाजरी+बेसन मिश्रण).\n• मल्टीग्रेन पोळी — सर्वोत्तम पर्याय.\n• ओट्स पोळी — कोलेस्टेरॉल रुग्णांसाठी उत्कृष्ट.\n• बेसन/मूग धिरडे — उच्च प्रथिने, ग्लुटेन-फ्री.\n• तंदूरी रोटी — नान पेक्षा चांगली (कमी तेल/लोणी).\n• ❌ नान — मैद्याचे, अधिक कॅलरी. टाळा किंवा क्वचित होल व्हीट नान घ्या.\n• ❌ कुल्चा — मैद्याचे भरलेले ब्रेड. टाळा.\n• ❌ रुमाली रोटी — मैद्याची. टाळा.\n• ❌ ब्रेड/पाव — मैदा + साखर. होल व्हीट किंवा मल्टीग्रेन ब्रेड निवडा.`,
+                    avDia: "साखर, गोड पदार्थ, मैदा, पांढरा भात, फळांचे रस", inDia: "बाजरी, ज्वारी, मेथी, जीवनसत्त्वे (संत्री)",
+                    avHyp: "वरचे मीठ, लोणचे, पापड", inHyp: "पोटॅशियम युक्त अन्न (केळी, पालक - CKD नसल्यास)",
+                    avCkd: "उच्च पोटॅशियम (केळी, नारळ पाणी)", inCkd: "उकळून पाणी काढलेल्या भाज्या",
+                    avHf: "तळलेले पदार्थ, जास्त मीठ", inHf: "ओमेगा-3 (जवस, मासे)",
+                    avAne: "जेवणानंतर लगेच चहा/कॉफी (लोह शोषण्यास अडथळा)", inAne: "लोहयुक्त अन्न (पालेभाज्या, खजूर, गूळ), व्हिटॅमिन सी",
+                    avVitK: "व्हिटॅमिन K सेवनात अचानक बदल. उच्च Vit-K अन्नपदार्थ (समान ठेवा, अचानक वाढवू/कमी करू नका): पालक, ब्रोकोली, कोबी, मेथी, कोथिंबीर, पुदिना, कांद्याची पात. INR प्रभावित करणारे: द्राक्षाचा रस (Grapefruit), क्रॅनबेरी रस, पपई (अधिक), आंबा (अधिक), लसूण/आले/हळद (अधिक), मत्स्य तेल, दारू, ग्रीन टी, कॅमोमाइल टी, एवोकॅडो, सोयाबीन तेल, कलेजी.", inVitK: "सर्व अन्नपदार्थांचे दैनंदिन प्रमाण समान ठेवा. स्थिर आहार पद्धती राखा.", specVitK: "⚠️ Vit-K Antagonist (Warfarin/Acitrom): (1) हिरव्या पालेभाज्यांचे सेवन समान ठेवा — अचानक वाढवू/कमी करू नका. (2) द्राक्षाचा रस, क्रॅनबेरी, दारू, ग्रीन टी, कॅमोमाइल टी टाळा. (3) अधिक लसूण, आले, हळद, पपई, आंबा, मत्स्य तेल रक्तस्रावाचा धोका वाढवतात. (4) हिरव्या भाज्या, सोयाबीन अचानक वाढवल्यास औषधाचा परिणाम कमी होतो. (5) असामान्य रक्तस्राव तात्काळ डॉक्टरांना कळवा. (6) INR नियमित तपासा.",
+                    avHypo: "कच्चा कोबी, फ्लॉवर - चांगले शिजवून खा", inHypo: "आयोडीन आणि सेलेनियम (सुकामेवा)",
+                    avHyper: "जास्त आयोडीन, कॅफिन", inHyper: "कोबी, फ्लॉवर, कॅल्शियम/व्हिटॅमिन डी",
+                    avEpi: "दारू, कॅफिन, MSG", inEpi: "मेंदूसाठी निरोगी स्निग्ध पदार्थ (तूप, खोबरेल तेल)",
+                    avPreg: "कच्ची पपई, अपूर्ण शिजवलेले मांस", inPreg: "फोलिक ऍसिड (पालक), लोह, कॅल्शियम",
+                    avLiver: "दारू पूर्णपणे वर्ज्य, तळलेले अन्न", inLiver: "हळद, लसूण, साधे प्रोटीन्स",
+                    avAcid: "मसालेदार अन्न, रिकाम्या पोटी लिंबूवर्गीय फळ", inAcid: "थंड दूध, काकडी, केळी, बडीशेप",
+                    avIbd: "उच्च-फायबर कडक पदार्थ, मसालेदार/तळलेले अन्न, कॅफीन/सोडा, डेअरी (असहिष्णुता असल्यास)", inIbd: "सहज पचणारे पदार्थ (केळी, पांढरा तांदूळ, सफरचंद), पातळ प्रथिने, दही (प्रोबायोटिक्स)",
+                    avDys: "ट्रान्स फॅट, संतृप्त स्निग्ध पदार्थ (लोणी, अतिरिक्त तूप, खोबरेल तेल, पाम तेल), अवयवांचे मांस (कलेजी), प्रोसेस्ड मीट, पूर्ण चरबीयुक्त डेअरी (चीझ, क्रीम), बेकरी पदार्थ (पेस्ट्री, केक, खारी), तळलेले पदार्थ (समोसा, वडा, भजी), अंड्याचा पिवळा भाग (आठवड्यातून 3 पर्यंत), रेड मीट, मेयोनेज, पॅकेज्ड स्नॅक्स.", inDys: "ओट्स, जव, ईसबगोल, बदाम, अक्रोड, जवस (अलसी), ऑलिव्ह तेल, मोहरीचे तेल, ओमेगा-3 मासे, लसूण, ग्रीन टी, सोया उत्पादने, मेथी दाणे, विद्राव्य फायबर (बीन्स, सफरचंद, मूग डाळ).",
+                    avGout: "रेड मीट, सीफूड, मद्यपान (विशेषत: बिअर), जास्त साखरेची पेये, जास्त पालक/फ्लॉवर.", inGout: "भरपूर पाणी प्या (३-४ लिटर), व्हिटॅमिन सी (आवळा, लिंबू), चेरी, कमी फॅट असलेले दूध.",
+                    exTypeNorm: "एरोबिक (चालणे, सायकलिंग) आणि लवचिकता", exIntNorm: "मध्यम", exDurNorm: "रोज 45 मिनिटे",
+                    exTypeRehab: "हृदय पुनर्वसन (हळू चालणे)", exIntLow: "कमी (HR < 100)", exDur15: "रोज 15-20 मिनिटे",
+                    exTypeLow: "कमी प्रभावाचा व्यायाम (पोहणे)", exDur45: "45-60 मिनिटे, आठवड्यातून 5 दिवस",
+                    exSpecCardiac: "सपाट जागेवर हळू चाला. धाप लागल्यास त्वरित थांबा.",
+                    exSpecObese: "पोहणे किंवा सायकलिंग. गुडघ्यांच्या संरक्षणासाठी उड्या मारणे टाळा.", exSpecObese2: "आठवड्यातून दोनदा हलके वजन उचला.",
+                    exSpecNorm: "वेगाने चालणे. आठवड्यातून दोनदा हलके स्क्वॅट्स.", exSpecHyper: "जड वजन उचलणे किंवा प्लॅंक (planks) टाळा.",
+                    exSpecEpi: "एकटे पोहणे किंवा उंचीवरील व्यायाम टाळा.",
+                    exWarm: "वॉर्म-अप (5 मिनिटे): हलके चालणे आणि स्ट्रेचिंग.", exCool: "कूल-डाउन (5 मिनिटे): दीर्घ श्वास.",
+                    yShavasana: "शवासन: पाठीवर झोपा. BP कमी करते.", yAnulom: "अनुलोम विलोम: नाडी शोधन प्राणायाम.",
+                    yBhramari: "भ्रामरी: मन शांत करण्यासाठी.", yNoHeadstand: "⚠️ टाळा: शीर्षासन आणि वेगाने श्वास घेणे टाळा.",
+                    ySurya: "सूर्य नमस्कार: 5-10 आवर्तने.", yManduka: "मंडूकासन: स्वादुपिंडाला (pancreas) उत्तेजित करते.",
+                    yKapala: "कपालभाती: पोटाच्या अवयवांसाठी (BP असल्यास टाळा).", yVajra: "वज्रासन: जेवणानंतर पचनासाठी.",
+                    yPawan: "पवनमुक्तासन: गॅस कमी करण्यासाठी.", ySheetali: "शीतली: ऍसिडिटी कमी करण्यासाठी.",
+                    yTadasana: "ताडासन: शरीराचे संतुलन सुधारते.", yBhujanga: "भुजंगासन: पाठीच्या कण्यासाठी.",
+                    yBala: "बालासन: मानसिक थकवा दूर करण्यासाठी.",
+                    med1: "ध्यान: सकाळी 10 मिनिटे ताठ बसा.", med2: "डोळे मिटून श्वासावर लक्ष केंद्रित करा.", med3: "लक्ष विचलित झाल्यास पुन्हा श्वासावर आणा.",
+                    defInc: "ताज्या हंगामी भाज्या, संतुलित प्रथिने.", defAv: "अल्ट्रा-प्रोसेस्ड पदार्थ, अतिरिक्त साखर आणि तळलेले अन्न.", avObese: "रिफाईंड साखर (मिठाई, कोला), बेकरीचे पदार्थ, तळलेले अन्न, अतिरिक्त कार्बोहायड्रेट्स."
+                },
+                kn: {
+                    title: "ಆಹಾರ ಯೋಜನೆ", bfast: "ಬೆಳಗಿನ ಉಪಹಾರ", mid: "ಬೆಳಗಿನ ತಿಂಡಿ", lunch: "ಮಧ್ಯಾಹ್ನದ ಊಟ", eve: "ಸಂಜೆಯ ತಿಂಡಿ", dinner: "ರಾತ್ರಿಯ ಊಟ",
+                    refTitle: "ವೈದ್ಯಕೀಯ ಉಲ್ಲೇಖಗಳು ಮತ್ತು ಸಮರ್ಥನೆಗಳು",
+                    opt1: "ಆಯ್ಕೆ 1", opt2: "ಆಯ್ಕೆ 2", opt3: "ಆಯ್ಕೆ 3",
+                    b1: "1-2 {staple} + 1 ಬಟ್ಟಲು {protein}.", b2: "1 ಬಟ್ಟಲು ದಲಿಯಾ / ಅವಲಕ್ಕಿ / ಉಪ್ಪಿಟ್ಟು / ಸಾಬುದಾನ ಖಿಚಡಿ (ಅಥವಾ ಬೇಕ್ ಮಾಡಿದ ಸಾಬುದಾನ ವಡಾ).", b3: "ಬೇಸನ್ ಚಿಲ್ಲಾ / ಹೆಸರು ಬೇಳೆ ದೋಸೆ / ತಾಲಿಪಟ್ಟು / ಓಟ್ಸ್ ದೋಸೆ + ಪುದೀನ ಚಟ್ನಿ.",
+                    m1: "1 ತಾಜಾ ಹಣ್ಣು ({fruit}) + ಕಡಲೆಕಾಯಿ / ಬಾದಾಮಿ.", m2: "1 ಲೋಟ ಮಜ್ಜಿಗೆ.", m3: "ಸೌತೆಕಾಯಿ + ಕ್ಯಾರೆಟ್ ಸ್ಟಿಕ್ಸ್ ಹಮ್ಮಸ್ / ಮೊಸರು ಡಿಪ್ ಜೊತೆ.",
+                    l1: "2 {staple} + 1 ಬಟ್ಟಲು {protein} + 1 ಬಟ್ಟಲು ತರಕಾರಿ ({veg}).", l2: "1 ಬಟ್ಟಲು {altStaple} + 1 ಬಟ್ಟಲು ಮೊಸರು.", l3: "ಮಲ್ಟಿಗ್ರೇನ್ ರೊಟ್ಟಿ / ಪುಲಾವ್ + 1 ಬಟ್ಟಲು ಬೇಳೆ + ತಾಜಾ ಸಲಾಡ್ ({veg}).",
+                    e1: "1 ಕಪ್ ಚಹಾ + ಹುರಿದ ಕಡಲೆ / ಮಖಾನ.", e2: "1 ಬಟ್ಟಲು ಮೊಳಕೆ ಕಾಳು ಸಲಾಡ್.", e3: "ಮಖಾನ ಭೇಲ್ / ಗೋಧಿ ಖಾಕ್ರಾ / ಹುರಿದ ಕಡಲೆ ಚಾಟ್ ನಿಂಬೆ ಹಣ್ಣಿನೊಂದಿಗೆ.",
+                    d1: "1-2 {staple} + 1 ಬಟ್ಟಲು ಬೇಳೆ + ತರಕಾರಿ ({veg}).", d2: "ಕಿಚಡಿ ಅಥವಾ ಜೋಳದ ರೊಟ್ಟಿ ಮತ್ತು ಬೇಳೆ.", d3: "ದಲಿಯಾ ಕಿಚಡಿ / ಹೆಸರು ಬೇಳೆ ದೋಸೆ / ಪಾಲಕ್ ಪರಾಠ + ಲಘು ತರಕಾರಿ ಸೂಪ್.",
+                    waProfile: "ರೋಗಿಯ ಮಾಹಿತಿ", waMeal: "ಆಹಾರ ಆಯ್ಕೆಗಳು", waAvoid: "ತಪ್ಪಿಸಬೇಕಾದ", waInclude: "ಒಳಗೊಂಡಿರಬೇಕು",
+                    waSpec: "ವಿಶೇಷ ಸೂಚನೆಗಳು", waEx: "ವ್ಯಾಯಾಮ ಯೋಜನೆ", waYoga: "ಯೋಗ ಮತ್ತು ಧ್ಯಾನ",
+                    vegNormal: "ಸೋರೆಕಾಯಿ, ಹೀರೆಕಾಯಿ, ಬೀನ್ಸ್, ಪಾಲಕ್, ಕ್ಯಾರೆಟ್, ದೊಣ್ಣೆಮೆಣಸಿನಕಾಯಿ, ಎಲೆಕೋಸು, ಬದನೆಕಾಯಿ, ಕುಂಬಳಕಾಯಿ, ಹೂಕೋಸು, ನುಗ್ಗೆಕಾಯಿ, ಪಡವಲಕಾಯಿ, ಅಣಬೆ, ಹಸಿರು ಬಟಾಣಿ, ಮೂಲಂಗಿ, ಮೆಂತ್ಯ ಸೊಪ್ಪು, ಈರುಳ್ಳಿ — (ಪ್ರತಿದಿನ ಬದಲಾಯಿಸಿ)", 
+                    vegCKD: "ಸೋರೆಕಾಯಿ, ಪಡವಲಕಾಯಿ, ಎಲೆಕೋಸು",
+                    vegDia: "ಹಾಗಲಕಾಯಿ, ಬೆಂಡೆಕಾಯಿ, ಮೆಂತ್ಯ, ಬ್ರೊಕೊಲಿ, ಪಡವಲಕಾಯಿ, ಪಾಲಕ್, ಅಣಬೆ, ದೊಣ್ಣೆಮೆಣಸಿನಕಾಯಿ, ನುಗ್ಗೆಕಾಯಿ, ಎಲೆಕೋಸು, ಹೀರೆಕಾಯಿ, ಬೀನ್ಸ್, ಈರುಳ್ಳಿ, ಬೆಳ್ಳುಳ್ಳಿ, ಸೋರೆಕಾಯಿ — (ಪ್ರತಿದಿನ ಬದಲಾಯಿಸಿ)", 
+                    vegHyp: "ಪಾಲಕ್, ಟೊಮೆಟೊ, ಬೀಟ್ರೂಟ್, ಸಿಹಿ ಗೆಣಸು, ಬೂದುಗುಂಬಳಕಾಯಿ, ನುಗ್ಗೆಕಾಯಿ, ಸೋರೆಕಾಯಿ, ಕ್ಯಾರೆಟ್, ದೊಣ್ಣೆಮೆಣಸಿನಕಾಯಿ, ಎಲೆಕೋಸು, ಹಸಿರು ಬಟಾಣಿ, ಹೂಕೋಸು — (ಪ್ರತಿದಿನ ಬದಲಾಯಿಸಿ)", 
+                    vegAcid: "ಸೋರೆಕಾಯಿ, ಬೂದುಗುಂಬಳಕಾಯಿ",
+                    vegIbd: "ಸಿಪ್ಪೆ ಸುಲಿದು ಚೆನ್ನಾಗಿ ಬೇಯಿಸಿದ ಸೋರೆಕಾಯಿ, ಹೀರೇಕಾಯಿ, ಕ್ಯಾರೆಟ್, ಕುಂಬಳಕಾಯಿ (ಹಸಿ ತರಕಾರಿಗಳನ್ನು ತಪ್ಪಿಸಿ)",
+                    vegDys: "ಬ್ರೊಕೊಲಿ, ಮೆಂತ್ಯ ಸೊಪ್ಪು, ಬೆಂಡೆಕಾಯಿ, ಪಾಲಕ್, ಎಲೆಕೋಸು, ನುಗ್ಗೆಕಾಯಿ, ಬೀನ್ಸ್, ಕ್ಯಾರೆಟ್, ಈರುಳ್ಳಿ, ಬೆಳ್ಳುಳ್ಳಿ, ದೊಣ್ಣೆಮೆಣಸಿನಕಾಯಿ, ಅಣಬೆ, ಸೋರೆಕಾಯಿ, ಹೀರೆಕಾಯಿ",
+                     breadSubs: "🍞 ರೊಟ್ಟಿ/ಬ್ರೆಡ್ ಆರೋಗ್ಯಕರ ಪರ್ಯಾಯಗಳು:\n• ಚಪಾತಿ / ಫುಲ್ಕಾ (ಗೋಧಿ) — ದೈನಂದಿನ ಬಳಕೆಗೆ ಅತ್ಯುತ್ತಮ, ಕಡಿಮೆ ಕ್ಯಾಲೋರಿ.\n• ಜೋಳದ ರೊಟ್ಟಿ — ಗ್ಲೂಟೆನ್-ಮುಕ್ತ, ಹೆಚ್ಚಿನ ನಾರಿನಂಶ, ಮಧುಮೇಹಕ್ಕೆ ಉತ್ತಮ.\n• ಸಜ್ಜೆ ರೊಟ್ಟಿ — ಕಬ್ಬಿಣ ಮತ್ತು ಮೆಗ್ನೀಷಿಯಂ ಸಮೃದ್ಧ.\n• ರಾಗಿ ರೊಟ್ಟಿ — ಕ್ಯಾಲ್ಸಿಯಂ ಸಮೃದ್ಧ, ಮೂಳೆಗಳಿಗೆ ಒಳ್ಳೆಯದು.\n• ತಾಲಿಪಟ್ಟು (ಮಲ್ಟಿಗ್ರೇನ್) — ಹೆಚ್ಚಿನ ಪ್ರೋಟೀನ್.\n• ಮಲ್ಟಿಗ್ರೇನ್ ರೊಟ್ಟಿ — ಅತ್ಯುತ್ತಮ ಪರ್ಯಾಯ.\n• ಓಟ್ಸ್ ರೊಟ್ಟಿ — ಕೊಲೆಸ್ಟ್ರಾಲ್ ರೋಗಿಗಳಿಗೆ ಉತ್ಕೃಷ್ಟ.\n• ಬೇಸನ್/ಹೆಸರು ಚಿಲ್ಲಾ — ಹೆಚ್ಚಿನ ಪ್ರೋಟೀನ್, ಗ್ಲೂಟೆನ್-ಮುಕ್ತ.\n• ❌ ನಾನ್ — ಮೈದಾ ಆಧಾರಿತ, ಹೆಚ್ಚು ಕ್ಯಾಲೋರಿ. ತಪ್ಪಿಸಿ.\n• ❌ ಕುಲ್ಚಾ — ಮೈದಾ ಆಧಾರಿತ. ತಪ್ಪಿಸಿ.\n• ❌ ಬ್ರೆಡ್/ಪಾವ್ — ಮೈದಾ + ಸಕ್ಕರೆ. ಗೋಧಿ ಅಥವಾ ಮಲ್ಟಿಗ್ರೇನ್ ಬ್ರೆಡ್ ಆಯ್ಕೆ ಮಾಡಿ.",
+                    avDia: "ಸಕ್ಕರೆ, ಸಿಹಿತಿಂಡಿ, ಮೈದಾ, ಬಿಳಿ ಅನ್ನ", inDia: "ಸಿರಿಧಾನ್ಯ, ನಾರಿನಂಶವಿರುವ ತರಕಾರಿ, ವಿಟಮಿನ್ ಸಿ",
+                    avHyp: "ಉಪ್ಪಿನಕಾಯಿ, ಹಪ್ಪಳ, ಸಂಸ್ಕರಿಸಿದ ಆಹಾರ", inHyp: "ಪೊಟ್ಯಾಸಿಯಮ್ (ಬಾಳೆಹಣ್ಣು, ಪಾಲಕ್ - CKD ಇಲ್ಲದಿದ್ದರೆ)",
+                    avCkd: "ಹೆಚ್ಚು ಪೊಟ್ಯಾಸಿಯಮ್ (ಬಾಳೆಹಣ್ಣು, ಎಳನೀರು)", inCkd: "ಬೇಯಿಸಿದ ತರಕಾರಿ",
+                    avHf: "ಕರಿದ ಆಹಾರ, ಹೆಚ್ಚು ಉಪ್ಪು", inHf: "ಒಮೆಗಾ-3 (ಅಗಸೆ ಬೀಜ, ಮೀನು)",
+                    avAne: "ಊಟದ ನಂತರ ಚಹಾ/ಕಾಫಿ", inAne: "ಕಬ್ಬಿಣಾಂಶ (ಸೊಪ್ಪು, ಖರ್ಜೂರ, ಬೆಲ್ಲ), ವಿಟಮಿನ್ ಸಿ",
+                    avVitK: "ವಿಟಮಿನ್ K ಸೇವನೆಯಲ್ಲಿ ಹಠಾತ್ ಬದಲಾವಣೆ. ಹೆಚ್ಚು Vit-K ಆಹಾರ (ಸ್ಥಿರವಾಗಿಡಿ): ಪಾಲಕ್, ಬ್ರೊಕೊಲಿ, ಎಲೆಕೋಸು, ಮೆಂತ್ಯ, ಕೊತ್ತಂಬರಿ, ಪುದೀನ, ಈರುಳ್ಳಿ ಸೊಪ್ಪು. INR ಪ್ರಭಾವಿಸುವ: ದ್ರಾಕ್ಷಿ ರಸ, ಕ್ರ್ಯಾನ್‌ಬೆರಿ ರಸ, ಪಪ್ಪಾಯಿ (ಅಧಿಕ), ಮಾವು (ಅಧಿಕ), ಬೆಳ್ಳುಳ್ಳಿ/ಶುಂಠಿ/ಅರಿಶಿನ (ಅಧಿಕ), ಮೀನಿನ ಎಣ್ಣೆ, ಮದ್ಯ, ಗ್ರೀನ್ ಟೀ, ಕ್ಯಾಮೊಮೈಲ್ ಟೀ, ಸೋಯಾಬೀನ್ ಎಣ್ಣೆ.", inVitK: "ಎಲ್ಲ ಆಹಾರಗಳ ದೈನಂದಿನ ಪ್ರಮಾಣ ಸ್ಥಿರವಾಗಿಡಿ. ಸ್ಥಿರ ಆಹಾರ ಪದ್ಧತಿ ಅನುಸರಿಸಿ.", specVitK: "⚠️ Vit-K Antagonist (Warfarin/Acitrom): (1) ಹಸಿರು ಸೊಪ್ಪುಗಳ ಸೇವನೆ ಸ್ಥಿರವಾಗಿಡಿ — ಹಠಾತ್ ಹೆಚ್ಚಿಸಬೇಡಿ/ಕಡಿಮೆ ಮಾಡಬೇಡಿ. (2) ದ್ರಾಕ್ಷಿ ರಸ, ಕ್ರ್ಯಾನ್‌ಬೆರಿ, ಮದ್ಯ, ಗ್ರೀನ್ ಟೀ ತಪ್ಪಿಸಿ. (3) ಅಧಿಕ ಬೆಳ್ಳುಳ್ಳಿ, ಶುಂಠಿ, ಅರಿಶಿನ, ಪಪ್ಪಾಯಿ, ಮಾವು, ಮೀನೆಣ್ಣೆ ರಕ್ತಸ್ರಾವದ ಅಪಾಯ ಹೆಚ್ಚಿಸುತ್ತವೆ. (4) INR ನಿಯಮಿತವಾಗಿ ಪರೀಕ್ಷಿಸಿ.",
+                    avHypo: "ಹಸಿ ಎಲೆಕೋಸು, ಹೂಕೋಸು - ಚೆನ್ನಾಗಿ ಬೇಯಿಸಿ", inHypo: "ಅಯೋಡಿನ್ ಮತ್ತು ಸೆಲೆನಿಯಮ್",
+                    avHyper: "ಹೆಚ್ಚು ಅಯೋಡಿನ್, ಕೆಫೀನ್", inHyper: "ಎಲೆಕೋಸು, ಕ್ಯಾಲ್ಸಿಯಂ/ವಿಟಮಿನ್ ಡಿ",
+                    avEpi: "ಮದ್ಯಪಾನ, ಕೆಫೀನ್, MSG", inEpi: "ಮೆದುಳಿಗೆ ಆರೋಗ್ಯಕರ ಕೊಬ್ಬು (ತುಪ್ಪ, ತೆಂಗಿನೆಣ್ಣೆ)",
+                    avPreg: "ಹಸಿ ಪರಂಗಿ, ಬೇಯಿಸದ ಮಾಂಸ", inPreg: "ಫೋಲಿಕ್ ಆಸಿಡ್ (ಪಾಲಕ್), ಕಬ್ಬಿಣಾಂಶ, ಕ್ಯಾಲ್ಸಿಯಂ",
+                    avLiver: "ಮದ್ಯಪಾನ ಕಟ್ಟುನಿಟ್ಟಾಗಿ ನಿಷೇಧ, ಕರಿದ ಆಹಾರ", inLiver: "ಅರಿಶಿನ, ಬೆಳ್ಳುಳ್ಳಿ, ಪ್ರೋಟೀನ್",
+                    avAcid: "ಖಾರವಾದ ಆಹಾರ, ಖಾಲಿ ಹೊಟ್ಟೆಯಲ್ಲಿ ನಿಂಬೆ", inAcid: "ತಣ್ಣನೆಯ ಹಾಲು, ಸೌತೆಕಾಯಿ, ಬಾಳೆಹಣ್ಣು",
+                    avIbd: "ಹೆಚ್ಚು ನಾರಿನಂಶವಿರುವ ಕಠಿಣ ಆಹಾರ, ಖಾರ/ಕರಿದ ಆಹಾರ, ಕೆಫೀನ್/ಸೋಡಾ, ಡೈರಿ ಉತ್ಪನ್ನಗಳು", inIbd: "ಸುಲಭವಾಗಿ ಜೀರ್ಣವಾಗುವ ಆಹಾರ (ಬಾಳೆಹಣ್ಣು, ಬಿಳಿ ಅನ್ನ, ಸೇಬಿನ ರಸ), ಪ್ರೋಟೀನ್, ಮೊಸರು (ಪ್ರೋಬಯಾಟಿಕ್ಸ್)",
+                    avDys: "ಟ್ರಾನ್ಸ್ ಫ್ಯಾಟ್, ಸ್ಯಾಚುರೇಟೆಡ್ ಫ್ಯಾಟ್ (ಬೆಣ್ಣೆ, ಅಧಿಕ ತುಪ್ಪ, ತೆಂಗಿನೆಣ್ಣೆ), ಅಂಗ ಮಾಂಸ, ಪ್ರೊಸೆಸ್ಡ್ ಮೀಟ್, ಪೂರ್ಣ ಕೊಬ್ಬಿನ ಡೈರಿ (ಚೀಸ್, ಕ್ರೀಮ್), ಬೇಕರಿ ಉತ್ಪನ್ನ, ಕರಿದ ಆಹಾರ, ಮೊಟ್ಟೆಯ ಹಳದಿ ಭಾಗ (ವಾರಕ್ಕೆ 3 ವರೆಗೆ), ಮೆಯೊನೈಸ್, ಪ್ಯಾಕೇಜ್ಡ್ ತಿಂಡಿ.", inDys: "ಓಟ್ಸ್, ಬಾರ್ಲಿ, ಇಸಬ್ಗೋಲ್, ಬಾದಾಮಿ, ಅಕ್ರೋಟ್, ಅಗಸೆ ಬೀಜ, ಆಲಿವ್ ಎಣ್ಣೆ, ಸಾಸಿವೆ ಎಣ್ಣೆ, ಒಮೆಗಾ-3 ಮೀನು, ಬೆಳ್ಳುಳ್ಳಿ, ಗ್ರೀನ್ ಟೀ, ಸೋಯಾ ಉತ್ಪನ್ನ, ಮೆಂತ್ಯ ಬೀಜ, ಕರಗುವ ನಾರಿನಂಶ.",
+                    avGout: "ಕೆಂಪು ಮಾಂಸ (Red meat), ಸಮುದ್ರಾಹಾರ, ಮದ್ಯ, ಹೆಚ್ಚು ಸಕ್ಕರೆ ಪಾನೀಯಗಳು, ಹೆಚ್ಚು ಪಾಲಕ್/ಹೂಕೋಸು.", inGout: "ಹೆಚ್ಚು ನೀರು ಕುಡಿಯಿರಿ (3-4 ಲೀಟರ್), ವಿಟಮಿನ್ ಸಿ (ನೆಲ್ಲಿಕಾಯಿ, ನಿಂಬೆ), ಕಡಿಮೆ ಕೊಬ್ಬಿನ ಹಾಲು.",
+                    exTypeNorm: "ಏರೋಬಿಕ್ (ವೇಗವಾಗಿ ನಡೆಯುವುದು) ಮತ್ತು ನಮ್ಯತೆ", exIntNorm: "ಮಧ್ಯಮ", exDurNorm: "ದಿನಕ್ಕೆ 45 ನಿಮಿಷ",
+                    exTypeRehab: "ಹೃदय ಪುನರ್ವಸತಿ", exIntLow: "ಕಡಿಮೆ (HR < 100)", exDur15: "ದಿನಕ್ಕೆ 15-20 ನಿಮಿಷ",
+                    exTypeLow: "ಕಡಿಮೆ ಪ್ರಭಾವದ ವ್ಯಾಯಾಮ (ಈಜು)", exDur45: "45-60 ನಿಮಿಷ, ವಾರಕ್ಕೆ 5 ದಿನ",
+                    exSpecCardiac: "ನಿಧಾನವಾಗಿ ನಡೆಯಿರಿ. ಉಸಿರಾಟದ ತೊಂದರೆಯಾದರೆ ನಿಲ್ಲಿಸಿ.",
+                    exSpecObese: "ಈಜು ಅಥವಾ ಸೈಕ್ಲಿಂಗ್. ಜಿಗಿಯುವುದನ್ನು ತಪ್ಪಿಸಿ.", exSpecObese2: "ವಾರಕ್ಕೆ ಎರಡು ಬಾರಿ ಕೈಗಳಿಗೆ ಲಘು ತೂಕ ಎತ್ತಿ.",
+                    exSpecNorm: "ವೇಗವಾಗಿ ನಡೆಯಿರಿ. ವಾರಕ್ಕೆ ಎರಡು ಬಾರಿ ಸ್ಕ್ವಾಟ್ಸ್.", exSpecHyper: "ಭಾರವಾದ ತೂಕ ಎತ್ತುವ ವ್ಯಾಯಾಮಗಳನ್ನು ಕಟ್ಟುನಿಟ್ಟಾಗಿ ತಪ್ಪಿಸಿ.",
+                    exSpecEpi: "ಒಂಟಿಯಾಗಿ ಈಜುವುದು ಬೇಡ.",
+                    exWarm: "ವಾರ್ಮ್-ಅಪ್ (5 ನಿಮಿಷ): ಲಘು ನಡಿಗೆ ಮತ್ತು ಸ್ಟ್ರೆಚಿಂಗ್.", exCool: "ಕೂಲ್-ಡೌನ್ (5 ನಿಮಿಷ): ಆಳವಾದ ಉಸಿರಾಟ.",
+                    yShavasana: "ಶವಾಸನ: ವಿಶ್ರಾಂತಿ ಪಡೆಯಿರಿ. BP ಕಡಿಮೆ ಮಾಡುತ್ತದೆ.", yAnulom: "ಅನುಲೋಮ ವಿಲೋಮ: ಉಸಿರಾಟದ ವ್ಯಾಯಾಮ.",
+                    yBhramari: "ಭ್ರಾಮರಿ: ಮನಸ್ಸನ್ನು ಶಾಂತಗೊಳಿಸಲು.", yNoHeadstand: "⚠️ ತಪ್ಪಿಸಿ: ಶೀರ್ಷಾಸನ ಮತ್ತು ವೇಗದ ಉಸಿರಾಟ ಬೇಡ.",
+                    ySurya: "ಸೂರ್ಯ ನಮಸ್ಕಾರ: 5-10 ಸುತ್ತುಗಳು.", yManduka: "ಮಂಡೂಕಾಸನ: ಪ್ಯಾಂಕ್ರಿಯಾಸ್ ಅನ್ನು ಉತ್ತೇಜಿಸುತ್ತದೆ.",
+                    yKapala: "ಕಪಾಲಭಾತಿ: ಹೊಟ್ಟೆಯ ಅಂಗಗಳಿಗೆ (BP ಇದ್ದರೆ ಬೇಡ).", yVajra: "ವಜ್ರಾಸನ: ಊಟದ ನಂತರ ಜೀರ್ಣಕ್ರಿಯೆಗೆ.",
+                    yPawan: "ಪವನಮುಕ್ತಾಸನ: ಗ್ಯಾಸ್ ಕಡಿಮೆ ಮಾಡಲು.", ySheetali: "ಶೀತಲಿ: ಆಮ್ಲೀಯತೆ ಕಡಿಮೆ ಮಾಡಲು.",
+                    yTadasana: "ತಾಡಾಸನ: ಭಂಗಿ ಸುಧಾರಿಸುತ್ತದೆ.", yBhujanga: "ಭುಜಂಗಾಸನ: ಬೆನ್ನುಮೂಳೆಗೆ.",
+                    yBala: "ಬಾಲಾಸನ: ಮಾನಸಿಕ ಆಯಾಸ ಕಡಿಮೆ ಮಾಡಲು.",
+                    med1: "ಬೆಳಿಗ್ಗೆ 10 ನಿಮಿಷ ನೇರವಾಗಿ ಕುಳಿತುಕೊಳ್ಳಿ.", med2: "ಕಣ್ಣು ಮುಚ್ಚಿ ಉಸಿರಾಟದ ಕಡೆ ಗಮನ ಕೊಡಿ.", med3: "ಗಮನ ಬೇರೆಡೆ ಹೋದರೆ ಮತ್ತೆ ಉಸಿರಾಟದತ್ತ ತನ್ನಿ.",
+                    defInc: "ತಾಜಾ ತರಕಾರಿಗಳು, ಸಮತೋಲಿತ ಪ್ರೋಟೀನ್.", defAv: "ಅಲ್ಟ್ರಾ-ಸಂಸ್ಕರಿಸಿದ ಆಹಾರಗಳು, ಅತಿಯಾದ ಸಕ್ಕರೆ ಮತ್ತು ಕರಿದ ಆಹಾರ.", avObese: "ಸಂಸ್ಕರಿಸಿದ ಸಕ್ಕರೆ (ಸಿಹಿತಿಂಡಿಗಳು, ಕೋಲಾ), ಬೇಕರಿ ಉತ್ಪನ್ನಗಳು, ಕರಿದ ಆಹಾರ, ಅತಿಯಾದ ಕಾರ್ಬೋಹೈಡ್ರೇಟ್ಸ್."
+                }
+            };
+
+            const translations = {
+                en: { stapleNorth: "Wheat Roti", altStapleNorth: "Stuffed Paratha", stapleSouth: "Dosa / Idli / Vada", altStapleSouth: "Ragi Mudde", stapleEast: "Rice / Poha", altStapleEast: "Khichdi", stapleWest: "Jowar / Bajra Bhakri", altStapleWest: "Wheat Roti", stapleDia: "Millets / Brown Rice", protVeg: "Dal / Paneer / Soya", protEgg: "Dal / Eggs", protNonVeg: "Dal / Chicken / Fish", protOccNonVeg: "Dal / Paneer (Daily), Chicken/Fish (1-2x/week)", fruitCKD: "Apple / Papaya", fruitNorm: "Apple / Orange / Papaya" },
+                hi: { stapleNorth: "रोटी", altStapleNorth: "पराठा", stapleSouth: "डोसा / इडली / वड़ा", altStapleSouth: "रागी मुड्डे", stapleEast: "चावल / पोहा", altStapleEast: "खिचड़ी", stapleWest: "ज्वार/बाजरे की भाकरी", altStapleWest: "रोटी", stapleDia: "बाजरा / ब्राउन राइस", protVeg: "दाल/पनीर/सोया", protEgg: "दाल/अंडे", protNonVeg: "दाल/चिकन/मछली", protOccNonVeg: "दाल/पनीर (रोज़), चिकन/मछली (हफ्ते में 1-2 बार)", fruitCKD: "सेब/पपीता", fruitNorm: "सेब/संतरा/पपीता" },
+                mr: { stapleNorth: "पोळी", altStapleNorth: "पराठा", stapleSouth: "डोसा / इडली / वड़ा", altStapleSouth: "नाचणीचा मुड्डा", stapleEast: "भात / पोहे", altStapleEast: "खिचडी", stapleWest: "ज्वारी/बाजरीची भाकरी", altStapleWest: "पोळी", stapleDia: "बाजरी / ब्राऊन राईस", protVeg: "वरण/पनीर/सोया", protEgg: "वरण/अंडी", protNonVeg: "वरण/चिकन/मासे", protOccNonVeg: "वरण/पनीर (रोज), चिकन/मासे (आठवड्यातून 1-2 वेळा)", fruitCKD: "सफरचंद/पपई", fruitNorm: "सफरचंद/संत्री/पपई" },
+                kn: { stapleNorth: "ರೊಟ್ಟಿ", altStapleNorth: "ಪರಾಠ", stapleSouth: "ದೋಸೆ / ಇಡ್ಲಿ / ವಡಾ", altStapleSouth: "ರಾಗಿ ಮುದ್ದೆ", stapleEast: "ಅನ್ನ / ಅವಲಕ್ಕಿ", altStapleEast: "ಕಿಚಡಿ", stapleWest: "ಜೋಳದ ರೊಟ್ಟಿ", altStapleWest: "ರೊಟ್ಟಿ", stapleDia: "ಸಿರಿಧಾನ್ಯ / ಕಂದು ಅಕ್ಕಿ", protVeg: "ಬೇಳೆ/ಪನೀರ್/ಸೋಯಾ", protEgg: "ಬೇಳೆ/ಮೊಟ್ಟೆ", protNonVeg: "ಬೇಳೆ/ಚಿಕನ್/ಮೀನು", protOccNonVeg: "ಬೇಳೆ (ಪ್ರತಿದಿನ), ಚಿಕನ್/ಮೀನು (ವಾರಕ್ಕೆ 1-2 ಬಾರಿ)", fruitCKD: "ಸೇಬು/ಪರಂಗಿ", fruitNorm: "ಸೇಬು/ಕಿತ್ತಳೆ/ಪರಂಗಿ" }
+            };
+
+            const referencesDict = {
+                en: { general: "NIN/ICMR Dietary Guidelines for Indians 2024 - Recommends balanced meals, reduced sodium, and increased fiber.", diabetes: "ADA Standards of Medical Care in Diabetes - Supports low glycemic index diets.", hypertension: "DASH Diet Guidelines - Emphasizes low sodium.", ckd: "KDOQI Clinical Practice Guidelines for Nutrition in CKD.", heart_failure: "AHA Diet and Lifestyle Recommendations.", anemia: "WHO Iron Deficiency Anemia Guidelines.", thyroid: "ATA Guidelines.", epilepsy: "NIN Guidelines.", pregnancy: "ICMR Guidelines for Pregnancy.", liver_disease: "EASL Clinical Practice Guidelines on nutrition in chronic liver disease.", hyperacidity: "General Dietary Guidelines for GERD/Peptic Ulcer.", peptic_ulcer: "General Dietary Guidelines for GERD/Peptic Ulcer.", ibd: "ESPEN guideline: Clinical nutrition in IBD.", dyslipidemia: "NLA/ACC/AHA Guidelines for Management of Blood Cholesterol & ICMR-NIN Dietary Guidelines 2024 - Recommends therapeutic lifestyle changes including dietary modification.", gout: "ACR Guidelines for Management of Gout - Emphasizes purine restriction and hydration." },
+                hi: { general: "NIN/ICMR भारतीय आहार दिशानिर्देश 2024", diabetes: "ADA मधुमेह दिशानिर्देश", hypertension: "DASH आहार दिशानिर्देश", ckd: "KDOQI CKD पोषण दिशानिर्देश", heart_failure: "AHA हृदय रोग दिशानिर्देश", anemia: "WHO एनीमिया दिशानिर्देश", thyroid: "ATA थायराइड दिशानिर्देश", epilepsy: "NIN न्यूरोलॉजी दिशानिर्देश", pregnancy: "ICMR गर्भावस्था दिशानिर्देश", liver_disease: "EASL लिवर रोग दिशानिर्देश", hyperacidity: "GERD आहार दिशानिर्देश", peptic_ulcer: "GERD आहार दिशानिर्देश", ibd: "ESPEN IBD दिशानिर्देश", dyslipidemia: "NLA/ACC/AHA कोलेस्ट्रॉल प्रबंधन दिशानिर्देश और ICMR-NIN आहार दिशानिर्देश 2024।", gout: "ACR गाउट प्रबंधन दिशानिर्देश - प्यूरीन प्रतिबंध और हाइड्रेशन पर जोर।" },
+                mr: { general: "NIN/ICMR भारतीय आहार मार्गदर्शक तत्त्वे 2024", diabetes: "ADA मधुमेह मार्गदर्शक तत्त्वे", hypertension: "DASH आहार मार्गदर्शक तत्त्वे", ckd: "KDOQI CKD पोषण मार्गदर्शक तत्त्वे", heart_failure: "AHA हृदय रोग मार्गदर्शक तत्त्वे", anemia: "WHO ॲनिमिया मार्गदर्शक तत्त्वे", thyroid: "ATA थायरॉईड मार्गदर्शक तत्त्वे", epilepsy: "NIN न्यूरोलॉजी मार्गदर्शक तत्त्वे", pregnancy: "ICMR गर्भधारणा मार्गदर्शक तत्त्वे", liver_disease: "EASL यकृत रोग मार्गदर्शक तत्त्वे", hyperacidity: "GERD आहार मार्गदर्शक तत्त्वे", peptic_ulcer: "GERD आहार मार्गदर्शक तत्त्वे", ibd: "ESPEN IBD मार्गदर्शक तत्त्वे", dyslipidemia: "NLA/ACC/AHA कोलेस्टेरॉल व्यवस्थापन मार्गदर्शक तत्त्वे आणि ICMR-NIN आहार मार्गदर्शक तत्त्वे 2024.", gout: "ACR संधिरोग (Gout) व्यवस्थापन मार्गदर्शक तत्त्वे - प्युरिन प्रतिबंध आणि हायड्रेशनवर भर." },
+                kn: { general: "NIN/ICMR ಭಾರತೀಯ ಆಹಾರ ಮಾರ್ಗಸೂಚಿಗಳು 2024", diabetes: "ADA ಮಧುಮೇಹ ಮಾರ್ಗಸೂಚಿಗಳು", hypertension: "DASH ಆಹಾರ ಮಾರ್ಗಸೂಚಿಗಳು", ckd: "KDOQI CKD ಪೋಷಣೆ ಮಾರ್ಗಸೂಚಿಗಳು", heart_failure: "AHA ಹೃದಯ ರೋಗ ಮಾರ್ಗಸೂಚಿಗಳು", anemia: "WHO ರಕ್ತಹೀನತೆ ಮಾರ್ಗಸೂಚಿಗಳು", thyroid: "ATA ಥೈರಾಯ್ಡ್ ಮಾರ್ಗಸೂಚಿಗಳು", epilepsy: "NIN ನರವಿಜ್ಞಾನ ಮಾರ್ಗಸೂಚಿಗಳು", pregnancy: "ICMR ಗರ್ಭಧಾರಣೆ ಮಾರ್ಗಸೂಚಿಗಳು", liver_disease: "EASL ಯಕೃತ್ತಿನ ರೋಗ ಮಾರ್ಗಸೂಚಿಗಳು", hyperacidity: "GERD ಆಹಾರ ಮಾರ್ಗಸೂಚಿಗಳು", peptic_ulcer: "GERD ಆಹಾರ ಮಾರ್ಗಸೂಚಿಗಳು", ibd: "ESPEN IBD ಮಾರ್ಗಸೂಚಿಗಳು", dyslipidemia: "NLA/ACC/AHA ಕೊಲೆಸ್ಟ್ರಾಲ್ ನಿರ್ವಹಣೆ ಮಾರ್ಗಸೂಚಿಗಳು ಮತ್ತು ICMR-NIN ಆಹಾರ ಮಾರ್ಗಸೂಚಿಗಳು 2024.", gout: "ACR ಗೌಟ್ ನಿರ್ವಹಣೆ ಮಾರ್ಗಸೂಚಿಗಳು - ಪ್ಯೂರಿನ್ ನಿರ್ಬಂಧ ಮತ್ತು ಜಲಸಂಚಯನವನ್ನು ಒತ್ತಿಹೇಳುತ್ತದೆ." }
+            };
+
+            document.getElementById('diet-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Custom Validation
+                let isValid = true;
+                let firstInvalid = null;
+                const requiredFields = document.querySelectorAll('#diet-form [required]');
+                
+                requiredFields.forEach(field => field.classList.remove('error-highlight'));
+                const oldFlash = document.getElementById('flash-msg');
+                if (oldFlash) oldFlash.remove();
+
+                requiredFields.forEach(field => {
+                    if (!field.value) {
+                        isValid = false;
+                        field.classList.add('error-highlight');
+                        if (!firstInvalid) firstInvalid = field;
+                    }
+                });
+
+                if (!isValid) {
+                    const flash = document.createElement('div');
+                    flash.id = 'flash-msg';
+                    flash.style.cssText = 'background: var(--danger); color: white; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; text-align: center; font-weight: bold; animation: shake 0.4s ease-in-out; box-shadow: 0 4px 6px rgba(239, 68, 68, 0.2);';
+                    flash.innerText = '⚠️ Please fill in all mandatory fields highlighted in red.';
+                    document.getElementById('diet-form').prepend(flash);
+                    firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    firstInvalid.focus();
+                    return;
+                }
+
+                const lang = document.getElementById('language').value;
+                const age = document.getElementById('age').value;
+                const gender = document.getElementById('gender').value;
+                const t = dict[lang];
+                const tr = translations[lang];
+
+                const thyroidStage = document.querySelector('input[name="thyroid_stage"]:checked')?.value;
+                const weight = parseInt(document.getElementById('weight').value);
+                const heightM = parseInt(document.getElementById('height').value) / 100;
+                const bmi = (weight / (heightM * heightM)).toFixed(1);
+                
+                let genderStr = gender === 'male' ? 'Male' : gender === 'female' ? 'Female' : 'Other';
+                
+                const name = document.getElementById('patient-name').value;
+                const region = document.getElementById('region').value;
+                const regionStr = document.getElementById('region').options[document.getElementById('region').selectedIndex].text;
+                const vegStatus = document.getElementById('veg-status').value;
+                const vegStr = document.getElementById('veg-status').options[document.getElementById('veg-status').selectedIndex].text;
+                const comorbidities = Array.from(document.querySelectorAll('input[name="comorbidity"]:checked')).map(cb => cb.value);
+                const comorbiditiesText = comorbidities.length ? Array.from(document.querySelectorAll('input[name="comorbidity"]:checked')).map(cb => cb.parentNode.innerText.trim()).join(', ') : 'None';
+
+                const cuisine = document.getElementById('cuisine').value;
+                const cuisineStr = document.getElementById('cuisine').options[document.getElementById('cuisine').selectedIndex].text;
+
+                const heightCm = parseInt(document.getElementById('height').value);
+                let bmr = (10 * weight) + (6.25 * heightCm) - (5 * age);
+                if (gender === 'male') bmr += 5;
+                else if (gender === 'female') bmr -= 161;
+                else bmr -= 78; // Average for 'other'
+                
+                let tdee = Math.round(bmr * 1.2);
+                let targetCalories = tdee;
+                let calorieAdvice = lang === 'hi' ? `वजन बनाए रखने के लिए: ~${tdee} कैलोरी` : lang === 'mr' ? `वजन राखण्यासाठी: ~${tdee} कॅलरी` : lang === 'kn' ? `ತೂಕ ಕಾಯ್ದುಕೊಳ್ಳಲು: ~${tdee} ಕ್ಯಾಲೋರಿ` : `Maintenance: ~${tdee} kcal`;
+                
+                if (bmi >= 25) {
+                    targetCalories = tdee - 500;
+                    calorieAdvice = lang === 'hi' ? `वजन घटाने का लक्ष्य: ~${targetCalories} कैलोरी (500 कम)` : lang === 'mr' ? `वजन कमी करण्याचे लक्ष्य: ~${targetCalories} कॅलरी (500 कमी)` : lang === 'kn' ? `ತೂಕ ಇಳಿಸುವ ಗುರಿ: ~${targetCalories} ಕ್ಯಾಲೋರಿ (500 ಕಡಿಮೆ)` : `Weight Loss Target: ~${targetCalories} kcal (Deficit 500)`;
+                } else if (bmi < 18.5) {
+                    targetCalories = tdee + 500;
+                    calorieAdvice = lang === 'hi' ? `वजन बढ़ाने का लक्ष्य: ~${targetCalories} कैलोरी (500 अधिक)` : lang === 'mr' ? `वजन वाढवण्याचे लक्ष्य: ~${targetCalories} कॅलरी (500 जास्त)` : lang === 'kn' ? `ತೂಕ ಹೆಚ್ಚಿಸುವ ಗುರಿ: ~${targetCalories} ಕ್ಯಾಲೋರಿ (500 ಹೆಚ್ಚು)` : `Weight Gain Target: ~${targetCalories} kcal (Surplus 500)`;
+                }
+
+                document.getElementById('profile-display').innerHTML = `
+                    <strong>${name}</strong> | ${age} yrs | ${genderStr} | BMI: ${bmi}<br>
+                    <span style="font-size: 0.85rem; color: var(--text-light); display: inline-block; margin-top: 0.25rem;">
+                        Diet: ${vegStr} | Region: ${regionStr} | Cuisine: ${cuisineStr} | Comorbidities: ${comorbiditiesText}
+                    </span><br>
+                    <span style="font-size: 0.9rem; font-weight: 600; color: var(--primary); display: inline-block; margin-top: 0.4rem;">
+                        ${lang === "hi" ? "🔥 दैनिक कैलोरी लक्ष्य:" : lang === "mr" ? "🔥 दैनिक कॅलरी लक्ष्य:" : lang === "kn" ? "🔥 ದೈನಂದಿನ ಕ್ಯಾಲೋರಿ ಗುರಿ:" : "🔥 Daily Calorie Goal:"} ${calorieAdvice}
+                    </span>
+                `;
+
+                let broadRegion = 'north';
+                if (cuisine !== 'default') {
+                    broadRegion = cuisine === 'central' ? 'north' : cuisine;
+                } else {
+                    if(['karnataka','tamilnadu','kerala','ap'].includes(region)) broadRegion = 'south';
+                    else if(['wb','northeast'].includes(region)) broadRegion = 'east';
+                    else if(['maharashtra','gujarat','rajasthan'].includes(region)) broadRegion = 'west';
+                }
+
+                let staple = broadRegion==='south'?tr.stapleSouth:broadRegion==='east'?tr.stapleEast:broadRegion==='west'?tr.stapleWest:tr.stapleNorth;
+                let altStaple = broadRegion==='south'?tr.altStapleSouth:broadRegion==='east'?tr.altStapleEast:broadRegion==='west'?tr.altStapleWest:tr.altStapleNorth;
+                let protein = vegStatus==='vegetarian'?tr.protVeg:vegStatus==='eggetarian'?tr.protEgg:vegStatus==='occasional-non-veg'?tr.protOccNonVeg:tr.protNonVeg;
+                let fruit = comorbidities.includes('ckd') ? tr.fruitCKD : tr.fruitNorm;
+
+                let avoid = [], include = [], special = [];
+
+                const targetBmi = 22.5; // Ideal BMI for Asians is ~22.5
+                const idealWeight = Math.round(targetBmi * heightM * heightM);
+
+                if (bmi < 18.5) {
+                    const gainKg = idealWeight - weight;
+                    special.push(lang === 'hi' ? `⚠️ आपका BMI (${bmi}) कम है (Underweight)। आपका आदर्श वजन लगभग ${idealWeight} kg है। वजन बढ़ाने के लिए उच्च कैलोरी आहार लें।`
+                               : lang === 'mr' ? `⚠️ तुमचा BMI (${bmi}) कमी आहे (Underweight). तुमचे आदर्श वजन अंदाजे ${idealWeight} kg आहे. वजन वाढवण्यासाठी उच्च कॅलरी आहार घ्या.`
+                               : lang === 'kn' ? `⚠️ ನಿಮ್ಮ BMI (${bmi}) ಕಡಿಮೆಯಾಗಿದೆ (Underweight). ನಿಮ್ಮ ಆದರ್ಶ ತೂಕ ಸರಿಸುಮಾರು ${idealWeight} kg. ತೂಕ ಹೆಚ್ಚಿಸಲು ಹೆಚ್ಚಿನ ಕ್ಯಾಲೋರಿ ಆಹಾರ ಸೇವಿಸಿ.`
+                               : `⚠️ Your BMI (${bmi}) indicates you are Underweight. Your Ideal Weight is ~${idealWeight} kg. Focus on a calorie-dense, high-protein diet.`);
+                } else if (bmi >= 25) {
+                    const severity = bmi >= 30 ? 'Obesity' : 'Overweight';
+                    const milestoneKg = Math.min(5, Math.max(3, Math.round(weight * 0.05)));
+                    
+                    const msgEn = `⚠️ Your BMI (${bmi}) indicates ${severity}. Your Ideal Body Weight is ~${idealWeight} kg. We know weight loss can feel overwhelming, so let's break it down into achievable steps!\n🎯 FIRST MILESTONE: Let's aim to lose just **${milestoneKg} kg** over the next 1-2 months. You can absolutely do this!\n🍽️ DIET ADJUSTMENT: Strictly cut your carbohydrate portions (Roti, Rice, Dalia) in half. Fill the remaining space on your plate with proteins (Dal, Egg, Paneer) and fresh vegetables. This keeps you full while actively burning fat!`;
+                    const msgHi = `⚠️ आपका BMI (${bmi}) ${severity === 'Obesity' ? 'मोटापा (Obesity)' : 'अधिक वजन (Overweight)'} दर्शाता है। आपका आदर्श वजन ~${idealWeight} kg है। वजन कम करना मुश्किल लग सकता है, इसलिए हम इसे आसान चरणों में बांटेंगे!\n🎯 पहला लक्ष्य: आइए पहले 1-2 महीनों में केवल **${milestoneKg} kg** वजन कम करने का लक्ष्य रखें। आप यह बिल्कुल कर सकते हैं!\n🍽️ आहार में बदलाव: रोटी, चावल जैसे कार्बोहाइड्रेट की मात्रा आधी (50%) कर दें। प्लेट की बाकी जगह प्रोटीन (दाल, पनीर) और ताजी सब्जियों से भरें। इससे पेट भरा रहेगा और फैट कम होगा!`;
+                    const msgMr = `⚠️ तुमचा BMI (${bmi}) ${severity === 'Obesity' ? 'लठ्ठपणा (Obesity)' : 'जास्त वजन (Overweight)'} दर्शवतो. तुमचे आदर्श वजन ~${idealWeight} kg आहे. वजन कमी करणे कठीण वाटू शकते, म्हणून आपण ते सोप्या टप्प्यांत विभागूया!\n🎯 पहिले लक्ष्य: आपण पहिल्या 1-2 महिन्यांत फक्त **${milestoneKg} kg** वजन कमी करण्याचे लक्ष्य ठेवूया. तुम्ही हे नक्की करू शकता!\n🍽️ आहारात बदल: पोळी, भात यांसारख्या कार्बोहायड्रेट्सचे प्रमाण निम्मे (50%) करा. उरलेली जागा प्रथिने (वरण, पनीर) आणि ताज्या भाज्यांनी भरा. यामुळे पोट भरलेले राहील आणि चरबी कमी होईल!`;
+                    const msgKn = `⚠️ ನಿಮ್ಮ BMI (${bmi}) ${severity === 'Obesity' ? 'ಬೊಜ್ಜು (Obesity)' : 'ಅಧಿಕ ತೂಕವನ್ನು (Overweight)'} ಸೂಚಿಸುತ್ತದೆ. ನಿಮ್ಮ ಆದರ್ಶ ತೂಕ ~${idealWeight} kg. ತೂಕ ಇಳಿಸುವುದು ಕಷ್ಟವೆನಿಸಬಹುದು, ಆದ್ದರಿಂದ ಇದನ್ನು ಸುಲಭ ಹಂತಗಳಾಗಿ ವಿಂಗಡಿಸೋಣ!\n🎯 ಮೊದಲ ಗುರಿ: ಮುಂದಿನ 1-2 ತಿಂಗಳುಗಳಲ್ಲಿ ಕೇವಲ **${milestoneKg} kg** ತೂಕ ಇಳಿಸುವ ಗುರಿಯನ್ನು ಹೊಂದೋಣ. ನೀವು ಇದನ್ನು ಖಂಡಿತ ಸಾಧಿಸಬಹುದು!\n🍽️ ಆಹಾರದಲ್ಲಿ ಬದಲಾವಣೆ: ರೊಟ್ಟಿ, ಅನ್ನದಂತಹ ಕಾರ್ಬೋಹೈಡ್ರೇಟ್ ಪ್ರಮಾಣವನ್ನು ಅರ್ಧಕ್ಕೆ (50%) ಇಳಿಸಿ. ಉಳಿದ ಭಾಗವನ್ನು ಪ್ರೋಟೀನ್ (ಬೇಳೆ, ಪನೀರ್) ಮತ್ತು ತಾಜಾ ತರಕಾರಿಗಳಿಂದ ತುಂಬಿಸಿ. ಇದು ನಿಮ್ಮ ಹೊಟ್ಟೆ ತುಂಬಿಸುತ್ತದೆ ಮತ್ತು ಕೊಬ್ಬನ್ನು ಕರಗಿಸುತ್ತದೆ!`;
+                    
+                    special.push(lang === 'hi' ? msgHi : lang === 'mr' ? msgMr : lang === 'kn' ? msgKn : msgEn);
+                }
+                let exType = t.exTypeNorm, exIntensity = t.exIntNorm, exDuration = t.exDurNorm;
+                let exWarm = t.exWarm, exCool = t.exCool, exSpec = [];
+                let yAsanas = [], yPranayama = [], yMed = [t.med1, t.med2, t.med3];
+
+                if(comorbidities.includes('diabetes')) {
+                    avoid.push(t.avDia); include.push(t.inDia);
+                }
+                if(comorbidities.includes('hypertension')) {
+                    avoid.push(t.avHyp); include.push(t.inHyp); exSpec.push(t.exSpecHyper);
+                }
+                if(comorbidities.includes('ckd')) {
+                    avoid.push(t.avCkd); include.push(t.inCkd); protein = 'Portion-controlled Dal';
+                }
+                if(comorbidities.includes('heart_failure') || comorbidities.includes('ihd')) {
+                    avoid.push(t.avHf); include.push(t.inHf);
+                    if (comorbidities.includes('heart_failure')) {
+                        const hfFluid = lang === 'hi' ? "तरल पदार्थ का सेवन दिन में 1.5 से 2 लीटर तक सीमित करें।"
+                                      : lang === 'mr' ? "दिवसातील द्रवपदार्थांचे सेवन 1.5 ते 2 लिटरपर्यंत मर्यादित ठेवा."
+                                      : lang === 'kn' ? "ದಿನಕ್ಕೆ ದ್ರವ ಸೇವನೆಯನ್ನು 1.5 ರಿಂದ 2 ಲೀಟರ್‌ಗಳಿಗೆ ಸೀಮಿತಗೊಳಿಸಿ."
+                                      : "Restrict total fluid intake to 1.5 - 2 Liters per day.";
+                        special.push(`⚠️ ${hfFluid}`);
+                    }
+                    exType = t.exTypeRehab; exIntensity = t.exIntLow; exDuration = t.exDur15;
+                    exSpec.push(t.exSpecCardiac);
+                    yAsanas.push(t.yShavasana); yPranayama.push(t.yAnulom, t.yBhramari, t.yNoHeadstand);
+                } else if(bmi >= 25) {
+                    exType = lang === 'hi' ? "वसा घटाने वाले व्यायाम (Fat Burning Cardio) जैसे तेज चलना, पानी में व्यायाम (Water Aerobics) या साइकिल चलाना"
+                           : lang === 'mr' ? "फॅट बर्निंग कार्डिओ (Fat Burning Cardio) जसे वेगात चालणे, पोहणे किंवा सायकलिंग"
+                           : lang === 'kn' ? "ಕೊಬ್ಬು ಕರಗಿಸುವ ವ್ಯಾಯಾಮ (Fat Burning Cardio) - ವೇಗವಾಗಿ ನಡೆಯುವುದು, ಈಜು ಅಥವಾ ಸೈಕ್ಲಿಂಗ್"
+                           : "Fat Burning Cardio (Brisk Walking, Water Aerobics, Stationary Cycling)";
+                    exDuration = lang === 'hi' ? "रोजाना 45-60 मिनट" : lang === 'mr' ? "दररोज 45-60 मिनिटे" : lang === 'kn' ? "ದಿನಕ್ಕೆ 45-60 ನಿಮಿಷ" : "45-60 mins daily";
+                    exIntensity = lang === 'hi' ? "मध्यम से तेज (Moderate to High)" : lang === 'mr' ? "मध्यम ते तीव्र (Moderate to High)" : lang === 'kn' ? "ಮಧ್ಯಮದಿಂದ ತೀವ್ರ (Moderate to High)" : "Moderate to High";
+                    
+                    const obeseSpec1 = lang === 'hi' ? "जोड़ों के लिए सुरक्षित व्यायाम करें (Joint-friendly exercises)। घुटनों को बचाने के लिए तेज दौड़ने या कूदने से बचें।"
+                                     : lang === 'mr' ? "सांध्यांसाठी सुरक्षित व्यायाम करा. गुडघे सुरक्षित ठेवण्यासाठी वेगात धावणे किंवा उड्या मारणे टाळा."
+                                     : lang === 'kn' ? "ಕೀಲುಗಳಿಗೆ ಸುರಕ್ಷಿತವಾದ ವ್ಯಾಯಾಮ ಮಾಡಿ. ಮೊಣಕಾಲುಗಳನ್ನು ರಕ್ಷಿಸಲು ಓಡುವುದು ಅಥವಾ ಜಿಗಿಯುವುದನ್ನು ತಪ್ಪಿಸಿ."
+                                     : "Focus on joint-friendly aerobic exercises. Avoid high-impact running or jumping to protect knees.";
+                    const obeseSpec2 = lang === 'hi' ? "रोजाना अपनी शारीरिक गतिविधि बढ़ाएं और लगातार बैठे रहने से बचें।"
+                                     : lang === 'mr' ? "दररोज आपली शारीरिक हालचाल वाढवा आणि सतत बसून राहणे टाळा."
+                                     : lang === 'kn' ? "ದೈನಂದಿನ ದೈಹಿಕ ಚಟುವಟಿಕೆಯನ್ನು ಹೆಚ್ಚಿಸಿ ಮತ್ತು ನಿರಂತರವಾಗಿ ಕುಳಿತುಕೊಳ್ಳುವುದನ್ನು ತಪ್ಪಿಸಿ."
+                                     : "Increase daily NEAT (Non-Exercise Activity Thermogenesis) by walking more and avoiding prolonged sitting.";
+                                     
+                    exSpec.push(obeseSpec1, obeseSpec2);
+                } else {
+                    exSpec.push(t.exSpecNorm);
+                }
+
+                if(comorbidities.includes('anemia')) {
+                    const hb = parseFloat(document.getElementById('hb_value').value);
+                    avoid.push(t.avAne); include.push(t.inAne);
+                    if(hb && hb < 9) special.push(`⚠️ Hb is very low (${hb} g/dL). Avoid strenuous exercise. Seek immediate medical advice.`);
+                }
+                
+                if(comorbidities.includes('thyroid')) {
+                    if (thyroidStage === 'hypo') {
+                        avoid.push(t.avHypo); include.push(t.inHypo);
+                    } else {
+                        avoid.push(t.avHyper); include.push(t.inHyper);
+                    }
+                }
+                
+                if(comorbidities.includes('vit_k_antagonist')) {
+                    avoid.push(t.avVitK); include.push(t.inVitK);
+                    special.push(t.specVitK);
+                }
+                
+                if(comorbidities.includes('epilepsy')) {
+                    avoid.push(t.avEpi); include.push(t.inEpi);
+                    exSpec.push(t.exSpecEpi); yAsanas.push(t.yBala);
+                }
+                if(comorbidities.includes('pregnancy') && gender === 'female') {
+                    avoid.push(t.avPreg); include.push(t.inPreg);
+                }
+                if(comorbidities.includes('liver_disease')) { avoid.push(t.avLiver); include.push(t.inLiver); }
+                if(comorbidities.includes('hyperacidity') || comorbidities.includes('peptic_ulcer')) { avoid.push(t.avAcid); include.push(t.inAcid); }
+                if(comorbidities.includes('ibd')) { avoid.push(t.avIbd); include.push(t.inIbd); }
+                if(comorbidities.includes('dyslipidemia')) { avoid.push(t.avDys); include.push(t.inDys); }
+                if(comorbidities.includes('gout')) { avoid.push(t.avGout); include.push(t.inGout); }
+
+                if (bmi >= 25) avoid.push(t.avObese);
+
+                // Fallbacks if empty
+                if(include.length === 0) include.push(t.defInc);
+                if(avoid.length === 0) avoid.push(t.defAv);
+
+                if (yAsanas.length === 0) {
+                    if (comorbidities.includes('diabetes') || bmi >= 25) {
+                        yAsanas.push(t.ySurya, t.yManduka); yPranayama.push(t.yKapala);
+                    } else if (comorbidities.includes('hyperacidity') || comorbidities.includes('peptic_ulcer') || comorbidities.includes('liver_disease')) {
+                        yAsanas.push(t.yVajra, t.yPawan); yPranayama.push(t.ySheetali);
+                    } else {
+                        yAsanas.push(t.yTadasana, t.yBhujanga); yPranayama.push(t.yAnulom);
+                    }
+                }
+
+                let veg = t.vegNormal;
+                if(comorbidities.includes('ckd')) { veg = t.vegCKD; }
+                else if(comorbidities.includes('diabetes')) { veg = t.vegDia; }
+                else if(comorbidities.includes('dyslipidemia')) { veg = t.vegDys; }
+                else if(comorbidities.includes('hypertension')) { veg = t.vegHyp; }
+                else if(comorbidities.includes('hyperacidity') || comorbidities.includes('peptic_ulcer')) { veg = t.vegAcid; }
+                else if(comorbidities.includes('ibd')) { veg = t.vegIbd; }
+                else if(comorbidities.includes('gout')) { veg = t.vegGout; }
+
+                // UI population
+                const rep = str => str.replace('{staple}', staple).replace('{protein}', protein).replace('{altStaple}', altStaple).replace('{fruit}', fruit).replace('{veg}', veg);
+                
+                document.getElementById('r-title').innerText = t.title;
+                document.getElementById('r-avoid').innerText = "⚠️ " + t.waAvoid;
+                document.getElementById('r-include').innerText = "✅ " + t.waInclude;
+                document.getElementById('r-exTitle').innerText = "🏃‍♂️ " + t.waEx;
+                document.getElementById('r-yogaTitle').innerText = "🧘‍♀️ " + t.waYoga;
+                document.getElementById('r-specTitle').innerText = "⚠️ " + t.waSpec;
+                document.getElementById('r-refTitle').innerText = "📚 " + t.refTitle;
+                
+                document.getElementById('diet-plan-title').innerText = t.title;
+                document.getElementById('header-bfast').innerText = t.bfast;
+                document.getElementById('header-mid').innerText = t.mid;
+                document.getElementById('header-lunch').innerText = t.lunch;
+                document.getElementById('header-eve').innerText = t.eve;
+                document.getElementById('header-dinner').innerText = t.dinner;
+
+                const kcalStr = lang === 'hi' ? 'कैलोरी' : lang === 'mr' ? 'कॅलरी' : lang === 'kn' ? 'ಕ್ಯಾಲೋರಿ' : 'kcal';
+                const cals = { b: `~300 ${kcalStr}`, m: `~100 ${kcalStr}`, l: `~400 ${kcalStr}`, e: `~100 ${kcalStr}`, d: `~300 ${kcalStr}` };
+                const calSpan = (c) => `<span style="color:var(--text-light); font-size:0.85rem; font-weight:normal;"> (${c})</span>`;
+
+                document.getElementById('col-bfast').innerHTML = `<div class="meal-option"><strong>${t.opt1}</strong>${rep(t.b1)}${calSpan(cals.b)}</div><div class="meal-option"><strong>${t.opt2}</strong>${rep(t.b2)}${calSpan(cals.b)}</div><div class="meal-option"><strong>${t.opt3}</strong>${rep(t.b3)}${calSpan(cals.b)}</div>`;
+                document.getElementById('col-mid').innerHTML = `<div class="meal-option"><strong>${t.opt1}</strong>${rep(t.m1)}${calSpan(cals.m)}</div><div class="meal-option"><strong>${t.opt2}</strong>${rep(t.m2)}${calSpan(cals.m)}</div><div class="meal-option"><strong>${t.opt3}</strong>${rep(t.m3)}${calSpan(cals.m)}</div>`;
+                document.getElementById('col-lunch').innerHTML = `<div class="meal-option"><strong>${t.opt1}</strong>${rep(t.l1)}${calSpan(cals.l)}</div><div class="meal-option"><strong>${t.opt2}</strong>${rep(t.l2)}${calSpan(cals.l)}</div><div class="meal-option"><strong>${t.opt3}</strong>${rep(t.l3)}${calSpan(cals.l)}</div>`;
+                document.getElementById('col-eve').innerHTML = `<div class="meal-option"><strong>${t.opt1}</strong>${rep(t.e1)}${calSpan(cals.e)}</div><div class="meal-option"><strong>${t.opt2}</strong>${rep(t.e2)}${calSpan(cals.e)}</div><div class="meal-option"><strong>${t.opt3}</strong>${rep(t.e3)}${calSpan(cals.e)}</div>`;
+                document.getElementById('col-dinner').innerHTML = `<div class="meal-option"><strong>${t.opt1}</strong>${rep(t.d1)}${calSpan(cals.d)}</div><div class="meal-option"><strong>${t.opt2}</strong>${rep(t.d2)}${calSpan(cals.d)}</div><div class="meal-option"><strong>${t.opt3}</strong>${rep(t.d3)}${calSpan(cals.d)}</div>`;
+
+                // Distinct unique filter for avoid/include to prevent overlaps
+                avoid = [...new Set(avoid)];
+                include = [...new Set(include)];
+
+                document.getElementById('avoid-list').innerHTML = avoid.length ? avoid.map(a=>`<li>${a}</li>`).join('') : '<li>No specific restrictions</li>';
+
+                // Translate Tables
+                const foodTitles = { en: "Common Foods & Calorie Content", hi: "सामान्य खाद्य पदार्थ और कैलोरी", mr: "सामान्य अन्न आणि कॅलरी", kn: "ಸಾಮಾನ್ಯ ಆಹಾರಗಳು ಮತ್ತು ಕ್ಯಾಲೋರಿಗಳು" };
+                const actTitles = { en: "Activity Calorie Burn Rate (per 30 mins)", hi: "व्यायाम कैलोरी बर्न (प्रति 30 मिनट)", mr: "व्यायाम कॅलरी बर्न (प्रति 30 मिनिटे)", kn: "ವ್ಯಾಯಾಮ ಕ್ಯಾಲೋರಿ ಬರ್ನ್ (ಪ್ರತಿ 30 ನಿಮಿಷಕ್ಕೆ)" };
+                document.getElementById('r-foodCalTitle').innerText = foodTitles[lang];
+                document.getElementById('r-activityCalTitle').innerText = actTitles[lang];
+
+                const foodData = {
+                    en: `
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li><strong>1 Roti (medium):</strong> ~80 kcal</li>
+                            <li><strong>1 Bhakri:</strong> ~120 kcal</li>
+                            <li><strong>1 bowl Rice:</strong> ~130 kcal</li>
+                            <li><strong>1 Idli:</strong> ~40 kcal</li>
+                            <li><strong>1 Dosa:</strong> ~120 kcal</li>
+                            <li><strong>1 bowl Poha:</strong> ~150 kcal</li>
+                        </ul>
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li><strong>1 bowl Dal:</strong> ~100 kcal</li>
+                            <li><strong>1 bowl Curd:</strong> ~60 kcal</li>
+                            <li><strong>1 bowl Veg Curry:</strong> ~100 kcal</li>
+                            <li><strong>1 Apple/Orange:</strong> ~50-60 kcal</li>
+                            <li><strong>1 Banana:</strong> ~100 kcal</li>
+                            <li><strong>1 Egg (boiled):</strong> ~75 kcal</li>
+                        </ul>
+                    `,
+                    hi: `
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li><strong>1 रोटी:</strong> ~80 कैलोरी</li>
+                            <li><strong>1 भाकरी:</strong> ~120 कैलोरी</li>
+                            <li><strong>1 कटोरी चावल:</strong> ~130 कैलोरी</li>
+                            <li><strong>1 इडली:</strong> ~40 कैलोरी</li>
+                            <li><strong>1 डोसा:</strong> ~120 कैलोरी</li>
+                            <li><strong>1 कटोरी पोहा:</strong> ~150 कैलोरी</li>
+                        </ul>
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li><strong>1 कटोरी दाल:</strong> ~100 कैलोरी</li>
+                            <li><strong>1 कटोरी दही:</strong> ~60 कैलोरी</li>
+                            <li><strong>1 कटोरी सब्जी:</strong> ~100 कैलोरी</li>
+                            <li><strong>1 सेब/संतरा:</strong> ~50-60 कैलोरी</li>
+                            <li><strong>1 केला:</strong> ~100 कैलोरी</li>
+                            <li><strong>1 अंडा (उबला):</strong> ~75 कैलोरी</li>
+                        </ul>
+                    `,
+                    mr: `
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li><strong>1 पोळी:</strong> ~80 कॅलरी</li>
+                            <li><strong>1 भाकरी:</strong> ~120 कॅलरी</li>
+                            <li><strong>1 वाटी भात:</strong> ~130 कॅलरी</li>
+                            <li><strong>1 इडली:</strong> ~40 कॅलरी</li>
+                            <li><strong>1 डोसा:</strong> ~120 कॅलरी</li>
+                            <li><strong>1 वाटी पोहे:</strong> ~150 कॅलरी</li>
+                        </ul>
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li><strong>1 वाटी वरण:</strong> ~100 कॅलरी</li>
+                            <li><strong>1 वाटी दही:</strong> ~60 कॅलरी</li>
+                            <li><strong>1 वाटी भाजी:</strong> ~100 कॅलरी</li>
+                            <li><strong>1 सफरचंद/संत्री:</strong> ~50-60 कॅलरी</li>
+                            <li><strong>1 केळे:</strong> ~100 कॅलरी</li>
+                            <li><strong>1 अंडी (उकडलेले):</strong> ~75 कॅलरी</li>
+                        </ul>
+                    `,
+                    kn: `
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li><strong>1 ರೊಟ್ಟಿ:</strong> ~80 ಕ್ಯಾಲೋರಿ</li>
+                            <li><strong>1 ಭಾಕ್ರಿ:</strong> ~120 ಕ್ಯಾಲೋರಿ</li>
+                            <li><strong>1 ಬಟ್ಟಲು ಅನ್ನ:</strong> ~130 ಕ್ಯಾಲೋರಿ</li>
+                            <li><strong>1 ಇಡ್ಲಿ:</strong> ~40 ಕ್ಯಾಲೋರಿ</li>
+                            <li><strong>1 ದೋಸೆ:</strong> ~120 ಕ್ಯಾಲೋರಿ</li>
+                            <li><strong>1 ಬಟ್ಟಲು ಅವಲಕ್ಕಿ:</strong> ~150 ಕ್ಯಾಲೋರಿ</li>
+                        </ul>
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li><strong>1 ಬಟ್ಟಲು ಬೇಳೆ:</strong> ~100 ಕ್ಯಾಲೋರಿ</li>
+                            <li><strong>1 ಬಟ್ಟಲು ಮೊಸರು:</strong> ~60 ಕ್ಯಾಲೋರಿ</li>
+                            <li><strong>1 ಬಟ್ಟಲು ಪಲ್ಯ:</strong> ~100 ಕ್ಯಾಲೋರಿ</li>
+                            <li><strong>1 ಸೇಬು/ಕಿತ್ತಳೆ:</strong> ~50-60 ಕ್ಯಾಲೋರಿ</li>
+                            <li><strong>1 ಬಾಳೆಹಣ್ಣು:</strong> ~100 ಕ್ಯಾಲೋರಿ</li>
+                            <li><strong>1 ಮೊಟ್ಟೆ (ಬೇಯಿಸಿದ):</strong> ~75 ಕ್ಯಾಲೋರಿ</li>
+                        </ul>
+                    `
+                };
+
+                const actData = {
+                    en: `
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li><strong>Brisk Walking:</strong> ~150 kcal</li>
+                            <li><strong>Cycling:</strong> ~250 kcal</li>
+                            <li><strong>Swimming:</strong> ~250 kcal</li>
+                            <li><strong>Yoga:</strong> ~120 kcal</li>
+                        </ul>
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li><strong>Badminton:</strong> ~200 kcal</li>
+                            <li><strong>Tennis:</strong> ~250 kcal</li>
+                            <li><strong>Cricket:</strong> ~150 kcal</li>
+                            <li><strong>Football:</strong> ~260 kcal</li>
+                        </ul>
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li><strong>Table Tennis:</strong> ~150 kcal</li>
+                            <li><strong>Volleyball:</strong> ~180 kcal</li>
+                            <li><strong>Hockey:</strong> ~250 kcal</li>
+                            <li><strong>Aerobics:</strong> ~200 kcal</li>
+                        </ul>
+                    `,
+                    hi: `
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li><strong>तेज चलना:</strong> ~150 कैलोरी</li>
+                            <li><strong>साइकिलिंग:</strong> ~250 कैलोरी</li>
+                            <li><strong>तैरना:</strong> ~250 कैलोरी</li>
+                            <li><strong>योग:</strong> ~120 कैलोरी</li>
+                        </ul>
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li><strong>बैडमिंटन:</strong> ~200 कैलोरी</li>
+                            <li><strong>टेनिस:</strong> ~250 कैलोरी</li>
+                            <li><strong>क्रिकेट:</strong> ~150 कैलोरी</li>
+                            <li><strong>फुटबॉल:</strong> ~260 कैलोरी</li>
+                        </ul>
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li><strong>टेबल टेनिस:</strong> ~150 कैलोरी</li>
+                            <li><strong>वॉलीबॉल:</strong> ~180 कैलोरी</li>
+                            <li><strong>हॉकी:</strong> ~250 कैलोरी</li>
+                            <li><strong>एरोबिक्स:</strong> ~200 कैलोरी</li>
+                        </ul>
+                    `,
+                    mr: `
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li><strong>जलद चालणे:</strong> ~150 कॅलरी</li>
+                            <li><strong>सायकलिंग:</strong> ~250 कॅलरी</li>
+                            <li><strong>पोहणे:</strong> ~250 कॅलरी</li>
+                            <li><strong>योग:</strong> ~120 कॅलरी</li>
+                        </ul>
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li><strong>बॅडमिंटन:</strong> ~200 कॅलरी</li>
+                            <li><strong>टेनिस:</strong> ~250 कॅलरी</li>
+                            <li><strong>क्रिकेट:</strong> ~150 कॅलरी</li>
+                            <li><strong>फुटबॉल:</strong> ~260 कॅलरी</li>
+                        </ul>
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li><strong>टेबल टेनिस:</strong> ~150 कॅलरी</li>
+                            <li><strong>व्हॉलीबॉल:</strong> ~180 कॅलरी</li>
+                            <li><strong>हॉकी:</strong> ~250 कॅलरी</li>
+                            <li><strong>एरोबिक्स:</strong> ~200 कॅलरी</li>
+                        </ul>
+                    `,
+                    kn: `
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li><strong>ವೇಗವಾಗಿ ನಡೆಯುವುದು:</strong> ~150 ಕ್ಯಾಲೋರಿ</li>
+                            <li><strong>ಸೈಕ್ಲಿಂಗ್:</strong> ~250 ಕ್ಯಾಲೋರಿ</li>
+                            <li><strong>ಈಜುವುದು:</strong> ~250 ಕ್ಯಾಲೋರಿ</li>
+                            <li><strong>ಯೋಗ:</strong> ~120 ಕ್ಯಾಲೋರಿ</li>
+                        </ul>
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li><strong>ಬ್ಯಾಡ್ಮಿಂಟನ್:</strong> ~200 ಕ್ಯಾಲೋರಿ</li>
+                            <li><strong>ಟೆನಿಸ್:</strong> ~250 ಕ್ಯಾಲೋರಿ</li>
+                            <li><strong>ಕ್ರಿಕೆಟ್:</strong> ~150 ಕ್ಯಾಲೋರಿ</li>
+                            <li><strong>ಫುಟ್ಬಾಲ್:</strong> ~260 ಕ್ಯಾಲೋರಿ</li>
+                        </ul>
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li><strong>ಟೇಬಲ್ ಟೆನಿಸ್:</strong> ~150 ಕ್ಯಾಲೋರಿ</li>
+                            <li><strong>ವಾಲಿಬಾಲ್:</strong> ~180 ಕ್ಯಾಲೋರಿ</li>
+                            <li><strong>ಹಾಕಿ:</strong> ~250 ಕ್ಯಾಲೋರಿ</li>
+                            <li><strong>ಏರೋಬಿಕ್ಸ್:</strong> ~200 ಕ್ಯಾಲೋರಿ</li>
+                        </ul>
+                    `
+                };
+
+                document.getElementById('food-cal-content').innerHTML = foodData[lang];
+                document.getElementById('act-cal-content').innerHTML = actData[lang];
+
+                
+                // Fruit & Dry Fruit Guidelines Logic
+                let fruitGuideText = '';
+                if (comorbidities.includes('ckd')) {
+                    const ckdData = {
+                        en: `<strong>Fruits:</strong> Avoid high-potassium fruits like Banana, Sweet Lime (Mosambi), Coconut water, and Melon. You may consume Apple, Papaya, and Pineapple in measured amounts.<br><strong style="margin-top:0.3rem; display:inline-block;">Dry Fruits:</strong> Strictly avoid Dates (Khajoor) and Raisins (Kishmish). Measured amounts of Almonds/Walnuts are fine unless your doctor advised otherwise.`,
+                        hi: `<strong>फल:</strong> केला, मौसमी, नारियल पानी और खरबूजे जैसे उच्च पोटेशियम वाले फलों से बचें। आप सीमित मात्रा में सेब, पपीता और अनानास खा सकते हैं।<br><strong style="margin-top:0.3rem; display:inline-block;">सूखे मेवे:</strong> खजूर और किशमिश से सख्त परहेज करें। बादाम/अखरोट सीमित मात्रा में ले सकते हैं (यदि डॉक्टर ने मना न किया हो)।`,
+                        mr: `<strong>फळे:</strong> केळी, मोसंबी, नारळपाणी आणि खरबूज यांसारखी जास्त पोटॅशियम असलेली फळे टाळा. तुम्ही सफरचंद, पपई आणि अननस मोजक्या प्रमाणात खाऊ शकता.<br><strong style="margin-top:0.3rem; display:inline-block;">सुकामेवा:</strong> खजूर आणि बेदाणे (किशमिश) काटेकोरपणे टाळा. बदामा/अक्रोड मर्यादित प्रमाणात घेऊ शकता.`,
+                        kn: `<strong>ಹಣ್ಣುಗಳು:</strong> ಬಾಳೆಹಣ್ಣು, ಮೂಸಂಬಿ, ಎಳನೀರು ಮತ್ತು ಕಲ್ಲಂಗಡಿಯಂತಹ ಹೆಚ್ಚು ಪೊಟ್ಯಾಸಿಯಮ್ ಇರುವ ಹಣ್ಣುಗಳನ್ನು ತಪ್ಪಿಸಿ. ಸೇಬು, ಪಪ್ಪಾಯಿ ಮತ್ತು ಅನಾನಸ್ ಅನ್ನು ಮಿತವಾಗಿ ಸೇವಿಸಬಹುದು.<br><strong style="margin-top:0.3rem; display:inline-block;">ಒಣ ಹಣ್ಣುಗಳು:</strong> ಖರ್ಜೂರ ಮತ್ತು ಒಣದ್ರಾಕ್ಷಿಯನ್ನು ಕಟ್ಟುನಿಟ್ಟಾಗಿ ತಪ್ಪಿಸಿ. ಬಾದಾಮಿ/ವಾಲ್ನಟ್ಸ್ ಅನ್ನು ಮಿತವಾಗಿ ಸೇವಿಸಬಹುದು.`
+                    };
+                    fruitGuideText = ckdData[lang];
+                } else if (comorbidities.includes('diabetes')) {
+                    const diabData = {
+                        en: `<strong>Fruits:</strong> Avoid high-sugar fruits like Mango, Chikoo, Grapes, Banana, and Custard Apple (Sitafal). You may safely eat Apple, Guava, Papaya, Jamun, and Orange.<br><strong style="margin-top:0.3rem; display:inline-block;">Dry Fruits:</strong> Avoid sugary dry fruits like Dates and Raisins. You can liberally consume soaked Almonds and Walnuts.`,
+                        hi: `<strong>फल:</strong> आम, चीकू, अंगूर, केला और सीताफल जैसे उच्च शुगर वाले फलों से बचें। आप सेब, अमरूद, पपीता, जामुन और संतरा सुरक्षित रूप से खा सकते हैं।<br><strong style="margin-top:0.3rem; display:inline-block;">सूखे मेवे:</strong> खजूर और किशमिश जैसे मीठे सूखे मेवे से बचें। आप भीगे हुए बादाम और अखरोट खा सकते हैं।`,
+                        mr: `<strong>फळे:</strong> आंबा, चीकू, द्राक्षे, केळी आणि सीताफळ यांसारखी जास्त साखरेची फळे टाळा. तुम्ही सफरचंद, पेरू, पपई, जांभूळ आणि संत्री सुरक्षितपणे खाऊ शकता.<br><strong style="margin-top:0.3rem; display:inline-block;">सुकामेवा:</strong> खजूर आणि बेदाणे यांसारखा गोड सुकामेवा टाळा. भिजवलेले बदाम आणि अक्रोड तुम्ही खाऊ शकता.`,
+                        kn: `<strong>ಹಣ್ಣುಗಳು:</strong> ಮಾವು, ಸಪೋಟ, ದ್ರಾಕ್ಷಿ, ಬಾಳೆಹಣ್ಣು ಮತ್ತು ಸೀತಾಫಲದಂತಹ ಹೆಚ್ಚು ಸಕ್ಕರೆ ಇರುವ ಹಣ್ಣುಗಳನ್ನು ತಪ್ಪಿಸಿ. ನೀವು ಸೇಬು, ಸೀಬೆಕಾಯಿ, ಪಪ್ಪಾಯಿ, ನೇರಳೆ ಮತ್ತು ಕಿತ್ತಳೆಯನ್ನು ಸುರಕ್ಷಿತವಾಗಿ ಸೇವಿಸಬಹುದು.<br><strong style="margin-top:0.3rem; display:inline-block;">ಒಣ ಹಣ್ಣುಗಳು:</strong> ಖರ್ಜೂರ ಮತ್ತು ಒಣದ್ರಾಕ್ಷಿಯಂತಹ ಸಿಹಿ ಒಣ ಹಣ್ಣುಗಳನ್ನು ತಪ್ಪಿಸಿ. ನೆನೆಸಿದ ಬಾದಾಮಿ ಮತ್ತು ವಾಲ್ನಟ್ಸ್ ಅನ್ನು ಸೇವಿಸಬಹುದು.`
+                    };
+                    fruitGuideText = diabData[lang];
+                } else if (comorbidities.includes('dyslipidemia') || comorbidities.includes('htn') || comorbidities.includes('cad')) {
+                    const heartData = {
+                        en: `<strong>Fruits:</strong> Consume a wide variety of fresh, seasonal Indian fruits daily. Avoid canned fruits with syrups.<br><strong style="margin-top:0.3rem; display:inline-block;">Dry Fruits:</strong> Heart-healthy nuts like Almonds, Walnuts, Pistachios, and seeds (Flax/Chia) are highly recommended. If overweight, limit sugary dry fruits like Dates.`,
+                        hi: `<strong>फल:</strong> रोजाना ताजे, मौसमी भारतीय फलों का सेवन करें। डिब्बाबंद या सिरप वाले फलों से बचें।<br><strong style="margin-top:0.3rem; display:inline-block;">सूखे मेवे:</strong> बादाम, अखरोट, पिस्ता और अलसी/चिया के बीज दिल के लिए बहुत अच्छे हैं। यदि वजन अधिक है, तो खजूर जैसे मीठे मेवे सीमित करें।`,
+                        mr: `<strong>फळे:</strong> दररोज ताजी, हंगामी भारतीय फळे खा. डबाबंद किंवा पाकातील फळे टाळा.<br><strong style="margin-top:0.3rem; display:inline-block;">सुकामेवा:</strong> बदाम, अक्रोड, पिस्ता आणि जवस (Flax seeds) हृदयासाठी उत्तम आहेत. वजन जास्त असल्यास खजूरसारखे गोड सुकामेवे मर्यादित ठेवा.`,
+                        kn: `<strong>ಹಣ್ಣುಗಳು:</strong> ಪ್ರತಿದಿನ ತಾಜಾ, ಋತುಮಾನದ ಹಣ್ಣುಗಳನ್ನು ಸೇವಿಸಿ. ಸಿರಪ್ ಹೊಂದಿರುವ ಡಬ್ಬಿಯಲ್ಲಿನ ಹಣ್ಣುಗಳನ್ನು ತಪ್ಪಿಸಿ.<br><strong style="margin-top:0.3rem; display:inline-block;">ಒಣ ಹಣ್ಣುಗಳು:</strong> ಬಾದಾಮಿ, ವಾಲ್ನಟ್ಸ್, ಪಿಸ್ತಾ ಮತ್ತು ಫ್ಲಾಕ್ಸ್ ಬೀಜಗಳು ಹೃದಯಕ್ಕೆ ತುಂಬಾ ಒಳ್ಳೆಯದು. ತೂಕ ಹೆಚ್ಚಿದ್ದರೆ, ಖರ್ಜೂರದಂತಹ ಸಿಹಿ ಒಣ ಹಣ್ಣುಗಳನ್ನು ಮಿತಗೊಳಿಸಿ.`
+                    };
+                    fruitGuideText = heartData[lang];
+                } else {
+                    const defData = {
+                        en: `<strong>Fruits:</strong> You can liberally consume a variety of fresh seasonal Indian fruits (like Mangoes, Oranges, Bananas, Papaya) daily for essential vitamins.<br><strong style="margin-top:0.3rem; display:inline-block;">Dry Fruits:</strong> A daily handful of mixed dry fruits (soaked Almonds, Raisins, Figs, Walnuts) is highly recommended for healthy fats and energy.`,
+                        hi: `<strong>फल:</strong> आप आवश्यक विटामिन के लिए रोजाना विभिन्न प्रकार के ताजे मौसमी भारतीय फलों (जैसे आम, संतरा, केला, पपीता) का सेवन कर सकते हैं।<br><strong style="margin-top:0.3rem; display:inline-block;">सूखे मेवे:</strong> स्वस्थ वसा और ऊर्जा के लिए मुट्ठी भर मिले-जुले सूखे मेवे (भीगे हुए बादाम, किशमिश, अंजीर, अखरोट) की अत्यधिक सिफारिश की जाती है।`,
+                        mr: `<strong>फळे:</strong> आवश्यक जीवनसत्त्वांसाठी तुम्ही दररोज विविध प्रकारची ताजी हंगामी भारतीय फळे (जसे आंबा, संत्री, केळी, पपई) मुक्तपणे खाऊ शकता.<br><strong style="margin-top:0.3rem; display:inline-block;">सुकामेवा:</strong> निरोगी चरबी आणि ऊर्जेसाठी दररोज मूठभर संमिश्र सुकामेवा (भिजवलेले बदाम, मनुका, अंजीर, अक्रोड) खाण्याची शिफारस केली जाते.`,
+                        kn: `<strong>ಹಣ್ಣುಗಳು:</strong> ಅಗತ್ಯ ವಿಟಮಿನ್‌ಗಳಿಗಾಗಿ ನೀವು ಪ್ರತಿದಿನ ವಿವಿಧ ತಾಜಾ ಋತುಮಾನದ ಹಣ್ಣುಗಳನ್ನು (ಮಾವು, ಕಿತ್ತಳೆ, ಬಾಳೆಹಣ್ಣು, ಪಪ್ಪಾಯಿ) ಯಥೇಚ್ಛವಾಗಿ ಸೇವಿಸಬಹುದು.<br><strong style="margin-top:0.3rem; display:inline-block;">ಒಣ ಹಣ್ಣುಗಳು:</strong> ಆರೋಗ್ಯಕರ ಕೊಬ್ಬು ಮತ್ತು ಶಕ್ತಿಗಾಗಿ ಪ್ರತಿದಿನ ಒಂದು ಹಿಡಿ ಒಣ ಹಣ್ಣುಗಳನ್ನು (ನೆನೆಸಿದ ಬಾದಾಮಿ, ಒಣದ್ರಾಕ್ಷಿ, ಅಂಜೂರ, ವಾಲ್ನಟ್ಸ್) ಸೇವಿಸುವುದು ಉತ್ತಮ.`
+                    };
+                    fruitGuideText = defData[lang];
+                }
+                const fruitTitleData = { en: "Fruits & Dry Fruits Guide", hi: "फल और सूखे मेवे दिशानिर्देश", mr: "फळे आणि सुकामेवा मार्गदर्शक", kn: "ಹಣ್ಣುಗಳು ಮತ್ತು ಒಣ ಹಣ್ಣುಗಳ ಮಾರ್ಗದರ್ಶಿ" };
+                document.getElementById('r-fruitTitle').innerText = fruitTitleData[lang];
+                document.getElementById('fruit-guide-content').innerHTML = fruitGuideText;
+
+                // Translate Compliance Section
+                const compTitles = { en: "Diet Compliance, Cheat Meals & Social Guidelines", hi: "आहार अनुपालन, चीट मील और पार्टी दिशानिर्देश", mr: "आहार अनुपालन, चीट मील आणि पार्टी मार्गदर्शक", kn: "ಆಹಾರ ಪಾಲನೆ, ಚೀಟ್ ಮೀಲ್ ಮತ್ತು ಪಾರ್ಟಿ ಮಾರ್ಗಸೂಚಿಗಳು" };
+                document.getElementById('r-compTitle').innerText = compTitles[lang];
+
+                const compData = {
+                    en: `
+                        <ul style="list-style-type: disc; padding-left: 1.5rem; margin-bottom: 0;">
+                            <li style="margin-bottom:0.4rem;"><strong>Cheat Meal (Once a week):</strong> To help you stay consistent, you can have one cheat meal a week. You can eat items like 1 slice of Pizza, a small bowl of Pasta, 1 small piece of Dark Chocolate, or a homemade dessert (like kheer/payasam with very little sugar) in <em>strictly limited portions</em>.</li>
+                            <li style="margin-bottom:0.4rem;"><strong>Parties & Dining Out:</strong> Eat a healthy snack (like an apple or almonds) before leaving home so you aren't starving. Choose roasted/tandoori starters (like Paneer or Chicken Tikka) instead of fried ones. If consuming <strong style="color:red;">prohibited foods</strong> (like deep-fried Manchurian, heavy buttery gravies, or rich sweets like Gulab Jamun), take only 1-2 small bites purely for taste, and do not make it a full meal.</li>
+                            <li style="margin-bottom:0;"><strong>Occasional Chaat options:</strong> Craving street food? You can occasionally eat healthier chaats to satisfy your tastebuds: Bhel Puri (without sweet chutney, add extra onion/tomato), Roasted Chana Chaat, Sprouts Chaat, Corn Chaat, non-fried Dahi Vada (sweetened with stevia), or 4-5 pieces of Pani Puri (use moong/chana filling instead of potato, and avoid sweet chutney).</li>
+                        </ul>
+                    `,
+                    hi: `
+                        <ul style="list-style-type: disc; padding-left: 1.5rem; margin-bottom: 0;">
+                            <li style="margin-bottom:0.4rem;"><strong>चीट मील (सप्ताह में एक बार):</strong> लगातार आहार का पालन करने के लिए, आप सप्ताह में एक बार अपनी पसंद का खाना <em>बहुत सीमित मात्रा</em> में खा सकते हैं। उदाहरण के लिए: 1 स्लाइस पिज्जा, छोटा कटोरी पास्ता, 1 छोटा टुकड़ा डार्क चॉकलेट, या घर की बनी कम चीनी वाली खीर।</li>
+                            <li style="margin-bottom:0.4rem;"><strong>पार्टियां और बाहर खाना:</strong> घर से निकलने से पहले एक सेब या बादाम खा लें ताकि आपको बहुत भूख न लगे। तली हुई चीजों के बजाय रोस्टेड/तंदूरी स्टार्टर्स (जैसे पनीर/चिकन टिक्का) चुनें। यदि आप <strong style="color:red;">प्रतिबंधित खाद्य पदार्थ</strong> (जैसे तली हुई मंचूरियन, भारी ग्रेवी या गुलाब जामुन) खा रहे हैं, तो केवल स्वाद के लिए 1-2 छोटे चम्मच लें, इसे पूरा भोजन न बनाएं।</li>
+                            <li style="margin-bottom:0;"><strong>कभी-कभार चाट विकल्प:</strong> चटपटा खाने का मन हो तो ये स्वस्थ विकल्प चुनें: भेल पूरी (बिना मीठी चटनी के, प्याज-टमाटर डालकर), भुना चना चाट, स्प्राउट्स चाट, कॉर्न चाट, बिना तला हुआ दही वड़ा, या 4-5 पानी पूरी (आलू के बजाय मूंग/चना भरें, मीठी चटनी से बचें)।</li>
+                        </ul>
+                    `,
+                    mr: `
+                        <ul style="list-style-type: disc; padding-left: 1.5rem; margin-bottom: 0;">
+                            <li style="margin-bottom:0.4rem;"><strong>चीट मील (आठवड्यातून एकदा):</strong> आहारातील सातत्य राखण्यासाठी तुम्ही आठवड्यातून एकदा तुमच्या आवडीचे अन्न <em>अत्यंत मर्यादित प्रमाणात</em> खाऊ शकता. उदा: १ स्लाइस पिझ्झा, छोटी वाटी पास्ता, डार्क चॉकलेटचा १ छोटा तुकडा किंवा घरी बनवलेली कमी साखरेची खीर.</li>
+                            <li style="margin-bottom:0.4rem;"><strong>पार्ट्या आणि बाहेर जेवणे:</strong> घरातून निघण्यापूर्वी सफरचंद किंवा बदाम खा, जेणेकरून तुम्हाला जास्त भूक लागणार नाही. तळलेल्या पदार्थांऐवजी भाजलेले/तंदुरी स्टार्टर्स (उदा. पनीर/चिकन टिक्का) निवडा. जर तुम्ही <strong style="color:red;">निषिद्ध अन्न</strong> (उदा. तळलेले मंचुरियन, जड ग्रेव्ही किंवा गुलाबजाम) खात असाल, तर फक्त चवीसाठी १-२ छोटे घास घ्या, त्याचे पूर्ण जेवण करू नका.</li>
+                            <li style="margin-bottom:0;"><strong>कधीतरी चाट पर्याय:</strong> चटपटीत खाण्याची इच्छा असल्यास हे आरोग्यदायी पर्याय निवडा: भेलपुरी (गोड चटणीशिवाय, कांदा-टोमॅटो टाकून), भाजलेला चणा चाट, मोड आलेल्या कडधान्यांचा चाट, कॉर्न चाट, न तळलेले दही वडे, किंवा ४-५ पाणीपुरी (बटाट्याऐवजी मूग/चणा भरा, गोड चटणी टाळा).</li>
+                        </ul>
+                    `,
+                    kn: `
+                        <ul style="list-style-type: disc; padding-left: 1.5rem; margin-bottom: 0;">
+                            <li style="margin-bottom:0.4rem;"><strong>ಚೀಟ್ ಮೀಲ್ (ವಾರಕ್ಕೊಮ್ಮೆ):</strong> ಆಹಾರವನ್ನು ನಿರಂತರವಾಗಿ ಪಾಲಿಸಲು, ವಾರಕ್ಕೊಮ್ಮೆ ನಿಮ್ಮ ನೆಚ್ಚಿನ ಆಹಾರವನ್ನು <em>ಅತ್ಯಂತ ಮಿತ ಪ್ರಮಾಣದಲ್ಲಿ</em> ಸೇವಿಸಬಹುದು. ಉದಾಹರಣೆಗೆ: 1 ತುಂಡು ಪಿಜ್ಜಾ, ಸಣ್ಣ ಬಟ್ಟಲು ಪಾಸ್ತಾ, 1 ಸಣ್ಣ ತುಂಡು ಡಾರ್ಕ್ ಚಾಕೊಲೇಟ್, ಅಥವಾ ಕಡಿಮೆ ಸಕ್ಕರೆಯ ಪಾಯಸ.</li>
+                            <li style="margin-bottom:0.4rem;"><strong>ಪಾರ್ಟಿಗಳು ಮತ್ತು ಹೊರಗೆ ಊಟ:</strong> ಮನೆಯಿಂದ ಹೊರಡುವ ಮುನ್ನ ಸೇಬು ಅಥವಾ ಬಾದಾಮಿ ತಿನ್ನಿ, ಇದರಿಂದ ಅತಿಯಾದ ಹಸಿವಾಗುವುದಿಲ್ಲ. ಕರಿದ ತಿಂಡಿಗಳ ಬದಲಿಗೆ ರೋಸ್ಟೆಡ್/ತಂದೂರಿ ಸ್ಟಾರ್ಟರ್ಸ್ (ಪನೀರ್/ಚಿಕನ್ ಟಿಕ್ಕಾ) ಆಯ್ಕೆ ಮಾಡಿ. <strong style="color:red;">ನಿಷೇಧಿತ ಆಹಾರಗಳನ್ನು</strong> (ಕರಿದ ಮಂಚೂರಿಯನ್, ಹೆಚ್ಚು ಬೆಣ್ಣೆಯ ಗ್ರೇವಿ ಅಥವಾ ಗುಲಾಬ್ ಜಾಮೂನ್) ಸೇವಿಸುತ್ತಿದ್ದರೆ, ಕೇವಲ ರುಚಿಗಾಗಿ 1-2 ಸಣ್ಣ ಕಚ್ಚು (ಬೈಟ್) ಮಾತ್ರ ತೆಗೆದುಕೊಳ್ಳಿ.</li>
+                            <li style="margin-bottom:0;"><strong>ಒಮ್ಮೊಮ್ಮೆ ಚಾಟ್ ಆಯ್ಕೆಗಳು:</strong> ಬಾಯಿಗೆ ರುಚಿಯಾದ ಏನನ್ನಾದರೂ ತಿನ್ನಬೇಕೆನಿಸಿದರೆ ಈ ಆರೋಗ್ಯಕರ ಆಯ್ಕೆಗಳನ್ನು ಆರಿಸಿ: ಭೇಲ್ ಪುರಿ (ಸಿಹಿ ಚಟ್ನಿ ಇಲ್ಲದೆ, ಈರುಳ್ಳಿ-ಟೊಮೆಟೊ ಸೇರಿಸಿ), ಹುರಿದ ಕಡಲೆ ಚಾಟ್, ಮೊಳಕೆ ಕಾಳು ಚಾಟ್, ಕಾರ್ನ್ ಚಾಟ್, ಕರಿಯದ ಮೊಸರು ವಡಾ, ಅಥವಾ 4-5 ಪಾನಿ ಪುರಿ (ಆಲೂಗಡ್ಡೆ ಬದಲಿಗೆ ಹೆಸರುಕಾಳು/ಕಡಲೆ ಬಳಸಿ, ಸಿಹಿ ಚಟ್ನಿ ಬೇಡ).</li>
+                        </ul>
+                    `
+                };
+                document.getElementById('compliance-content').innerHTML = compData[lang];
+
+
+                document.getElementById('include-list').innerHTML = include.length ? include.map(a=>`<li>${a}</li>`).join('') : '<li>Balanced diet</li>';
+
+                const hfStage = document.querySelector('input[name="hf_stage"]:checked')?.value;
+                const liverStage = document.querySelector('input[name="liver_stage"]:checked')?.value;
+                let noExercise = false;
+                let noExerciseReason = "";
+
+                if (comorbidities.includes('heart_failure') && hfStage === 'advanced') {
+                    noExercise = true;
+                    noExerciseReason = lang === 'hi' ? "डिकम्पेंसेटेड हार्ट फेल्योर (Decompensated Heart Failure) के लिए पूर्ण आराम की सलाह दी जाती है। व्यायाम न करें।" 
+                                     : lang === 'mr' ? "डिकम्पेंसेटेड हार्ट फेल्युअरमध्ये (Decompensated Heart Failure) पूर्ण विश्रांतीचा सल्ला दिला जातो. व्यायाम करू नका." 
+                                     : lang === 'kn' ? "ಡಿಕಂಪೆನ್ಸೇಟೆಡ್ ಹಾರ್ಟ್ ಫೇಲ್ಯೂರ್ (Decompensated Heart Failure) ಗಾಗಿ ಸಂಪೂರ್ಣ ವಿಶ್ರಾಂತಿ ಸೂಚಿಸಲಾಗಿದೆ. ವ್ಯಾಯಾಮ ಮಾಡಬೇಡಿ."
+                                     : "Strict bed rest is advised for decompensated Heart Failure. No exercise.";
+                } else if (comorbidities.includes('liver_disease') && liverStage === 'acute') {
+                    noExercise = true;
+                    noExerciseReason = lang === 'hi' ? "एक्यूट हेपेटाइटिस (Acute Hepatitis) में लिवर को ठीक होने के लिए पूर्ण आराम की सलाह दी जाती है। व्यायाम न करें।"
+                                     : lang === 'mr' ? "एक्यूट हेपेटायटीस (Acute Hepatitis) मध्ये यकृत बरे होण्यासाठी पूर्ण विश्रांतीचा सल्ला दिला जातो. व्यायाम करू नका."
+                                     : lang === 'kn' ? "ತೀವ್ರವಾದ ಹೆಪಟೈಟಿಸ್ (Acute Hepatitis) ಸಮಯದಲ್ಲಿ ಯಕೃತ್ತು ಗುಣಮುಖವಾಗಲು ಸಂಪೂರ್ಣ ವಿಶ್ರಾಂತಿ ಸೂಚಿಸಲಾಗಿದೆ. ವ್ಯಾಯಾಮ ಮಾಡಬೇಡಿ."
+                                     : "Strict bed rest is advised during Acute Hepatitis to allow liver healing. No exercise.";
+                }
+
+                if (noExercise) {
+                    exType = lang === 'hi' ? "पूर्ण आराम (Strict Rest)" : lang === 'mr' ? "पूर्ण विश्रांती (Strict Rest)" : lang === 'kn' ? "ಸಂಪೂರ್ಣ ವಿಶ್ರಾಂತಿ (Strict Rest)" : "Strict Rest / Bed Rest";
+                    exIntensity = lang === 'hi' ? "कोई नहीं" : lang === 'mr' ? "काहीही नाही" : lang === 'kn' ? "ಯಾವುದೂ ಇಲ್ಲ" : "None";
+                    exDuration = lang === 'hi' ? "कोई नहीं" : lang === 'mr' ? "काहीही नाही" : lang === 'kn' ? "ಯಾವುದೂ ಇಲ್ಲ" : "None";
+                    exWarm = "";
+                    exCool = "";
+                    exSpec = [noExerciseReason];
+                    
+                    const noAsanaText = lang === 'hi' ? "शारीरिक आसन वर्जित हैं। केवल पूर्ण आराम करें।" 
+                                      : lang === 'mr' ? "शारीरिक आसने निषिद्ध आहेत. केवळ पूर्ण विश्रांती घ्या." 
+                                      : lang === 'kn' ? "ದೈಹಿಕ ಯೋಗಾಸನಗಳನ್ನು ಮಾಡಬಾರದು. ಸಂಪೂರ್ಣ ವಿಶ್ರಾಂತಿ ತೆಗೆದುಕೊಳ್ಳಿ." 
+                                      : "Strictly avoid active physical Asanas. Complete rest is advised.";
+                    yAsanas = [noAsanaText];
+                    
+                    if (!special.includes(`⚠️ ${noExerciseReason}`)) special.push(`⚠️ ${noExerciseReason}`);
+                }
+
+                document.getElementById('ex-type').innerText = exType;
+                document.getElementById('ex-intensity').innerText = exIntensity;
+                document.getElementById('ex-duration').innerText = exDuration;
+                document.getElementById('ex-warmup').innerHTML = `<p style="margin-top:1rem;font-weight:bold">${exWarm}</p>`;
+                document.getElementById('ex-specifics').innerHTML = exSpec.map(e=>`<p style="margin-top:0.5rem;">${e}</p>`).join('');
+                document.getElementById('ex-cooldown').innerHTML = `<p style="margin-top:0.5rem;font-weight:bold">${exCool}</p>`;
+                document.getElementById('exercise-block').classList.remove('hidden');
+
+                document.getElementById('yoga-asanas').innerHTML = yAsanas.map(y=>`<li style="margin-bottom:0.5rem">${y}</li>`).join('');
+                document.getElementById('yoga-pranayama').innerHTML = yPranayama.map(y=>`<li style="margin-bottom:0.5rem">${y}</li>`).join('');
+                document.getElementById('yoga-meditation').innerHTML = yMed.map(y=>`<li style="margin-bottom:0.5rem">${y}</li>`).join('');
+                document.getElementById('yoga-block').classList.remove('hidden');
+
+                if(special.length) {
+                    document.getElementById('special-text').innerHTML = special.map(s=>`<li style="margin-bottom:0.5rem">${s}</li>`).join('');
+                    document.getElementById('special-block').classList.remove('hidden');
+                } else {
+                    document.getElementById('special-text').innerHTML = '';
+                    document.getElementById('special-block').classList.add('hidden');
+                }
+
+                document.getElementById('r-breadTitle').innerText = lang === 'hi' ? '🍞 रोटी/ब्रेड स्वस्थ विकल्प' : lang === 'mr' ? '🍞 पोळी/ब्रेड निरोगी पर्याय' : lang === 'kn' ? '🍞 ರೊಟ್ಟಿ/ಬ್ರೆಡ್ ಆರೋಗ್ಯಕರ ಪರ್ಯಾಯಗಳು' : '🍞 Bread/Roti Healthy Substitutes Guide';
+                
+                const breadItems = t.breadSubs || "";
+                document.getElementById('bread-subs-text').innerHTML = breadItems.split('\n').filter(s => s.trim()).map(s => `<p style="margin-bottom:0.4rem;">${s.trim()}</p>`).join('');
+                document.getElementById('bread-subs-block').classList.remove('hidden');
+
+                // Populate references list
+                const referencesText = document.getElementById('references-text');
+                referencesText.innerHTML = '';
+                
+                // Add general reference
+                const generalRef = referencesDict[lang].general;
+                const generalLi = document.createElement('li');
+                generalLi.style.marginBottom = '0.5rem';
+                generalLi.innerText = generalRef;
+                referencesText.appendChild(generalLi);
+                
+                // Add comorbidity-specific references
+                comorbidities.forEach(cb => {
+                    if (referencesDict[lang][cb]) {
+                        const li = document.createElement('li');
+                        li.style.marginBottom = '0.5rem';
+                        li.innerText = referencesDict[lang][cb];
+                        referencesText.appendChild(li);
+                    }
+                });
+                
+                // Add obesity reference if relevant
+                if (bmi >= 30) {
+                    const obeseRef = lang === 'hi' ? "WHO मोटापा रोकथाम और प्रबंधन दिशानिर्देश - संतुलित ऊर्जा प्रतिबंध और नियमित व्यायाम का समर्थन करता है।"
+                                     : lang === 'mr' ? "WHO लठ्ठपणा प्रतिबंध आणि व्यवस्थापन मार्गदर्शक तत्त्वे - ऊर्जा प्रतिबंध आणि नियमित व्यायामाचे समर्थन करते."
+                                     : lang === 'kn' ? "WHO ಬೊಜ್ಜು ತಡೆಗಟ್ಟುವಿಕೆ ಮತ್ತು ನಿರ್ವಹಣೆ ಮಾರ್ಗಸೂಚಿಗಳು - ಸಮತೋಲಿತ ಕ್ಯಾಲೋರಿ ನಿಯಂತ್ರಣ ಮತ್ತು ವ್ಯಾಯಾಮವನ್ನು ಸಮರ್ಥಿಸುತ್ತದೆ."
+                                     : "WHO Obesity Prevention and Management Guidelines - Justifies lifestyle modifications, energy restriction, and structured physical activity.";
+                    const li = document.createElement('li');
+                    li.style.marginBottom = '0.5rem';
+                    li.innerText = obeseRef;
+                    referencesText.appendChild(li);
+                }
+
+                // Transition
+                document.getElementById('input-section').classList.remove('active');
+                setTimeout(() => {
+                    document.getElementById('input-section').classList.add('hidden');
+                    document.getElementById('result-section').classList.remove('hidden');
+                    setTimeout(() => document.getElementById('result-section').classList.add('active'), 50);
+                }, 500);
+            });
+
+            document.getElementById('btn-recalculate').addEventListener('click', () => {
+                document.getElementById('result-section').classList.remove('active');
+                setTimeout(() => {
+                    document.getElementById('result-section').classList.add('hidden');
+                    document.getElementById('input-section').classList.remove('hidden');
+                    setTimeout(() => document.getElementById('input-section').classList.add('active'), 50);
+                }, 500);
+            });
+
+            document.getElementById('btn-new-patient').addEventListener('click', () => {
+                document.getElementById('diet-form').reset();
+                document.getElementById('result-section').classList.remove('active');
+                setTimeout(() => {
+                    document.getElementById('result-section').classList.add('hidden');
+                    document.getElementById('input-section').classList.remove('hidden');
+                    setTimeout(() => document.getElementById('input-section').classList.add('active'), 50);
+                    window.scrollTo(0, 0);
+                }, 500);
+            });
+
+            document.getElementById('btn-whatsapp').addEventListener('click', () => {
+                const lang = document.getElementById('language').value;
+                const t = dict[lang]; // Grab translations
+
+                // Synchronously extract text and format to avoid browser user-gesture timeouts
+                const title = document.getElementById('r-title').innerText;
+                const profileText = document.getElementById('profile-display').innerText;
+                const avoid = document.getElementById('avoid-list').innerText;
+                const include = document.getElementById('include-list').innerText;
+                
+                const bfast = document.getElementById('col-bfast').innerText.replace(/\n/g, '  |  ');
+                const mid = document.getElementById('col-mid').innerText.replace(/\n/g, '  |  ');
+                const lunch = document.getElementById('col-lunch').innerText.replace(/\n/g, '  |  ');
+                const eve = document.getElementById('col-eve').innerText.replace(/\n/g, '  |  ');
+                const dinner = document.getElementById('col-dinner').innerText.replace(/\n/g, '  |  ');
+
+                const exType = document.getElementById('ex-type').innerText;
+                const exInt = document.getElementById('ex-intensity').innerText;
+                const exDur = document.getElementById('ex-duration').innerText;
+                const exWarm = document.getElementById('ex-warmup').innerText;
+                const exSpec = document.getElementById('ex-specifics').innerText;
+                const exCool = document.getElementById('ex-cooldown').innerText;
+
+                const yogaAsanas = document.getElementById('yoga-asanas').innerText;
+                const yogaPran = document.getElementById('yoga-pranayama').innerText;
+                const yogaMed = document.getElementById('yoga-meditation').innerText;
+                const specialText = document.getElementById('special-text').innerText;
+                const breadSubsText = document.getElementById('bread-subs-text').innerText;
+
+                const text = `*Dr Parale's Spandan Diet | ${title}*\n` +
+                    `*${t.waProfile}:*\n${profileText}\n\n` +
+                    `*🍽️ ${t.waMeal}:*\n` +
+                    `*${t.bfast}:* ${bfast}\n*${t.mid}:* ${mid}\n*${t.lunch}:* ${lunch}\n*${t.eve}:* ${eve}\n*${t.dinner}:* ${dinner}\n\n` +
+                    `*⚠️ ${t.waAvoid}:*\n${avoid}\n\n` +
+                    `*✅ ${t.waInclude}:*\n${include}\n\n` +
+                    (specialText.length > 0 ? `*⚕️ ${t.waSpec}:*\n${specialText}\n\n` : '') +
+                    (breadSubsText.length > 0 ? `*🍞 Bread Substitutes:*\n${breadSubsText}\n\n` : '') +
+                    `*🍎 Fruits & Dry Fruits:*\n${document.getElementById('fruit-guide-content').innerText}\n\n` +
+                    `*🎉 Diet Compliance & Cheat Meals:*\n${document.getElementById('compliance-content').innerText}\n\n` +
+                    `*🏃‍♂️ ${t.waEx}:*\n${exType} | ${exInt} | ${exDur}\n${exWarm}\n${exSpec}\n${exCool}\n\n` +
+                    `*🧘‍♀️ ${t.waYoga}:*\n${yogaAsanas}\n${yogaPran}\n${yogaMed}\n\n` +
+                    `_Generated by Dr Parale's Spandan Diet App._\n_For the highly detailed PDF document, please request it directly._`;
+
+                const encodedText = encodeURIComponent(text);
+                window.open(`https://api.whatsapp.com/send?text=${encodedText}`, '_blank');
+            });
+
+            document.getElementById('btn-pdf').addEventListener('click', () => {
+                // Native browser printing perfectly handles page breaks and CSS layout without cutting off content!
+                window.print();
+            });
+
+            // --- EMR Integration Logic ---
+            const appUrl = window.location.href.split('?')[0];
+            const rawCode = `
+                let f = "";
+                try {
+                    f += document.body.innerText + ' ' + Array.from(document.querySelectorAll('input, textarea')).map(i=>i.value).join(' ');
+                    document.querySelectorAll('iframe').forEach(ifr => {
+                        try {
+                            f += ' ' + ifr.contentWindow.document.body.innerText;
+                            f += ' ' + Array.from(ifr.contentWindow.document.querySelectorAll('input, textarea')).map(i=>i.value).join(' ');
+                        } catch(e) {}
+                    });
+                } catch(e) {}
+                
+                let p = new URLSearchParams();
+                
+                let nMatch = f.match(/(?:Mr\\.|Mrs\\.|Ms\\.|Dr\\.)\\s*[A-Za-z\\s]+/i);
+                if(nMatch) p.set('name', nMatch[0].trim());
+                
+                let gMatch = f.match(/Gender:\\s*(Male|Female)/i);
+                if(gMatch) p.set('gender', gMatch[1].toLowerCase());
+                
+                let aMatch = f.match(/Age:\\s*(\\d+)/i);
+                if(aMatch) p.set('age', aMatch[1]);
+                
+                let hMatch = f.match(/height:?\\s*(\\d+)/i);
+                if(hMatch) p.set('height', hMatch[1]);
+                
+                let wMatch = f.match(/weight:?\\s*(\\d+)/i);
+                if(wMatch) p.set('weight', wMatch[1]);
+                
+                let dx = [];
+                if(/HTN|Hypertension/i.test(f)) dx.push('hypertension');
+                if(/DM|Diabetes/i.test(f)) dx.push('diabetes');
+                if(/IHD|Ischemic/i.test(f)) dx.push('ihd');
+                if(/CKD|Chronic Kidney/i.test(f)) dx.push('ckd');
+                if(/Gout|Hyperuricemia/i.test(f)) dx.push('gout');
+                if(/Thyroid|Hypo|Hyperthyroid/i.test(f)) dx.push('thyroid');
+                if(dx.length) p.set('dx', dx.join(','));
+                
+                let existing = document.getElementById('spandan-diet-sidepanel');
+                if(existing) existing.remove();
+
+                let container = document.createElement('div');
+                container.id = 'spandan-diet-sidepanel';
+                container.style.position = 'fixed';
+                container.style.top = '0';
+                container.style.right = '0';
+                container.style.width = '500px';
+                container.style.height = '100vh';
+                container.style.backgroundColor = '#1e1b4b';
+                container.style.zIndex = '9999999';
+                container.style.boxShadow = '-5px 0 25px rgba(0,0,0,0.5)';
+                container.style.display = 'flex';
+                container.style.flexDirection = 'column';
+                container.style.transition = 'transform 0.3s ease';
+                container.style.borderRadius = '12px 0 0 12px';
+                container.style.overflow = 'hidden';
+
+                let header = document.createElement('div');
+                header.style.display = 'flex';
+                header.style.justifyContent = 'space-between';
+                header.style.alignItems = 'center';
+                header.style.padding = '12px 20px';
+                header.style.backgroundColor = '#0f172a';
+                header.style.color = '#fff';
+                header.style.fontFamily = 'sans-serif';
+                header.innerHTML = '<strong style="font-size:16px;">🥗 Spandan Diet</strong>';
+                
+                let btnGroup = document.createElement('div');
+                let minBtn = document.createElement('button');
+                minBtn.innerHTML = '&#9472;';
+                minBtn.style.cssText = 'background:transparent; border:none; color:#cbd5e1; font-size:18px; font-weight:bold; cursor:pointer; margin-right:15px;';
+                
+                let closeBtn = document.createElement('button');
+                closeBtn.innerHTML = '&#10005;';
+                closeBtn.style.cssText = 'background:transparent; border:none; color:#ef4444; font-size:18px; font-weight:bold; cursor:pointer;';
+                
+                btnGroup.appendChild(minBtn);
+                btnGroup.appendChild(closeBtn);
+                header.appendChild(btnGroup);
+                container.appendChild(header);
+
+                let iframe = document.createElement('iframe');
+                iframe.src = '${appUrl}?' + p.toString() + '&is_iframe=true';
+                iframe.style.width = '100%';
+                iframe.style.flex = '1';
+                iframe.style.border = 'none';
+                iframe.style.backgroundColor = 'white';
+                container.appendChild(iframe);
+
+                document.body.appendChild(container);
+
+                let isMinimized = false;
+                minBtn.onclick = () => {
+                    isMinimized = !isMinimized;
+                    iframe.style.display = isMinimized ? 'none' : 'block';
+                    container.style.height = isMinimized ? '50px' : '100vh';
+                    minBtn.innerHTML = isMinimized ? '&#9633;' : '&#9472;';
+                };
+                closeBtn.onclick = () => {
+                    container.remove();
+                };
+            `;
+            const bookmarkletHref = 'javascript:(function(){' + encodeURIComponent(rawCode) + '})();';
+            document.getElementById('bookmarklet-btn').href = bookmarkletHref;
+
+            const urlParams = new URLSearchParams(window.location.search);
+            if(urlParams.has('name')) document.getElementById('patient-name').value = urlParams.get('name');
+            if(urlParams.has('gender')) {
+                let g = urlParams.get('gender');
+                let s = document.getElementById('gender');
+                if(g === 'male' || g === 'female') s.value = g;
+                s.dispatchEvent(new Event('change'));
+            }
+            if(urlParams.has('age')) document.getElementById('age').value = urlParams.get('age');
+            if(urlParams.has('height')) document.getElementById('height').value = urlParams.get('height');
+            if(urlParams.has('weight')) document.getElementById('weight').value = urlParams.get('weight');
+            
+            if(urlParams.has('dx')) {
+                let dxs = urlParams.get('dx').split(',');
+                dxs.forEach(d => {
+                    let cb = document.querySelector('input[name="comorbidity"][value="' + d + '"]');
+                    if(cb) {
+                        cb.checked = true;
+                        cb.dispatchEvent(new Event('change'));
+                    }
+                });
+            }
+
+            // Auto-generate plan if all required fields are filled by scraper
+            if(urlParams.has('name') && urlParams.has('gender') && urlParams.has('height') && urlParams.has('weight') && document.getElementById('weight').value !== "") {
+                setTimeout(() => {
+                    document.getElementById('diet-form').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+                }, 500);
+            }
+        });
+    </script>
+</body>
+</html>
