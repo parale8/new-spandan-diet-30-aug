@@ -1508,11 +1508,24 @@
 
                 const encodedText = encodeURIComponent(text);
                 let phone = document.getElementById('wa-number').value.replace(/[^0-9]/g, '');
-                if (phone) {
-                    window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encodedText}`, '_blank');
-                } else {
-                    window.open(`https://api.whatsapp.com/send?text=${encodedText}`, '_blank');
-                }
+                
+                // If text is extremely long, WhatsApp API can crash due to URL limits.
+                // We will copy to clipboard as a fallback/primary.
+                navigator.clipboard.writeText(text).then(() => {
+                    alert("Diet plan copied to clipboard! Just Paste (Ctrl+V) it in WhatsApp.");
+                    if (phone) {
+                        window.open(`https://api.whatsapp.com/send?phone=${phone}`, '_blank');
+                    } else {
+                        window.open(`https://api.whatsapp.com/send`, '_blank');
+                    }
+                }).catch(err => {
+                    // Fallback if clipboard fails
+                    if (phone) {
+                        window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encodedText}`, '_blank');
+                    } else {
+                        window.open(`https://api.whatsapp.com/send?text=${encodedText}`, '_blank');
+                    }
+                });
             });
 
             document.getElementById('btn-pdf').addEventListener('click', () => {
@@ -1643,6 +1656,7 @@
                 iframe.style.flex = '1';
                 iframe.style.border = 'none';
                 iframe.style.backgroundColor = 'white';
+                iframe.allow = 'clipboard-write';
                 container.appendChild(iframe);
 
                 document.body.appendChild(container);
