@@ -1536,7 +1536,7 @@
                     } catch(e) {}
                     
                     let p = new URLSearchParams();
-                    let nMatch = f.match(/(?:^|\s)(Master|Mrs|Ms|Mr)\\.?\\s*[A-Za-z]+(?:\\s+[A-Za-z]+){0,3}/i);
+                    let nMatch = f.match(/(?:^|\\s)(Master|Mrs|Ms|Mr)\\.?\\s*[A-Za-z]+(?:\\s+[A-Za-z]+){0,3}/i);
                     let inferredGender = '';
                     if(nMatch) {
                         let nStr = nMatch[0];
