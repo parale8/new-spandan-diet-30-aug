@@ -1536,12 +1536,24 @@
                     } catch(e) {}
                     
                     let p = new URLSearchParams();
-                    let nMatch = f.match(/(?:Mr|Mrs|Ms|Master)\\.?\\s*[A-Za-z]+(?:\\s+[A-Za-z]+){0,3}/i);
-                    if(nMatch) { p.set('name', nMatch[0].trim()); }
-                    else { let dMatch = f.match(/(?:Dr)\\.?\\s*[A-Za-z]+(?:\\s+[A-Za-z]+){0,2}/i); if(dMatch) p.set('name', dMatch[0].trim()); }
+                    let nMatch = f.match(/(?:Master|Mrs|Ms|Mr|Dr)\\.?\\s*[A-Za-z]+(?:\\s+[A-Za-z]+){0,3}/i);
+                    let inferredGender = '';
+                    if(nMatch) {
+                        let nStr = nMatch[0];
+                        p.set('name', nStr.trim());
+                        if(nStr.match(/Mrs|Ms/i)) inferredGender = 'female';
+                        else if(nStr.match(/Mr|Master/i)) inferredGender = 'male';
+                    } else {
+                        let dMatch = f.match(/(?:Dr)\\.?\\s*[A-Za-z]+(?:\\s+[A-Za-z]+){0,2}/i);
+                        if(dMatch) p.set('name', dMatch[0].trim());
+                    }
                     
                     let gMatch = f.match(/Gender:\\s*(Male|Female)/i);
-                    if(gMatch) p.set('gender', gMatch[1].toLowerCase());
+                    if(gMatch) {
+                        p.set('gender', gMatch[1].toLowerCase());
+                    } else if (inferredGender) {
+                        p.set('gender', inferredGender);
+                    }
                     
                     let age = '', height = '', weight = '';
                     
