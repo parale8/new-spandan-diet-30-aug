@@ -1588,13 +1588,26 @@
                     if(height) p.set('height', height.match(/\\d+/)?.[0] || height);
                     if(weight) p.set('weight', weight.match(/\\d+/)?.[0] || weight);
                     
+                    let diagMatch = f.match(/Diagnosis[\\s\\S]*?(?=ECG Diagnosis|Addiction|Intolerance|Plan|Treatment|Vitals|SystemicExam|$)/i);
+                    let diagText = diagMatch ? diagMatch[0] : f;
                     let dx = [];
-                    if(/HTN|Hypertension/i.test(f)) dx.push('hypertension');
-                    if(/DM|Diabetes/i.test(f)) dx.push('diabetes');
-                    if(/IHD|Ischemic/i.test(f)) dx.push('ihd');
-                    if(/CKD|Chronic Kidney/i.test(f)) dx.push('ckd');
-                    if(/Gout|Hyperuricemia/i.test(f)) dx.push('gout');
-                    if(/Thyroid|Hypo|Hyperthyroid/i.test(f)) dx.push('thyroid');
+                    if(/\\bHTN\\b|Hypertension/i.test(diagText)) dx.push('hypertension');
+                    if(/\\bDM\\b|Diabetes/i.test(diagText)) dx.push('diabetes');
+                    if(/\\bIHD\\b|Ischemic/i.test(diagText)) dx.push('ihd');
+                    if(/\\bCKD\\b|Renal/i.test(diagText)) dx.push('ckd');
+                    if(/\\bHypothyroid/i.test(diagText)) dx.push('thyroid');
+                    if(/\\bHyperthyroid/i.test(diagText)) dx.push('thyroid');
+                    if(/\\bEpilepsy/i.test(diagText)) dx.push('epilepsy');
+                    if(/Pregnancy|Pregnant/i.test(diagText)) dx.push('pregnancy');
+                    if(/\\bLiver/i.test(diagText)) dx.push('liver_disease');
+                    if(/Acidity|GERD/i.test(diagText)) dx.push('hyperacidity');
+                    if(/Ulcer/i.test(diagText)) dx.push('peptic_ulcer');
+                    if(/\\bIBD|\\bIBS/i.test(diagText)) dx.push('ibd');
+                    if(/Dyslipidemia|Cholesterol/i.test(diagText)) dx.push('dyslipidemia');
+                    if(/\\bGout|Uric Acid/i.test(diagText)) dx.push('gout');
+                    if(/Anemia|Anaemia/i.test(diagText)) dx.push('anemia');
+                    if(/Warfarin|Acitrom/i.test(diagText)) dx.push('vit_k_antagonist');
+                    if(/Heart Failure|\\bCHF\\b/i.test(diagText)) dx.push('heart_failure');
                     if(dx.length) p.set('dx', dx.join(','));
                     return p.toString();
                 }
