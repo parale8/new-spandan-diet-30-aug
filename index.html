@@ -1507,50 +1507,48 @@
             // --- EMR Integration Logic ---
             const appUrl = window.location.href.split('?')[0];
             const rawCode = `
-                let f = "";
-                try {
-                    f += document.body.innerText + ' ' + Array.from(document.querySelectorAll('input, textarea')).map(i=>i.value).join(' ');
-                    document.querySelectorAll('iframe').forEach(ifr => {
-                        try {
-                            f += ' ' + ifr.contentWindow.document.body.innerText;
-                            f += ' ' + Array.from(ifr.contentWindow.document.querySelectorAll('input, textarea')).map(i=>i.value).join(' ');
-                        } catch(e) {}
-                    });
-                } catch(e) {}
-                
-                let p = new URLSearchParams();
-                
-                let nMatch = f.match(/(?:Mr|Mrs|Ms|Master)\\.?\\s+[A-Za-z\\s]+/i);
-                if(nMatch) {
-                    p.set('name', nMatch[0].trim());
-                } else {
-                    let dMatch = f.match(/(?:Dr)\\.?\\s+[A-Za-z\\s]+/i);
-                    if(dMatch) p.set('name', dMatch[0].trim());
+                function scrapeEMR() {
+                    let f = "";
+                    try {
+                        f += document.body.innerText + ' ' + Array.from(document.querySelectorAll('input, textarea')).map(i=>i.value).join(' ');
+                        document.querySelectorAll('iframe').forEach(ifr => {
+                            try {
+                                f += ' ' + ifr.contentWindow.document.body.innerText;
+                                f += ' ' + Array.from(ifr.contentWindow.document.querySelectorAll('input, textarea')).map(i=>i.value).join(' ');
+                            } catch(e) {}
+                        });
+                    } catch(e) {}
+                    
+                    let p = new URLSearchParams();
+                    let nMatch = f.match(/(?:Mr|Mrs|Ms|Master)\\.?\\s+[A-Za-z\\s]+/i);
+                    if(nMatch) { p.set('name', nMatch[0].trim()); }
+                    else { let dMatch = f.match(/(?:Dr)\\.?\\s+[A-Za-z\\s]+/i); if(dMatch) p.set('name', dMatch[0].trim()); }
+                    
+                    let gMatch = f.match(/Gender:\\s*(Male|Female)/i);
+                    if(gMatch) p.set('gender', gMatch[1].toLowerCase());
+                    
+                    let aMatch = f.match(/Age[^0-9]*(\\d+)/i);
+                    if(aMatch) p.set('age', aMatch[1]);
+                    
+                    let hMatch = f.match(/height[^0-9]*(\\d+)/i);
+                    if(hMatch) p.set('height', hMatch[1]);
+                    
+                    let wMatch = f.match(/weight[^0-9]*(\\d+)/i);
+                    if(wMatch) p.set('weight', wMatch[1]);
+                    
+                    let dx = [];
+                    if(/HTN|Hypertension/i.test(f)) dx.push('hypertension');
+                    if(/DM|Diabetes/i.test(f)) dx.push('diabetes');
+                    if(/IHD|Ischemic/i.test(f)) dx.push('ihd');
+                    if(/CKD|Chronic Kidney/i.test(f)) dx.push('ckd');
+                    if(/Gout|Hyperuricemia/i.test(f)) dx.push('gout');
+                    if(/Thyroid|Hypo|Hyperthyroid/i.test(f)) dx.push('thyroid');
+                    if(dx.length) p.set('dx', dx.join(','));
+                    return p.toString();
                 }
-                
-                let gMatch = f.match(/Gender:\\s*(Male|Female)/i);
-                if(gMatch) p.set('gender', gMatch[1].toLowerCase());
-                
-                let aMatch = f.match(/Age[^0-9]*(\\d+)/i);
-                if(aMatch) p.set('age', aMatch[1]);
-                
-                let hMatch = f.match(/height[^0-9]*(\\d+)/i);
-                if(hMatch) p.set('height', hMatch[1]);
-                
-                let wMatch = f.match(/weight[^0-9]*(\\d+)/i);
-                if(wMatch) p.set('weight', wMatch[1]);
-                
-                let dx = [];
-                if(/HTN|Hypertension/i.test(f)) dx.push('hypertension');
-                if(/DM|Diabetes/i.test(f)) dx.push('diabetes');
-                if(/IHD|Ischemic/i.test(f)) dx.push('ihd');
-                if(/CKD|Chronic Kidney/i.test(f)) dx.push('ckd');
-                if(/Gout|Hyperuricemia/i.test(f)) dx.push('gout');
-                if(/Thyroid|Hypo|Hyperthyroid/i.test(f)) dx.push('thyroid');
-                if(dx.length) p.set('dx', dx.join(','));
-                
+
                 let existing = document.getElementById('spandan-diet-sidepanel');
-                if(existing) existing.remove();
+                if(existing) { existing.remove(); if(window.spandanInterval) clearInterval(window.spandanInterval); }
 
                 let container = document.createElement('div');
                 container.id = 'spandan-diet-sidepanel';
@@ -1579,6 +1577,12 @@
                 header.innerHTML = '<strong style="font-size:16px;">🥗 Spandan Diet</strong>';
                 
                 let btnGroup = document.createElement('div');
+                
+                let refBtn = document.createElement('button');
+                refBtn.innerHTML = '&#8635;'; // refresh icon
+                refBtn.title = 'Refresh Patient Data';
+                refBtn.style.cssText = 'background:transparent; border:none; color:#10b981; font-size:22px; font-weight:bold; cursor:pointer; margin-right:15px;';
+
                 let minBtn = document.createElement('button');
                 minBtn.innerHTML = '&#9472;';
                 minBtn.style.cssText = 'background:transparent; border:none; color:#cbd5e1; font-size:18px; font-weight:bold; cursor:pointer; margin-right:15px;';
@@ -1587,13 +1591,15 @@
                 closeBtn.innerHTML = '&#10005;';
                 closeBtn.style.cssText = 'background:transparent; border:none; color:#ef4444; font-size:18px; font-weight:bold; cursor:pointer;';
                 
+                btnGroup.appendChild(refBtn);
                 btnGroup.appendChild(minBtn);
                 btnGroup.appendChild(closeBtn);
                 header.appendChild(btnGroup);
                 container.appendChild(header);
 
+                let currentParams = scrapeEMR();
                 let iframe = document.createElement('iframe');
-                iframe.src = '${appUrl}?' + p.toString() + '&is_iframe=true';
+                iframe.src = '${appUrl}?' + currentParams + '&is_iframe=true';
                 iframe.style.width = '100%';
                 iframe.style.flex = '1';
                 iframe.style.border = 'none';
@@ -1611,7 +1617,18 @@
                 };
                 closeBtn.onclick = () => {
                     container.remove();
+                    if(window.spandanInterval) clearInterval(window.spandanInterval);
                 };
+                
+                let doUpdate = () => {
+                    let newParams = scrapeEMR();
+                    if (newParams !== currentParams && newParams.includes('name=')) {
+                        currentParams = newParams;
+                        iframe.src = '${appUrl}?' + currentParams + '&is_iframe=true';
+                    }
+                };
+                refBtn.onclick = doUpdate;
+                window.spandanInterval = setInterval(doUpdate, 2000);
             `;
             const bookmarkletHref = 'javascript:(function(){' + encodeURIComponent(rawCode) + '})();';
             document.getElementById('bookmarklet-btn').href = bookmarkletHref;
@@ -1647,11 +1664,6 @@
                 
                 setTimeout(() => {
                     document.getElementById('diet-form').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
-                    
-                    // Auto open print dialog if launched from EMR
-                    if(urlParams.has('is_iframe')) {
-                        setTimeout(() => { window.print(); }, 1500);
-                    }
                 }, 500);
             }
         });
