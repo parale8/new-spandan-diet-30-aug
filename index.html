@@ -42,9 +42,12 @@
         .header p { font-size: 1.2rem; font-weight: 500; }
 
         @media print {
-            body { background: white !important; padding: 0 !important; margin: 0 !important; color: black !important; display: block !important; }
+            * { color: black !important; text-shadow: none !important; }
+            body { background: white !important; padding: 0 !important; margin: 0 !important; display: block !important; }
             .container { max-width: 100% !important; width: 100% !important; margin: 0 !important; padding: 0 !important; }
             .background-animation, .header, #input-section, .action-buttons, #wa-hint { display: none !important; }
+            .bmi-badge { background: transparent !important; border: 1px solid #ccc !important; padding: 10px !important; margin-bottom: 15px !important; }
+            .meal-col-header { background: #eee !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             
             .glass-panel { 
                 box-shadow: none !important; border: none !important; background: transparent !important; padding: 0 !important;
