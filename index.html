@@ -454,8 +454,11 @@
             </div>
             <div id="pdf-content">
                 <div class="result-header">
-                    <h2 id="r-title">Your Personalized Prescription</h2>
-                    <div id="profile-display" class="bmi-badge">--</div>
+                    <div>
+                        <h2 id="r-title" style="margin-bottom:0.25rem;">Your Personalized Prescription</h2>
+                        <p style="font-size: 1rem; color: var(--text-light); line-height: 1.4;"><strong>Dr Parale's Spandan Diet</strong><br><em>Developed by Dr. Gurunath Parale</em></p>
+                    </div>
+                    <div id="profile-display" class="bmi-badge profile-badge">--</div>
                 </div>
                 
                 <div class="diet-guidelines">
@@ -888,13 +891,15 @@
                 }
 
                 document.getElementById('profile-display').innerHTML = `
-                    <strong>${name}</strong> | ${age} yrs | ${genderStr} | BMI: ${bmi}<br>
-                    <span style="font-size: 0.85rem; color: var(--text-light); display: inline-block; margin-top: 0.25rem;">
-                        Diet: ${vegStr} | Region: ${regionStr} | Cuisine: ${cuisineStr} | Comorbidities: ${comorbiditiesText}
-                    </span><br>
-                    <span style="font-size: 0.9rem; font-weight: 600; color: var(--primary); display: inline-block; margin-top: 0.4rem;">
+                    <div style="color: inherit;">
+                        <strong style="font-size: 1.1em;">${name}</strong> | ${age} yrs | ${genderStr} | BMI: ${bmi}
+                    </div>
+                    <div style="font-size: 0.9rem; color: inherit; opacity: 0.9; margin-top: 0.4rem; line-height: 1.4;">
+                        Diet: ${vegStr} | Region: ${regionStr} | Cuisine: ${cuisineStr} | Comorbidities: <strong>${comorbiditiesText}</strong>
+                    </div>
+                    <div style="font-size: 0.95rem; font-weight: 700; color: inherit; margin-top: 0.5rem; text-shadow: 0 1px 2px rgba(0,0,0,0.1);">
                         ${lang === "hi" ? "🔥 दैनिक कैलोरी लक्ष्य:" : lang === "mr" ? "🔥 दैनिक कॅलरी लक्ष्य:" : lang === "kn" ? "🔥 ದೈನಂದಿನ ಕ್ಯಾಲೋರಿ ಗುರಿ:" : "🔥 Daily Calorie Goal:"} ${calorieAdvice}
-                    </span>
+                    </div>
                 `;
 
                 let broadRegion = 'north';
@@ -1593,7 +1598,7 @@
                     let dx = [];
                     if(/\\bHTN\\b|Hypertension/i.test(diagText)) dx.push('hypertension');
                     if(/\\bDM\\b|Diabetes/i.test(diagText)) dx.push('diabetes');
-                    if(/\\bIHD\\b|Ischemic\\s+Heart|CAD\\b|Coronary/i.test(diagText)) dx.push('ihd');
+                    if(/\\bIHD\\b|Ischemic\\s+Heart|CAD\\b|Coronary|\\bMI\\b|\\bANGINA\\b|\\bPTCA\\b/i.test(diagText)) dx.push('ihd');
                     if(/\\bCKD\\b|Chronic\\s+Kidney|CRF\\b|Renal\\s+Failure/i.test(diagText)) dx.push('ckd');
                     if(/\\bHypothyroid/i.test(diagText)) dx.push('thyroid');
                     if(/\\bHyperthyroid/i.test(diagText)) dx.push('thyroid');
