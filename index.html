@@ -1548,6 +1548,11 @@
                     let f = "";
                     try {
                         f += document.title + ' ' + document.body.innerText + ' ' + Array.from(document.querySelectorAll('input, textarea')).map(i=>i.value).join(' ');
+                    
+                    // The EMR has a default autocomplete dropdown list that opens when clicking the Diagnosis field.
+                    // If the user runs the bookmarklet while this dropdown is open, it dumps all these diseases into the text.
+                    // We must surgically remove this specific list from the text to prevent false positives.
+                    f = f.replace(/DM\s+MVR\s+DYSLIPIDEMIA\s+DVT\s+HYPOTHYROIDISM\s+HYPERTHYROIDISM\s+AVR\/?\s*DVR\s+CRF\/?\s*CKD\s+ANEMIA/gi, '');
                         document.querySelectorAll('iframe, frame').forEach(ifr => {
                             try {
                                 f += ' ' + ifr.contentWindow.document.body.innerText;
